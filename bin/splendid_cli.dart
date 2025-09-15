@@ -1,5 +1,10 @@
-import 'package:splendid_cli/splendid_cli.dart' as splendid_cli;
+import 'package:splendid_cli/splendid_command_runner.dart';
 
-void main(List<String> arguments) {
-  print('Hello world: ${splendid_cli.calculate()}!');
+/// CLI entrypoint for the Splendid CLI.
+///
+/// Delegates argument parsing and execution to the [SplendidCommandRunner], which manages all available subcommands.
+Future<void> main(List<String> arguments) async {
+  // The [SplendidCommandRunner] will manage CLI commands.
+  final SplendidCommandRunner runner = SplendidCommandRunner();
+  await runner.run(arguments);
 }

@@ -6,14 +6,10 @@ import 'home_controller.dart';
 
 /// View widget for the home screen that handles UI presentation.
 ///
-/// This StatelessWidget receives the controller as a parameter and
-/// uses it to access state and trigger actions. The view contains
-/// no business logic and is purely declarative.
+/// This StatelessWidget receives the controller as a parameter and uses it to access state and trigger actions. The 
+/// view contains no business logic and is purely declarative.
 class HomeView extends StatelessWidget {
   /// Creates the home view with the required controller.
-  ///
-  /// The controller provides access to state data and action methods
-  /// needed for rendering and user interaction handling.
   const HomeView(this.controller, {super.key});
 
   /// Controller instance that manages state and business logic.

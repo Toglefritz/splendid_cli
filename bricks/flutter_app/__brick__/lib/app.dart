@@ -21,13 +21,10 @@ part 'theme/app_theme.dart';
 /// * Defining the initial route (home screen)
 /// * Enabling Material 3 design system
 /// 
-/// The widget follows the StatelessWidget pattern as it contains no mutable
-/// state and serves purely as a configuration container.
+/// The widget follows the StatelessWidget pattern as it contains no mutable state and serves purely as a configuration 
+/// container.
 class {{name.pascalCase()}} extends StatelessWidget {
   /// Creates the root application widget.
-  /// 
-  /// This constructor is const to enable compile-time optimization
-  /// and follows Flutter best practices for immutable widgets.
   const {{name.pascalCase()}}({super.key});
 
   /// Builds the widget tree for the root application.
@@ -39,9 +36,8 @@ class {{name.pascalCase()}} extends StatelessWidget {
   /// * Debug banner disabled for cleaner presentation
   /// * Localization support for multiple languages
   /// 
-  /// The MaterialApp provides the foundation for Material Design components
-  /// and navigation throughout the application. Theme switching is handled
-  /// automatically based on system preferences.
+  /// The [MaterialApp] provides the foundation for Material Design components and navigation throughout the 
+  /// application. Theme switching is handled automatically based on system preferences.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

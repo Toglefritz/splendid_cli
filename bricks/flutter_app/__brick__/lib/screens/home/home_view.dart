@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'home_controller.dart';
+
+import '../../l10n/app_localizations.dart';
 import '../../theme/insets.dart';
+import 'home_controller.dart';
 
 /// View widget for the home screen that handles UI presentation.
 ///
@@ -24,7 +26,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('{{name.titleCase()}}'),
+        title: Text(AppLocalizations.of(context)!.appTitle),
       ),
       body: Center(
         child: Column(
@@ -42,7 +44,7 @@ class HomeView extends StatelessWidget {
                 boxShadow: controller.isLampOn
                     ? [
                         BoxShadow(
-                          color: Colors.amber.withOpacity(0.3),
+                          color: Colors.amber.withValues(alpha: 0.3),
                           blurRadius: 30,
                           spreadRadius: 10,
                         ),
@@ -60,16 +62,16 @@ class HomeView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('OFF'),
+                  Text(AppLocalizations.of(context)!.lampOff),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: Insets.small),
                     child: Switch(
                       value: controller.isLampOn,
                       onChanged: controller.toggleLamp,
-                      activeColor: Colors.amber,
+                      activeThumbColor: Colors.amber,
                     ),
                   ),
-                  const Text('ON'),
+                  Text(AppLocalizations.of(context)!.lampOn),
                 ],
               ),
             ),

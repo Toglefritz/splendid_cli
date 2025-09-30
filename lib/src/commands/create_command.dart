@@ -230,6 +230,7 @@ class CreateCommand extends Command<int> {
         ..info('Next steps:')
         ..info('  cd $targetPath')
         ..info('  flutter pub get')
+        ..info('  flutter gen-l10n')
         ..info('  flutter run');
 
       return 0;

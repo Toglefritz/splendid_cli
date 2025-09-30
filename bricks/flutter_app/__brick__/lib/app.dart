@@ -5,7 +5,9 @@
 /// following MVC architecture patterns.
 library;
 
+import 'l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+
 import 'screens/home/home_route.dart';
 
 part 'theme/app_theme.dart';
@@ -35,6 +37,7 @@ class {{name.pascalCase()}} extends StatelessWidget {
   /// * Light and dark themes from [AppTheme]
   /// * Home route pointing to the main screen
   /// * Debug banner disabled for cleaner presentation
+  /// * Localization support for multiple languages
   /// 
   /// The MaterialApp provides the foundation for Material Design components
   /// and navigation throughout the application. Theme switching is handled
@@ -43,10 +46,16 @@ class {{name.pascalCase()}} extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '{{name.titleCase()}}',
+      debugShowCheckedModeBanner: false,
+
+      // Themes with accessibility support
       theme: _AppTheme.lightTheme,
       darkTheme: _AppTheme.darkTheme,
       home: const HomeRoute(),
-      debugShowCheckedModeBanner: false,
+
+      // Localizations
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

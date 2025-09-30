@@ -3,9 +3,12 @@
 /// This file contains the main application widget that configures the Flutter app
 /// with Material Design theming and sets up the initial route to the home screen
 /// following MVC architecture patterns.
+library;
 
 import 'package:flutter/material.dart';
 import 'screens/home/home_route.dart';
+
+part 'theme/app_theme.dart';
 
 /// Root application widget that configures the Flutter app.
 /// 
@@ -29,20 +32,19 @@ class {{name.pascalCase()}} extends StatelessWidget {
   /// 
   /// Returns a [MaterialApp] configured with:
   /// * App title derived from the project name
-  /// * Material 3 design system with deep purple color scheme
+  /// * Light and dark themes from [AppTheme]
   /// * Home route pointing to the main screen
   /// * Debug banner disabled for cleaner presentation
   /// 
   /// The MaterialApp provides the foundation for Material Design components
-  /// and navigation throughout the application.
+  /// and navigation throughout the application. Theme switching is handled
+  /// automatically based on system preferences.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '{{name.titleCase()}}',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
-        useMaterial3: true,
-      ),
+      theme: _AppTheme.lightTheme,
+      darkTheme: _AppTheme.darkTheme,
       home: const HomeRoute(),
       debugShowCheckedModeBanner: false,
     );

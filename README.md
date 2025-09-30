@@ -1,5 +1,7 @@
 # Splendid CLI
 
+<img src="./images/icon.png" width=150  >
+
 ## Overview
 
 Splendid CLI is a command-line interface tool designed to scaffold Flutter projects following MVC architecture standards. It promotes strong typing, localization (l10n), and other best practices to help developers build maintainable and scalable Flutter applications quickly and efficiently.

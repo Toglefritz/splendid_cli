@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:splendid_cli/splendid_command_runner.dart';
 
 /// CLI entrypoint for the Splendid CLI.
@@ -6,5 +7,8 @@ import 'package:splendid_cli/splendid_command_runner.dart';
 Future<void> main(List<String> arguments) async {
   // The [SplendidCommandRunner] will manage CLI commands.
   final SplendidCommandRunner runner = SplendidCommandRunner();
-  await runner.run(arguments);
+
+  final int code = await runner.run(arguments);
+
+  exit(code);
 }

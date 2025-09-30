@@ -1,0 +1,9 @@
+name: app_mvc
+description: "New Flutter app scaffold using Splendid MVC standards"
+version: 0.1.0+1
+
+vars:
+  name:
+    type: string
+    description: The Flutter project name (e.g., splendid_demo)
+    default: splendid_app

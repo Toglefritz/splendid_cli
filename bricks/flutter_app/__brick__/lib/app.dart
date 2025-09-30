@@ -40,7 +40,7 @@ class {{name.pascalCase()}} extends StatelessWidget {
     return MaterialApp(
       title: '{{name.titleCase()}}',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
         useMaterial3: true,
       ),
       home: const HomeRoute(),

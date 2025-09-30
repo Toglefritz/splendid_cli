@@ -14,8 +14,6 @@ import 'app.dart';
 /// is handled by the {{name.pascalCase()}} widget in app.dart.
 void main() {
   runApp(
-    const {
-      {name.pascalCase()},
-    }(),
+    const {{name.pascalCase()}}(),
   );
 }

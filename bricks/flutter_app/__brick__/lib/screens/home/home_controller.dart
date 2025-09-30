@@ -8,26 +8,26 @@ import 'home_view.dart';
 /// and serves as the bridge between the route and view components.
 /// All user interactions and state changes are handled here.
 class HomeController extends State<HomeRoute> {
-  /// Current counter value displayed on the home screen.
+  /// Current state of the lamp (on/off).
   ///
   /// This demonstrates basic state management within the controller.
-  /// The counter is incremented when the user taps the floating action button.
-  int _counter = 0;
+  /// The lamp state is toggled when the user interacts with the switch.
+  bool _isLampOn = false;
 
-  /// Increments the counter value and triggers a UI rebuild.
+  /// Toggles the lamp state and triggers a UI rebuild.
   ///
   /// This method demonstrates how user interactions are handled in the
   /// controller layer, with setState() triggering view updates.
-  void incrementCounter() {
+  void toggleLamp(bool value) {
     setState(() {
-      _counter++;
+      _isLampOn = value;
     });
   }
 
-  /// Getter for the current counter value.
+  /// Getter for the current lamp state.
   ///
-  /// Provides read-only access to the counter state for the view layer.
-  int get counter => _counter;
+  /// Provides read-only access to the lamp state for the view layer.
+  bool get isLampOn => _isLampOn;
 
   @override
   Widget build(BuildContext context) => HomeView(this);

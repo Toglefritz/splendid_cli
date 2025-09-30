@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home_controller.dart';
+import '../../theme/insets.dart';
 
 /// View widget for the home screen that handles UI presentation.
 ///
@@ -55,13 +56,13 @@ class HomeView extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 24.0),
+              padding: const EdgeInsets.only(top: Insets.medium),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('OFF'),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: Insets.small),
                     child: Switch(
                       value: controller.isLampOn,
                       onChanged: controller.toggleLamp,

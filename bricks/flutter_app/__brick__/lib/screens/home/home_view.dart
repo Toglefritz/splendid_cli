@@ -6,7 +6,7 @@ import 'home_controller.dart';
 
 /// View widget for the home screen that handles UI presentation.
 ///
-/// This StatelessWidget receives the controller as a parameter and uses it to access state and trigger actions. The 
+/// This StatelessWidget receives the controller as a parameter and uses it to access state and trigger actions. The
 /// view contains no business logic and is purely declarative.
 class HomeView extends StatelessWidget {
   /// Creates the home view with the required controller.
@@ -28,10 +28,8 @@ class HomeView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            /// Lamp icon that changes appearance based on state.
-            ///
-            /// When the lamp is on, it displays a bright yellow bulb with glow effect.
-            /// When off, it displays a dim gray bulb without glow.
+            // Lamp icon that changes appearance based on state. When the lamp is on, it displays a bright yellow bulb
+            // with glow effect. When off, it displays a dim gray bulb without glow.
             Container(
               width: 120,
               height: 120,

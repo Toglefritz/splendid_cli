@@ -323,6 +323,7 @@ void main() {
         expect(result.exitCode, equals(0));
         expect(result.stdout.toString(), contains('splendid_cli'));
         expect(result.stdout.toString(), contains('create'));
+        expect(result.stdout.toString(), contains('setup'));
         expect(result.stdout.toString(), contains('Scaffold and manage Flutter apps'));
       });
 
@@ -341,6 +342,23 @@ void main() {
         expect(result.stdout.toString(), contains('--output-directory'));
         expect(result.stdout.toString(), contains('--platforms'));
         expect(result.stdout.toString(), contains('--force'));
+      });
+
+      /// Tests that setup command help displays detailed command information.
+      ///
+      /// This test ensures that users can get specific help for the setup
+      /// command, including all available options and usage examples.
+      test('should display setup command help', () async {
+        final ProcessResult result = await Process.run(
+          'dart',
+          [cliExecutable, 'setup', '--help'],
+        );
+
+        expect(result.exitCode, equals(0));
+        expect(result.stdout.toString(), contains('Setup a Flutter project'));
+        expect(result.stdout.toString(), contains('--project'));
+        expect(result.stdout.toString(), contains('--[no-]run'));
+        expect(result.stdout.toString(), contains('--verbose'));
       });
 
       /// Tests that version information is accessible.

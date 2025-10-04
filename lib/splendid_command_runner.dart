@@ -2,6 +2,7 @@ import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 import 'src/commands/create_command.dart';
+import 'src/commands/setup_command.dart';
 
 /// Top-level command runner for the Splendid CLI.
 ///
@@ -14,6 +15,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
         'Scaffold and manage Flutter apps using MVC standards.',
       ) {
     addCommand(CreateCommand());
+    addCommand(SetupCommand());
   }
 
   /// Parses and executes the provided [args] using the registered subcommands.

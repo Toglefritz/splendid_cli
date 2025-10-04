@@ -22,31 +22,65 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 ## Usage
 
-After installation, you can use the `splendid` command to scaffold your Flutter projects and features.
+After installation, you can use the `splendid_cli` command to scaffold your Flutter projects.
 
 ### Creating a new project
 
 ```bash
-splendid create app_name
+splendid_cli create my_awesome_app
 ```
 
-This command scaffolds a new Flutter project named `example_app` with MVC architecture, strong typing, localization setup, and other conventions.
+This command scaffolds a new Flutter project named `my_awesome_app` with MVC architecture, strong typing, localization setup, and other conventions.
 
-### Adding a feature
+### Setting up a project after creation
 
 ```bash
-cd example_app
-splendid feature welcome
+cd my_awesome_app
+splendid_cli setup
 ```
 
-This command generates a new feature called `welcome` with the necessary MVC components and localization support.
+This command runs the post-creation setup steps:
+- `flutter pub get` - Downloads and installs dependencies
+- `flutter gen-l10n` - Generates localization files
+- `flutter run` - Launches the application (optional with `--no-run`)
+
+You can also run setup on any Flutter project:
+
+```bash
+splendid_cli setup --project path/to/flutter/project --no-run
+```
 
 ## Available Commands
 
-- `splendid create <project_name>`: Creates a new Flutter project with Splendid CLI standards.
-- `splendid feature <feature_name>`: Adds a new feature module to your existing project.
-- `splendid doctor`: Checks your environment and project for common issues.
-- `splendid help`: Displays help information about commands.
+- `splendid_cli create <project_name>`: Creates a new Flutter project with Splendid CLI standards.
+- `splendid_cli setup`: Sets up a Flutter project by running pub get, gen-l10n, and optionally flutter run.
+- `splendid_cli help`: Displays help information about commands.
+
+### Create Command Options
+
+- `--output-directory` (`-o`): Specify where to create the project
+- `--platforms`: Choose which platforms to enable (android,ios,web,windows,macos,linux)
+- `--force`: Overwrite existing directories
+
+### Setup Command Options
+
+- `--project` (`-p`): Specify the Flutter project directory to setup
+- `--no-run`: Skip running the app after setup
+- `--verbose` (`-v`): Enable verbose output from Flutter commands
+
+## Quick Start
+
+1. Create a new Flutter project:
+   ```bash
+   splendid_cli create my_app
+   ```
+
+2. Set up the project:
+   ```bash
+   splendid_cli setup --project my_app
+   ```
+
+That's it! Your Flutter project is ready for development with MVC architecture and all dependencies installed.
 
 ## Contributing
 

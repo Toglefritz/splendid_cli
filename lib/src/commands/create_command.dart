@@ -229,6 +229,9 @@ class CreateCommand extends Command<int> {
         ..info('')
         ..info('Next steps:')
         ..info('  cd $targetPath')
+        ..info('  splendid_cli setup')
+        ..info('')
+        ..info('Or run the setup steps manually:')
         ..info('  flutter pub get')
         ..info('  flutter gen-l10n')
         ..info('  flutter run');

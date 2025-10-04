@@ -450,8 +450,7 @@ class AutoClass {
 Future<int> _runCommandWithArgs(TestCommand command, List<String> args) async {
   try {
     // Create a test command runner and add our command
-    final runner = CommandRunner<int>('test_runner', 'Test runner');
-    runner.addCommand(command);
+    final runner = CommandRunner<int>('test_runner', 'Test runner')..addCommand(command);
 
     // Prepend the command name to the args
     final fullArgs = ['generate-test', ...args];
@@ -459,7 +458,7 @@ Future<int> _runCommandWithArgs(TestCommand command, List<String> args) async {
     // Run the command through the runner
     final result = await runner.run(fullArgs);
     return result ?? 0;
-  } on UsageException catch (e) {
+  } on UsageException {
     // Usage errors (missing args, invalid options, etc.)
     return 64;
   } catch (error) {

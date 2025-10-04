@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:splendid_cli/splendid_command_runner.dart';
+import 'package:splendid_cli/splendid_cli.dart';
 import 'package:test/test.dart';
 
 /// Core functionality tests for Splendid CLI.

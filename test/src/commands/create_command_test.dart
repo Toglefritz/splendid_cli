@@ -25,7 +25,7 @@ library;
 import 'dart:io';
 
 import 'package:path/path.dart' as path;
-import 'package:splendid_cli/splendid_command_runner.dart';
+import 'package:splendid_cli/splendid_cli.dart';
 import 'package:splendid_cli/src/commands/create_command.dart';
 import 'package:test/test.dart';
 

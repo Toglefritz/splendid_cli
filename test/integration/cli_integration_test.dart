@@ -167,8 +167,7 @@ void main() {
           final String projectPath = path.join(tempDir.path, projectName);
 
           // Create existing directory with some content
-          final Directory existingDir = Directory(projectPath);
-          existingDir.createSync();
+          Directory(projectPath).createSync();
           File(path.join(projectPath, 'existing_file.txt')).writeAsStringSync('existing content');
 
           // Execute CLI command with force flag

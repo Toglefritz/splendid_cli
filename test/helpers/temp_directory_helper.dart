@@ -25,7 +25,7 @@ class TempDirectoryHelper {
 
   /// Returns the absolute path to the temporary directory.
   ///
-  /// This is a convenience method for accessing the directory path without needing to call [directory.path] directly.
+  /// This is a convenience method for accessing the directory path without needing to call `directory.path` directly.
   String get directoryPath => directory.path;
 
   /// Creates a subdirectory within the temporary directory.

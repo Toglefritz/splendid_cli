@@ -1,8 +1,9 @@
 import 'dart:io';
-import 'package:test/test.dart';
-import 'package:path/path.dart' as path;
 
-import '../../../lib/src/commands/setup_command.dart';
+import 'package:path/path.dart' as path;
+import 'package:splendid_cli/src/commands/setup_command.dart';
+import 'package:test/test.dart';
+
 import '../../helpers/temp_directory_helper.dart';
 
 /// Test suite for SetupCommand functionality.

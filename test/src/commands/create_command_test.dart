@@ -193,8 +193,7 @@ void main() {
         const String projectName = 'existing_project';
 
         // Create existing directory
-        final Directory existingDir = Directory(path.join(tempDir.path, projectName));
-        existingDir.createSync();
+        Directory(path.join(tempDir.path, projectName)).createSync();
 
         final int exitCode = await runner.run([
           'create',
@@ -215,8 +214,7 @@ void main() {
         const String projectName = 'existing_project';
 
         // Create existing directory with some content
-        final Directory existingDir = Directory(path.join(tempDir.path, projectName));
-        existingDir.createSync();
+        final Directory existingDir = Directory(path.join(tempDir.path, projectName))..createSync();
         File(path.join(existingDir.path, 'existing_file.txt')).writeAsStringSync('test');
 
         final int exitCode = await runner.run([

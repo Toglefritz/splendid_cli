@@ -199,14 +199,14 @@ class _AutoWidgetState extends State<AutoWidget> {
       test('should auto-detect class files and generate class tests', () async {
         // Create a regular Dart class file
         final classFile = File(path.join(tempDir.path, 'auto_class.dart'));
-        await classFile.writeAsString('''
+        await classFile.writeAsString(r'''
 class AutoClass {
   final String name;
   
   AutoClass(this.name);
   
   String greet() {
-    return 'Hello, \$name!';
+    return 'Hello, $name!';
   }
 }
 ''');
@@ -249,8 +249,7 @@ class CustomClass {
 ''');
 
         // Create custom output directory
-        final customOutputDir = Directory(path.join(tempDir.path, 'custom_tests'));
-        customOutputDir.createSync();
+        final Directory customOutputDir = Directory(path.join(tempDir.path, 'custom_tests'))..createSync();
 
         // Execute CLI command with custom output directory
         final ProcessResult result = await Process.run(

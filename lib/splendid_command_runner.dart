@@ -4,6 +4,7 @@ import 'package:mason_logger/mason_logger.dart';
 import 'src/commands/create_command.dart';
 import 'src/commands/setup_command.dart';
 import 'src/commands/test_command.dart';
+import 'src/utils/custom_help.dart';
 
 /// Top-level command runner for the Splendid CLI.
 ///
@@ -20,6 +21,13 @@ class SplendidCommandRunner extends CommandRunner<int> {
     addCommand(TestCommand());
   }
 
+  /// Override to provide custom help output.
+  @override
+  void printUsage() {
+    final Logger logger = Logger();
+    CustomHelp.showGeneralHelp(logger, this);
+  }
+
   /// Parses and executes the provided [args] using the registered subcommands.
   ///
   /// Returns a POSIX-style exit code:
@@ -32,6 +40,20 @@ class SplendidCommandRunner extends CommandRunner<int> {
     final Logger logger = Logger();
 
     try {
+      // Check for custom help command pattern: help <command>
+      if (args.isNotEmpty && args.first == 'help') {
+        final List<String> argsList = args.toList();
+        if (argsList.length > 1) {
+          final String commandName = argsList[1];
+          final bool success = CustomHelp.showCommandHelp(commandName, logger, this);
+          return success ? 0 : 64;
+        } else {
+          // Just "help" with no command - show general help
+          CustomHelp.showGeneralHelp(logger, this);
+          return 0;
+        }
+      }
+
       // Parse the raw [args] into a concrete Command instance + its options. `runCommand` executes the matched
       // subcommand and may return an integer exit code or `null` depending on the subcommand's contract.
       final Object? result = await runCommand(parse(args.toList()));

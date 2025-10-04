@@ -187,8 +187,7 @@ void main() {
         const String projectName = 'existing_project';
 
         // Create existing directory
-        final Directory existingDir = Directory('${tempDir.path}/$projectName');
-        existingDir.createSync();
+        Directory('${tempDir.path}/$projectName').createSync();
 
         final int exitCode = await runner.run([
           'create',
@@ -207,8 +206,7 @@ void main() {
         const String projectName = 'existing_project_force';
 
         // Create existing directory
-        final Directory existingDir = Directory('${tempDir.path}/$projectName');
-        existingDir.createSync();
+        Directory('${tempDir.path}/$projectName').createSync();
 
         final int exitCode = await runner.run([
           'create',

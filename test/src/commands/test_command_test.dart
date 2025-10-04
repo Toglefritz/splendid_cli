@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:args/command_runner.dart';
 import 'package:path/path.dart' as path;
 import 'package:splendid_cli/src/commands/test_command.dart';
 import 'package:test/test.dart';
@@ -448,17 +449,21 @@ class AutoClass {
 /// * The exit code returned by the command execution
 Future<int> _runCommandWithArgs(TestCommand command, List<String> args) async {
   try {
-    // Parse arguments and set up the command
-    final argResults = command.argParser.parse(args);
+    // Create a test command runner and add our command
+    final runner = CommandRunner<int>('test_runner', 'Test runner');
+    runner.addCommand(command);
 
-    // Use reflection or a test harness to set argResults
-    // This is a simplified approach - in practice you might need
-    // to use the full CommandRunner infrastructure
+    // Prepend the command name to the args
+    final fullArgs = ['generate-test', ...args];
 
-    // For now, return a placeholder result
-    // In a real implementation, you would invoke the command properly
-    return args.isEmpty ? 64 : 0;
+    // Run the command through the runner
+    final result = await runner.run(fullArgs);
+    return result ?? 0;
+  } on UsageException catch (e) {
+    // Usage errors (missing args, invalid options, etc.)
+    return 64;
   } catch (error) {
-    return 64; // Usage error
+    // Other errors
+    return 1;
   }
 }

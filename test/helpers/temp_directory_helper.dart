@@ -57,7 +57,7 @@ class TempDirectoryHelper {
     final File file = File(path.join(directoryPath, relativePath));
     file.parent.createSync(recursive: true);
     file.writeAsStringSync(content);
-    
+
     return file;
   }
 

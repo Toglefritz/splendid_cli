@@ -1,3 +1,5 @@
+// dart format off
+
 /// Main entry point for the {{name}} Flutter application.
 ///
 /// This file serves as the application entry point and is responsible only for initializing and running the Flutter
@@ -12,8 +14,6 @@ import 'app.dart';
 /// application configuration and setup is handled by the {{name.pascalCase()}} widget in app.dart.
 void main() {
   runApp(
-    const {
-      {name.pascalCase()},
-    }(),
+    const {{name.pascalCase()}}(),
   );
 }

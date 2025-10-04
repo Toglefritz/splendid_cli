@@ -58,7 +58,6 @@ class SetupCommand extends Command<int> {
         'run',
         help: 'Whether to run the app after setup.',
         defaultsTo: true,
-        negatable: true,
       )
       ..addFlag(
         'verbose',
@@ -134,17 +133,17 @@ class SetupCommand extends Command<int> {
       // Step 1: Install dependencies
       logger.info('📦 Installing dependencies...');
       await _runFlutterCommand(['pub', 'get'], targetPath, verbose, logger);
-      logger.success('✓ Dependencies installed');
+      logger..success('✓ Dependencies installed')
 
       // Step 2: Generate localizations
-      logger.info('🌐 Generating localizations...');
+      ..info('🌐 Generating localizations...');
       await _runFlutterCommand(['gen-l10n'], targetPath, verbose, logger);
       logger.success('✓ Localizations generated');
 
       // Step 3: Optionally run the app
       if (shouldRun) {
-        logger.info('🚀 Starting application...');
-        logger.info('Press Ctrl+C to stop the application when ready.');
+        logger..info('🚀 Starting application...')
+        ..info('Press Ctrl+C to stop the application when ready.');
 
         // Note: flutter run is a long-running command, so we inform the user
         // but don't wait for it to complete

@@ -1,0 +1,29 @@
+name: dart_class_test
+description: "Test template for regular Dart classes"
+version: 0.1.0+1
+
+vars:
+  className:
+    type: string
+    description: The name of the class being tested
+    default: MyClass
+  
+  fileName:
+    type: string
+    description: The base file name without extension
+    default: my_class
+  
+  importPath:
+    type: string
+    description: The import path to the source file
+    default: package:app/my_class.dart
+  
+  testClassName:
+    type: string
+    description: The name of the test class
+    default: MyClassTest
+  
+  testFileName:
+    type: string
+    description: The test file name without extension
+    default: my_class_test

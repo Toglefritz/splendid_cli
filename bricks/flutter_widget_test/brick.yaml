@@ -1,0 +1,29 @@
+name: flutter_widget_test
+description: "Test template for Flutter widgets"
+version: 0.1.0+1
+
+vars:
+  className:
+    type: string
+    description: The name of the widget class being tested
+    default: MyWidget
+  
+  fileName:
+    type: string
+    description: The base file name without extension
+    default: my_widget
+  
+  importPath:
+    type: string
+    description: The import path to the source file
+    default: package:app/my_widget.dart
+  
+  testClassName:
+    type: string
+    description: The name of the test class
+    default: MyWidgetTest
+  
+  testFileName:
+    type: string
+    description: The test file name without extension
+    default: my_widget_test

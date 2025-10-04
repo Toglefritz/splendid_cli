@@ -3,6 +3,7 @@ import 'package:mason_logger/mason_logger.dart';
 
 import 'src/commands/create_command.dart';
 import 'src/commands/setup_command.dart';
+import 'src/commands/test_command.dart';
 
 /// Top-level command runner for the Splendid CLI.
 ///
@@ -16,6 +17,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
       ) {
     addCommand(CreateCommand());
     addCommand(SetupCommand());
+    addCommand(TestCommand());
   }
 
   /// Parses and executes the provided [args] using the registered subcommands.

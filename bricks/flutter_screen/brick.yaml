@@ -1,0 +1,13 @@
+name: flutter_screen
+description: A Flutter screen following MVC architecture with icon selection game
+version: 0.1.0+1
+
+environment:
+  mason: ">=0.1.0-dev.26 <0.1.0"
+
+vars:
+  name:
+    type: string
+    description: The name of the screen
+    default: example
+    prompt: What is the name of the screen?

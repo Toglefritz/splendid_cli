@@ -1,3 +1,14 @@
+## 2.0.0
+
+### Screen Generation
+
+- **Screen Scaffolding**: `screen` command for adding MVC-structured screens to existing Flutter projects
+- **MVC Architecture**: Generates route, controller, and view files following established patterns
+- **Interactive Placeholder**: Icon selection game demonstrating proper MVC separation
+- **Smart Naming**: Automatic conversion between naming conventions (PascalCase → snake_case)
+- **Enhanced Help**: Updated CLI help system with comprehensive screen command documentation
+- **Robust Validation**: Flutter project detection and Dart identifier validation
+
 ## 1.0.0
 
 ### Initial Release
@@ -8,4 +19,4 @@
 - **Strong Typing**: All generated code follows explicit typing patterns
 - **Localization Ready**: Pre-configured l10n setup with ARB files
 - **Cross-Platform**: Support for all Flutter platforms (Android, iOS, Web, Desktop)
-- **Developer Experience**: Intuitive CLI with helpful aliases and comprehensive help system
+- **Developer Experience**: Intuitive CLI with helpful

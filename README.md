@@ -50,6 +50,28 @@ You can also run setup on any Flutter project:
 splendid_cli setup --project path/to/flutter/project --no-run
 ```
 
+### Adding screens to existing projects
+
+```bash
+splendid_cli screen game
+```
+
+This command adds a new screen to an existing Flutter project following MVC architecture patterns. It creates three files:
+
+- **Route**: `lib/screens/game/game_route.dart` - StatefulWidget entry point
+- **Controller**: `lib/screens/game/game_controller.dart` - Business logic and state management  
+- **View**: `lib/screens/game/game_view.dart` - UI presentation layer
+
+The generated screen includes placeholder content (a simple icon selection game) that demonstrates proper MVC separation and can be easily replaced with your actual screen content.
+
+```bash
+# Create screen with PascalCase name (converts to snake_case files)
+splendid_cli screen UserProfile
+
+# Overwrite existing screen files
+splendid_cli screen settings --force
+```
+
 ### Generating test templates
 
 ```bash
@@ -80,6 +102,7 @@ splendid_cli gen-test lib/services/auth_service.dart --output=test/unit/services
 ## Available Commands
 
 - `splendid_cli create <project_name>`: Creates a new Flutter project with Splendid CLI standards.
+- `splendid_cli screen <screen_name>`: Adds a new screen with MVC architecture to an existing Flutter project.
 - `splendid_cli setup`: Sets up a Flutter project by running pub get, gen-l10n, and optionally flutter run.
 - `splendid_cli generate-test <dart_file>` (alias: `gen-test`): Generates test file templates for Dart classes and Flutter widgets.
 - `splendid_cli help`: Displays help information about commands.
@@ -95,6 +118,10 @@ splendid_cli gen-test lib/services/auth_service.dart --output=test/unit/services
 - `--project` (`-p`): Specify the Flutter project directory to setup
 - `--no-run`: Skip running the app after setup
 - `--verbose` (`-v`): Enable verbose output from Flutter commands
+
+### Screen Command Options
+
+- `--force`: Overwrite existing screen files without confirmation
 
 ### Generate-Test Command Options
 
@@ -114,7 +141,13 @@ splendid_cli gen-test lib/services/auth_service.dart --output=test/unit/services
    splendid_cli setup --project my_app
    ```
 
-3. Generate test templates as you develop:
+3. Add new screens as you develop:
+   ```bash
+   splendid_cli screen game
+   splendid_cli screen user_profile
+   ```
+
+4. Generate test templates as you develop:
    ```bash
    splendid_cli gen-test lib/services/my_service.dart
    splendid_cli gen-test lib/widgets/my_widget.dart --type=widget

@@ -47,6 +47,11 @@ class CustomHelp {
         example: 'splendid_cli create my_awesome_app',
       ),
       const CommandInfo(
+        name: 'screen',
+        description: 'Add a new screen with MVC architecture to existing Flutter app',
+        example: 'splendid_cli screen game',
+      ),
+      const CommandInfo(
         name: 'setup',
         description: 'Setup a Flutter project (pub get, gen-l10n, run)',
         example: 'splendid_cli setup --project my_app',
@@ -135,6 +140,8 @@ class CustomHelp {
     switch (commandName) {
       case 'create':
         _showCreateCommandHelp(logger);
+      case 'screen':
+        _showScreenCommandHelp(logger);
       case 'setup':
         _showSetupCommandHelp(logger);
       case 'generate-test':
@@ -204,6 +211,71 @@ class CustomHelp {
     logger.info('${yellow.wrap('NEXT STEPS:')}');
     logger.info('  After creating your project, run:');
     logger.info('  ${cyan.wrap('splendid_cli setup --project <project_name>')}');
+    logger.info('');
+  }
+
+  /// Shows detailed help for the screen command.
+  static void _showScreenCommandHelp(Logger logger) {
+    logger.info('${yellow.wrap('USAGE:')}');
+    logger.info('  splendid_cli screen <screen_name> [options]');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DESCRIPTION:')}');
+    logger.info('  Adds a new screen to an existing Flutter project following MVC');
+    logger.info('  architecture patterns. Creates route, controller, and view files');
+    logger.info('  with proper separation of concerns and placeholder content.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARGUMENTS:')}');
+    logger.info('  ${green.wrap('screen_name')}      Name of the screen to create');
+    logger.info('                     Must be a valid Dart identifier');
+    logger.info('                     (letters, numbers, underscores)');
+    logger.info('');
+
+    logger.info('${yellow.wrap('OPTIONS:')}');
+    logger.info('  ${green.wrap('--force')}           Overwrite existing screen files');
+    logger.info('  ${green.wrap('-h, --help')}        Show this help message');
+    logger.info('');
+
+    logger.info('${yellow.wrap('EXAMPLES:')}');
+    logger.info('  ${cyan.wrap('splendid_cli screen game')}');
+    logger.info('    Create a new game screen with MVC structure');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli screen UserProfile')}');
+    logger.info('    Create user profile screen (converts to user_profile files)');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli screen settings --force')}');
+    logger.info('    Create settings screen, overwriting if exists');
+    logger.info('');
+
+    logger.info('${yellow.wrap('WHAT GETS CREATED:')}');
+    logger.info('  • ${cyan.wrap('lib/screens/<screen_name>/<screen_name>_route.dart')}');
+    logger.info('    StatefulWidget entry point for the screen');
+    logger.info('  • ${cyan.wrap('lib/screens/<screen_name>/<screen_name>_controller.dart')}');
+    logger.info('    State management and business logic');
+    logger.info('  • ${cyan.wrap('lib/screens/<screen_name>/<screen_name>_view.dart')}');
+    logger.info('    UI presentation layer (StatelessWidget)');
+    logger.info('');
+
+    logger.info('${yellow.wrap('PLACEHOLDER CONTENT:')}');
+    logger.info('  The generated screen includes a simple icon selection game with:');
+    logger.info('  • Three Material icons (rocket, chef hat, art palette)');
+    logger.info('  • Random arrangement and target selection');
+    logger.info('  • User interaction handling in the controller');
+    logger.info('  • Clean separation between business logic and UI');
+    logger.info('');
+
+    logger.info('${yellow.wrap('REQUIREMENTS:')}');
+    logger.info('  • Must be run from the root of a Flutter project');
+    logger.info('  • Project must have lib/ directory and pubspec.yaml');
+    logger.info('  • Screen name must be a valid Dart identifier');
+    logger.info('');
+
+    logger.info('${yellow.wrap('NEXT STEPS:')}');
+    logger.info('  After creating your screen:');
+    logger.info('  1. Add navigation to the new screen in your app');
+    logger.info('  2. Customize the screen content as needed');
+    logger.info('  3. Update any routing configuration');
     logger.info('');
   }
 

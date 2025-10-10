@@ -1,6 +1,6 @@
 # Splendid CLI
 
-<img src="./images/icon.png" width=150  >
+<img src="https://github.com/Toglefritz/splendid_cli/blob/main/images/icon.png" width=150  >
 
 ## Overview
 

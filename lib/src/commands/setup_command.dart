@@ -3,6 +3,8 @@ import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
 
+import '../services/project_service.dart';
+
 /// Command-line interface for setting up a Flutter project after creation.
 ///
 /// This command automates the post-creation setup process by running the standard
@@ -41,6 +43,9 @@ import 'package:path/path.dart' as path;
 /// Thread Safety: This command is safe to run concurrently on different projects
 /// but should not be run multiple times on the same project simultaneously.
 class SetupCommand extends Command<int> {
+  /// Service for handling project operations.
+  final ProjectService _projectService = ProjectService();
+
   /// Creates a new instance of [SetupCommand] with configured argument parser.
   ///
   /// Initializes the command with support for:
@@ -100,176 +105,81 @@ class SetupCommand extends Command<int> {
     final Logger logger = Logger();
 
     /// The target project directory to setup.
-    ///
-    /// Defaults to the current working directory if no --project flag is provided.
-    /// Must contain a valid pubspec.yaml file with Flutter dependencies.
     final String? projectPath = argResults!['project'] as String?;
     final String targetPath = projectPath ?? Directory.current.path;
 
     /// Whether to run the Flutter app after completing setup.
-    ///
-    /// Controlled by the --run/--no-run flag. When false, only dependency
-    /// installation and localization generation are performed.
     final bool shouldRun = argResults!['run'] as bool;
 
     /// Whether to enable verbose output from Flutter commands.
-    ///
-    /// When true, passes the --verbose flag to Flutter commands for detailed
-    /// output that can help with debugging setup issues.
     final bool verbose = argResults!['verbose'] as bool;
 
-    // Validate that the target directory is a Flutter project
-    if (!await _isFlutterProject(targetPath)) {
-      logger
-        ..err('Not a Flutter project: $targetPath')
-        ..info('Make sure you are in a Flutter project directory or specify one with --project');
-      return 64;
-    }
-
-    final String projectName = path.basename(targetPath);
-    logger.info('Setting up Flutter project: $projectName');
+    // Create request object
+    final ProjectSetupRequest request = ProjectSetupRequest(
+      projectPath: targetPath,
+      runApp: shouldRun,
+      verbose: verbose,
+    );
 
     try {
-      // Step 1: Install dependencies
-      logger.info('📦 Installing dependencies...');
-      await _runFlutterCommand(['pub', 'get'], targetPath, verbose, logger);
-      logger
-        ..success('✓ Dependencies installed')
-        // Step 2: Generate localizations
-        ..info('🌐 Generating localizations...');
-      await _runFlutterCommand(['gen-l10n'], targetPath, verbose, logger);
-      logger.success('✓ Localizations generated');
+      final String projectName = path.basename(targetPath);
+      logger..info('Setting up Flutter project: $projectName')
 
-      // Step 3: Optionally run the app
+      // Show progress messages
+      ..info('📦 Installing dependencies...')
+      ..info('🌐 Generating localizations...');
+
       if (shouldRun) {
         logger
           ..info('🚀 Starting application...')
           ..info('Press Ctrl+C to stop the application when ready.');
-
-        // Note: flutter run is a long-running command, so we inform the user
-        // but don't wait for it to complete
-        await _runFlutterCommand(['run'], targetPath, verbose, logger, waitForCompletion: false);
       }
 
-      logger
-        ..success('✓ Setup completed successfully!')
-        ..info('')
-        ..info('Your Flutter project is ready for development.');
+      // Use service to setup project
+      final ProjectSetupResult result = await _projectService.setupProject(request);
 
-      if (!shouldRun) {
-        logger.info('Run "flutter run" when you\'re ready to start the app.');
+      if (result.success) {
+        logger
+          ..success('✓ Dependencies installed')
+          ..success('✓ Localizations generated');
+
+        if (shouldRun) {
+          logger.success('✓ Application started');
+        }
+
+        logger
+          ..success('✓ Setup completed successfully!')
+          ..info('')
+          ..info('Your Flutter project is ready for development.');
+
+        if (!shouldRun) {
+          logger.info('Run "flutter run" when you\'re ready to start the app.');
+        }
+
+        return 0;
+      } else {
+        logger.err('Setup failed: ${result.error}');
+        return 1;
       }
-
-      return 0;
+    } on ProjectServiceException catch (e) {
+      switch (e.type) {
+        case ProjectServiceErrorType.notFlutterProject:
+          logger
+            ..err(e.message)
+            ..info('Make sure you are in a Flutter project directory or specify one with --project');
+          return 64;
+        case ProjectServiceErrorType.flutterCommandFailed:
+          logger.err('Setup failed: ${e.message}');
+          return 1;
+        // A default case is useful to guard against any unforeseen errors.
+        // ignore: no_default_cases
+        default:
+          logger.err('Setup failed: ${e.message}');
+          return 1;
+      }
     } catch (error) {
       logger.err('Setup failed: $error');
       return 1;
-    }
-  }
-
-  /// Checks if the specified directory contains a valid Flutter project.
-  ///
-  /// A valid Flutter project must have:
-  /// * A pubspec.yaml file in the root directory
-  /// * Flutter SDK dependency declared in pubspec.yaml
-  /// * A lib/ directory (created by flutter create)
-  ///
-  /// Parameters:
-  /// * [projectPath] - Path to the directory to check
-  ///
-  /// Returns:
-  /// * `true` if the directory contains a valid Flutter project
-  /// * `false` if the directory is not a Flutter project
-  Future<bool> _isFlutterProject(String projectPath) async {
-    final File pubspecFile = File(path.join(projectPath, 'pubspec.yaml'));
-    final Directory libDirectory = Directory(path.join(projectPath, 'lib'));
-
-    // Check if pubspec.yaml exists
-    if (!pubspecFile.existsSync()) {
-      return false;
-    }
-
-    // Check if lib directory exists
-    if (!libDirectory.existsSync()) {
-      return false;
-    }
-
-    try {
-      // Check if pubspec.yaml contains Flutter dependency
-      final String pubspecContent = await pubspecFile.readAsString();
-      return pubspecContent.contains('flutter:') &&
-          (pubspecContent.contains('sdk: flutter') || pubspecContent.contains('flutter'));
-    } catch (error) {
-      return false;
-    }
-  }
-
-  /// Executes a Flutter command with the specified arguments.
-  ///
-  /// This method runs Flutter CLI commands in the specified project directory
-  /// and handles output, error reporting, and process management.
-  ///
-  /// Parameters:
-  /// * [args] - Command arguments to pass to the flutter command
-  /// * [workingDirectory] - Directory to run the command in
-  /// * [verbose] - Whether to show verbose output
-  /// * [logger] - Logger instance for output and error reporting
-  /// * [waitForCompletion] - Whether to wait for the command to complete
-  ///
-  /// Throws:
-  /// * [ProcessException] if the flutter command fails or is not found
-  Future<void> _runFlutterCommand(
-    List<String> args,
-    String workingDirectory,
-    bool verbose,
-    Logger logger, {
-    bool waitForCompletion = true,
-  }) async {
-    final List<String> commandArgs = [...args];
-
-    // Add verbose flag if requested
-    if (verbose && !commandArgs.contains('--verbose')) {
-      commandArgs.add('--verbose');
-    }
-
-    if (verbose) {
-      logger.detail('Running: flutter ${commandArgs.join(' ')}');
-    }
-
-    if (!waitForCompletion && args.contains('run')) {
-      // For flutter run, start the process but don't wait for completion
-      final Process process = await Process.start(
-        'flutter',
-        commandArgs,
-        workingDirectory: workingDirectory,
-        mode: ProcessStartMode.detached,
-      );
-
-      logger.info('Application started (PID: ${process.pid})');
-      return;
-    }
-
-    // For other commands, wait for completion
-    final ProcessResult result = await Process.run(
-      'flutter',
-      commandArgs,
-      workingDirectory: workingDirectory,
-    );
-
-    if (verbose && result.stdout.toString().isNotEmpty) {
-      logger.detail('stdout: ${result.stdout}');
-    }
-
-    if (result.exitCode != 0) {
-      final String errorMessage = result.stderr.toString().isNotEmpty
-          ? result.stderr.toString()
-          : 'Command failed with exit code ${result.exitCode}';
-
-      throw ProcessException(
-        'flutter',
-        commandArgs,
-        'Flutter command failed: $errorMessage',
-      );
     }
   }
 }

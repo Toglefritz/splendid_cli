@@ -3,6 +3,8 @@ import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart';
 import 'package:path/path.dart' as path;
 
+import '../services/screen_service.dart';
+
 /// Command-line interface for adding new screens to existing Flutter applications.
 ///
 /// This command generates a new screen following Splendid's MVC architecture patterns. It uses Mason bricks to ensure
@@ -37,6 +39,9 @@ import 'package:path/path.dart' as path;
 ///
 /// Thread Safety: This command is not thread-safe and should not be run concurrently for the same screen name.
 class ScreenCommand extends Command<int> {
+  /// Service for handling screen operations.
+  final ScreenService _screenService = ScreenService();
+
   /// Creates a new instance of [ScreenCommand] with configured argument parser.
   ///
   /// Initializes the command with support for:
@@ -101,9 +106,6 @@ class ScreenCommand extends Command<int> {
   @override
   Future<int> run() async {
     /// Logger instance for user-facing output and error reporting.
-    ///
-    /// Provides structured logging with different levels (info, success, warn, err) and consistent formatting across
-    /// all CLI operations.
     final Logger logger = Logger();
 
     // Validate that a screen name was provided as a positional argument
@@ -116,100 +118,79 @@ class ScreenCommand extends Command<int> {
     }
 
     /// The screen name provided by the user as the first positional argument.
-    ///
-    /// This name will be used for:
-    /// * File and directory naming (converted to snake_case)
-    /// * Class naming (converted to PascalCase)
-    /// * Template variable substitution in Mason brick
     final String screenName = argResults!.rest.first;
 
     /// Whether to force overwrite existing screen files (--force flag).
-    ///
-    /// When true, existing screen files will be overwritten without confirmation. When false, the command will fail if
-    /// screen files already exist.
     final bool force = argResults!['force'] as bool;
 
-    // Validate screen name
-    if (!_isValidScreenName(screenName)) {
-      logger
-        ..err('Invalid screen name: $screenName')
-        ..info('Screen name must be a valid Dart identifier (letters, numbers, underscores).');
-
-      return 64;
-    }
-
-    // Verify we're in a Flutter project
-    if (!_isFlutterProject()) {
-      logger
-        ..err('Not in a Flutter project directory.')
-        ..info('Run this command from the root of a Flutter project.');
-
-      return 64;
-    }
-
-    /// Directory path where the screen files will be created.
-    ///
-    /// Follows the established pattern: lib/screens/<screen_name>/
-    /// All three MVC files (route, controller, view) will be placed in this directory.
-    final String screenPath = path.join('lib', 'screens', _toSnakeCase(screenName));
-
-    /// Directory object representing the target location for screen creation.
-    ///
-    /// Used for existence checks and as the target for Mason generation.
-    final Directory screenDirectory = Directory(screenPath);
-
-    // Check if screen already exists and handle force flag
-    if (screenDirectory.existsSync()) {
-      if (!force) {
-        logger
-          ..err('Screen $screenName already exists at $screenPath.')
-          ..info('Use --force to overwrite existing screen files.');
-        return 1;
-      }
-      logger.warn('Overwriting existing screen: $screenName');
-    }
+    // Create request object
+    final ScreenCreationRequest request = ScreenCreationRequest(
+      screenName: screenName,
+      projectPath: Directory.current.path,
+      force: force,
+    );
 
     try {
-      /// Mason generator instance loaded from the flutter_screen brick template.
-      ///
-      /// The generator contains all template files and logic needed to create a complete screen with MVC
-      /// architecture and icon selection game functionality.
-      final MasonGenerator generator = await _loadBrick(logger);
+      // Check if screen exists and show warning if force is used
+      final String screenPath = path.join(Directory.current.path, 'lib', 'screens', _toSnakeCase(screenName));
+      final Directory screenDirectory = Directory(screenPath);
 
-      /// Template variables passed to the Mason brick during generation.
-      ///
-      /// Currently includes:
-      /// * `name`: The screen name for file naming and class generation
-      ///
-      /// The Mason brick will automatically convert this to appropriate cases (snake_case, PascalCase, etc.)
-      /// based on the template file names and content.
-      final Map<String, dynamic> vars = {'name': screenName};
+      if (screenDirectory.existsSync() && force) {
+        logger.warn('Overwriting existing screen: $screenName');
+      }
 
       logger.info('Generating screen: $screenName');
 
-      await generator.generate(
-        DirectoryGeneratorTarget(Directory('.')),
-        vars: vars,
-        fileConflictResolution: force ? FileConflictResolution.overwrite : FileConflictResolution.skip,
-      );
+      // Use service to create screen
+      final ScreenCreationResult result = await _screenService.createScreen(request);
 
-      logger
-        ..success('✓ Generated screen: $screenName')
-        ..info('')
-        ..info('Screen files created:')
-        ..info('  $screenPath/${_toSnakeCase(screenName)}_route.dart')
-        ..info('  $screenPath/${_toSnakeCase(screenName)}_controller.dart')
-        ..info('  $screenPath/${_toSnakeCase(screenName)}_view.dart')
-        ..info('')
-        ..info('Next steps:')
-        ..info('  1. Add navigation to the new screen in your app')
-        ..info('  2. Customize the screen content as needed')
-        ..info('  3. Update any routing configuration');
+      if (result.success) {
+        logger
+          ..success('✓ Generated screen: ${result.screenName}')
+          ..info('')
+          ..info('Screen files created:');
 
-      return 0;
+        for (final String file in result.createdFiles) {
+          logger.info('  $file');
+        }
+
+        logger
+          ..info('')
+          ..info('Next steps:')
+          ..info('  1. Add navigation to the new screen in your app')
+          ..info('  2. Customize the screen content as needed')
+          ..info('  3. Update any routing configuration');
+
+        return 0;
+      } else {
+        logger.err('Failed to create screen: ${result.error}');
+        return 1;
+      }
+    } on ScreenServiceException catch (e) {
+      switch (e.type) {
+        case ScreenServiceErrorType.invalidScreenName:
+          logger
+            ..err(e.message)
+            ..info('Screen name must be a valid Dart identifier (letters, numbers, underscores).');
+          return 64;
+        case ScreenServiceErrorType.notFlutterProject:
+          logger
+            ..err(e.message)
+            ..info('Run this command from the root of a Flutter project.');
+          return 64;
+        case ScreenServiceErrorType.screenExists:
+          logger
+            ..err(e.message)
+            ..info('Use --force to overwrite existing screen files.');
+          return 1;
+        // A default case is useful to guard against any unforeseen errors.
+        // ignore: no_default_cases
+        default:
+          logger.err('Failed to create screen: ${e.message}');
+          return 1;
+      }
     } catch (error) {
       logger.err('Failed to create screen: $error');
-
       return 1;
     }
   }
@@ -424,4 +405,11 @@ class ScreenCommand extends Command<int> {
         .replaceAllMapped(RegExp(r'[A-Z]'), (Match match) => '_${match.group(0)!.toLowerCase()}')
         .replaceFirst(RegExp(r'^_'), '');
   }
+}
+
+/// Converts a string to snake_case format.
+String _toSnakeCase(String input) {
+  return input
+      .replaceAllMapped(RegExp(r'[A-Z]'), (Match match) => '_${match.group(0)!.toLowerCase()}')
+      .replaceFirst(RegExp(r'^_'), '');
 }

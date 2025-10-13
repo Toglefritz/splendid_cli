@@ -7,6 +7,15 @@ import 'src/commands/setup_command.dart';
 import 'src/commands/test_command.dart';
 import 'src/utils/custom_help.dart';
 
+// Export MCP server components
+export 'src/mcp/mcp_server.dart';
+export 'src/mcp/mcp_tool_registry.dart';
+
+// Export services for external use
+export 'src/services/project_service.dart';
+export 'src/services/screen_service.dart';
+export 'src/services/test_service.dart';
+
 /// Top-level command runner for the Splendid CLI.
 ///
 /// This class registers subcommands and handles top-level errors.

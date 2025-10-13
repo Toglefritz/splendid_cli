@@ -39,8 +39,8 @@ class ProjectService {
 
       // Check if directory exists and handle force flag
       if (targetDirectory.existsSync() && !request.force) {
-        throw ProjectServiceException(
-          'Directory $targetPath already exists. Use force flag to overwrite.',
+        throw const ProjectServiceException(
+          'Directory already exists. Use force flag to overwrite.',
           ProjectServiceErrorType.directoryExists,
         );
       }
@@ -188,7 +188,7 @@ class ProjectService {
         .toList();
 
     if (enabledPlatforms.isEmpty) {
-      throw ProjectServiceException(
+      throw const ProjectServiceException(
         'No valid platforms specified',
         ProjectServiceErrorType.invalidPlatforms,
       );

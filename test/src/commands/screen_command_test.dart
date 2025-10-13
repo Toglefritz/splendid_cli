@@ -1,6 +1,8 @@
 import 'dart:io';
-import 'package:test/test.dart';
+
 import 'package:path/path.dart' as path;
+import 'package:test/test.dart';
+
 import '../../helpers/temp_directory_helper.dart';
 
 /// Test suite for ScreenCommand functionality.

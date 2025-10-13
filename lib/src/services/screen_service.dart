@@ -32,7 +32,7 @@ class ScreenService {
 
       // Check if we're in a Flutter project
       if (!_isFlutterProject(request.projectPath)) {
-        throw ScreenServiceException(
+        throw const ScreenServiceException(
           'Not in a Flutter project directory.',
           ScreenServiceErrorType.notFlutterProject,
         );
@@ -51,7 +51,7 @@ class ScreenService {
       // Check if screen already exists and handle force flag
       if (screenDirectory.existsSync() && !request.force) {
         throw ScreenServiceException(
-          'Screen ${request.screenName} already exists at $screenPath',
+          'Screen ${request.screenName} already exists',
           ScreenServiceErrorType.screenExists,
         );
       }
@@ -203,8 +203,8 @@ class ScreenService {
   /// Converts a string to snake_case format.
   String _toSnakeCase(String input) {
     return input
-        .replaceAllMapped(RegExp(r'[A-Z]'), (Match match) => '_${match.group(0)!.toLowerCase()}')
-        .replaceFirst(RegExp(r'^_'), '');
+        .replaceAllMapped(RegExp('[A-Z]'), (Match match) => '_${match.group(0)!.toLowerCase()}')
+        .replaceFirst(RegExp('^_'), '');
   }
 }
 

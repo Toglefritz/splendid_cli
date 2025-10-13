@@ -171,7 +171,7 @@ class TestService {
 
   /// Converts a string to PascalCase format.
   String _toPascalCase(String input) {
-    return input.split('_').map((word) => word.isEmpty ? '' : '${word[0].toUpperCase()}${word.substring(1)}').join('');
+    return input.split('_').map((word) => word.isEmpty ? '' : '${word[0].toUpperCase()}${word.substring(1)}').join();
   }
 }
 

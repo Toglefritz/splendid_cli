@@ -1,3 +1,14 @@
+## 3.0.0
+
+### MCP Server Integration
+
+- **AI Integration**: `--mcp-server` flag enables Model Context Protocol server mode for AI systems
+- **Programmatic Access**: Exposes all CLI functionality through standardized MCP tools
+- **Tool Registry**: Four core tools for project creation, screen generation, setup, and test generation
+- **JSON-RPC Communication**: Standards-compliant MCP server with proper error handling
+- **AI-Driven Development**: Enables AI assistants to scaffold Flutter projects autonomously
+- **Protocol Compliance**: Full MCP specification support with initialization and capability negotiation
+
 ## 2.0.0
 
 ### Screen Generation

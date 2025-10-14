@@ -1,3 +1,12 @@
+## 3.1.1
+
+### Screen Template Improvements
+
+- **Linter Compliance**: Fixed linter warnings in generated screen templates
+- **Code Quality**: Minor adjustments to screen brick templates for better code standards
+- **Template Refinement**: Improved generated code quality without functional changes
+
+
 ## 3.1.0
 
 ### Hybrid Brick Loading System

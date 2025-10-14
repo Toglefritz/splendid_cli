@@ -1,3 +1,16 @@
+## 3.1.0
+
+### Hybrid Brick Loading System
+
+- **Smart Brick Resolution**: Hybrid loading system that checks local development bricks first, then cached bricks, then downloads from GitHub
+- **Global Installation Support**: Fixes PathNotFoundException when CLI is installed globally via `dart pub global activate`
+- **Automatic Caching**: Downloaded bricks are cached locally in `~/.splendid_cli/bricks/` for offline use
+- **Cache Management**: New `cache` command with `list`, `info`, and `clear` subcommands for managing brick cache
+- **Seamless Fallback**: Transparent fallback from local → cached → remote without user intervention
+- **Development Friendly**: Preserves local brick usage during development while enabling production deployments
+- **Offline Support**: Cached bricks work without internet connection after first download
+
+
 ## 3.0.0
 
 ### MCP Server Integration

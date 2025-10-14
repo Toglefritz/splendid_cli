@@ -41,7 +41,7 @@ class {{name.pascalCase()}}View extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('{{name.titleCase()}}'),
+        title: const Text('{{name.titleCase()}}'),
       ),
       body: Center(
         child: Column(

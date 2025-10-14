@@ -5,7 +5,7 @@ import '{{name.snakeCase()}}_view.dart';
 
 /// Controller for the {{name.lowerCase()}} screen that manages state and business logic.
 ///
-/// Extends State<{{name.pascalCase()}}Route> to provide state management capabilities and serves as the bridge between the route and
+/// Extends `State<{{name.pascalCase()}}Route>` to provide state management capabilities and serves as the bridge between the route and
 /// view components. Manages the icon selection game logic including randomization and user interactions.
 class {{name.pascalCase()}}Controller extends State<{{name.pascalCase()}}Route> {
   /// Available icons for the selection game.

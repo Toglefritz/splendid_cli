@@ -63,6 +63,11 @@ class CustomHelp {
         example: 'splendid_cli gen-test lib/services/api_service.dart',
       ),
       const CommandInfo(
+        name: 'cache',
+        description: 'Manage the local brick cache (list, info, clear)',
+        example: 'splendid_cli cache list',
+      ),
+      const CommandInfo(
         name: 'help',
         description: 'Show help information for commands',
         example: 'splendid_cli help create',

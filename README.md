@@ -20,6 +20,17 @@ Make sure to add Dart's pub cache bin directory to your PATH:
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 ```
 
+### How Brick Loading Works
+
+The CLI uses a hybrid approach for loading Mason bricks:
+
+1. **Development Mode**: When running from source, uses local `bricks/` directory
+2. **Global Installation**: Downloads bricks from GitHub and caches them locally
+3. **Offline Support**: Cached bricks work offline after first download
+4. **Automatic Fallback**: Seamlessly falls back from local → cached → remote
+
+Bricks are cached in `~/.splendid_cli/bricks/` for fast offline access.
+
 ## Usage
 
 After installation, you can use the `splendid_cli` command to scaffold your Flutter projects.
@@ -99,12 +110,31 @@ splendid_cli gen-test lib/models/user.dart --type=class
 splendid_cli gen-test lib/services/auth_service.dart --output=test/unit/services
 ```
 
+### Managing the brick cache
+
+```bash
+# List cached bricks
+splendid_cli cache list
+
+# Show cache information
+splendid_cli cache info
+
+# Clear all cached bricks
+splendid_cli cache clear
+
+# Clear cache without confirmation
+splendid_cli cache clear --force
+```
+
+The cache commands help you manage locally cached Mason bricks that are downloaded from GitHub when not available locally.
+
 ## Available Commands
 
 - `splendid_cli create <project_name>`: Creates a new Flutter project with Splendid CLI standards.
 - `splendid_cli screen <screen_name>`: Adds a new screen with MVC architecture to an existing Flutter project.
 - `splendid_cli setup`: Sets up a Flutter project by running pub get, gen-l10n, and optionally flutter run.
 - `splendid_cli generate-test <dart_file>` (alias: `gen-test`): Generates test file templates for Dart classes and Flutter widgets.
+- `splendid_cli cache <subcommand>`: Manage the local brick cache (list, info, clear).
 - `splendid_cli help`: Displays help information about commands.
 
 ### Create Command Options

@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 import 'package:path/path.dart' as path;
 
+import 'brick_loader.dart';
+
 /// Service for managing Flutter screen generation operations.
 ///
 /// This service encapsulates the core business logic for screen operations,
@@ -101,14 +103,13 @@ class ScreenService {
     }
   }
 
-  /// Loads the Flutter screen Mason brick.
+  /// Loads the Flutter screen Mason brick using the brick loader.
+  ///
+  /// This method uses the BrickLoader to find the brick locally (for development)
+  /// or download it from GitHub (for global installations).
   Future<MasonGenerator> _loadScreenBrick() async {
-    final String brickPath = path.join(
-      path.dirname(Platform.script.path),
-      '..',
-      'bricks',
-      'flutter_screen',
-    );
+    final BrickLoader brickLoader = BrickLoader();
+    final String brickPath = await brickLoader.loadBrick('flutter_screen');
 
     final Brick brick = Brick.path(brickPath);
     return MasonGenerator.fromBrick(brick);

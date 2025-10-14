@@ -1,6 +1,7 @@
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
+import 'src/commands/cache_command.dart';
 import 'src/commands/create_command.dart';
 import 'src/commands/screen_command.dart';
 import 'src/commands/setup_command.dart';
@@ -26,6 +27,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
         'splendid_cli',
         'Scaffold and manage Flutter apps using MVC standards.',
       ) {
+    addCommand(CacheCommand());
     addCommand(CreateCommand());
     addCommand(ScreenCommand());
     addCommand(SetupCommand());

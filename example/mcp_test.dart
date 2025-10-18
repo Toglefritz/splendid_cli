@@ -5,8 +5,8 @@ import 'dart:io';
 
 /// Example script demonstrating how to interact with the Splendid CLI MCP server.
 ///
-/// This script shows how AI systems can programmatically use the CLI's functionality
-/// through the MCP (Model Context Protocol) interface.
+/// This script shows how AI systems can programmatically use the CLI's functionality through the MCP (Model Context
+/// Protocol) interface.
 ///
 /// Run with: dart run examples/mcp_test.dart
 // ignore_for_file: avoid_print, avoid_dynamic_calls

@@ -1,3 +1,21 @@
+## 4.2.0
+
+### GUI Dashboard
+
+- **Visual Interface**: New `gui` command launches a Flutter desktop application for visual project management
+- **Cross-Platform Desktop**: Full support for Windows, macOS, and Linux desktop platforms
+- **Project Creation Wizard**: Visual interface for creating Flutter projects with platform selection and parameter configuration
+- **Screen Generation Interface**: Point-and-click screen creation with MVC architecture preview
+- **Test Generation Tools**: File browser integration for selecting target files and generating comprehensive test templates
+- **Real-Time Output**: Live command execution feedback with expandable output panel and copy-to-clipboard functionality
+- **Project Detection**: Automatic Flutter project detection with visual status indicators
+- **Command Preview**: Shows exact CLI commands before execution for transparency and learning
+- **File System Integration**: Native file picker dialogs for project and file selection
+- **Responsive Design**: Adaptive grid layout that works across different screen sizes
+- **Error Handling**: Comprehensive error display and recovery with user-friendly messages
+- **MVC Architecture**: GUI follows the same architectural patterns as generated projects
+- **Dependency Isolation**: Separate Flutter dependencies for GUI to avoid version conflicts with CLI
+
 ## 4.1.1
 
 ### Version Management

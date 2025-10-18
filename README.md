@@ -128,12 +128,38 @@ splendid_cli cache clear --force
 
 The cache commands help you manage locally cached Mason bricks that are downloaded from GitHub when not available locally.
 
+## GUI Dashboard
+
+For users who prefer a visual interface, Splendid CLI includes a desktop GUI dashboard:
+
+```bash
+# Launch the GUI dashboard
+splendid_cli gui
+
+# Launch for specific project
+splendid_cli gui --project-path /path/to/project
+```
+
+The GUI provides:
+- Visual project creation wizard with platform selection
+- Screen generation interface with MVC architecture
+- Test file generation tools with file browser
+- Real-time command output and progress feedback
+- Cross-platform desktop support (Windows, macOS, Linux)
+
+**Requirements:**
+- Flutter SDK installed and available in PATH
+- Desktop platform support enabled for Flutter
+
+See [example/gui_dashboard/README.md](example/gui_dashboard/README.md) for detailed GUI documentation.
+
 ## Available Commands
 
 - `splendid_cli create <project_name>`: Creates a new Flutter project with Splendid CLI standards.
 - `splendid_cli screen <screen_name>`: Adds a new screen with MVC architecture to an existing Flutter project.
 - `splendid_cli setup`: Sets up a Flutter project by running pub get, gen-l10n, and optionally flutter run.
 - `splendid_cli generate-test <dart_file>` (alias: `gen-test`): Generates test file templates for Dart classes and Flutter widgets.
+- `splendid_cli gui` (alias: `dashboard`): Launch the GUI dashboard for visual project management.
 - `splendid_cli cache <subcommand>`: Manage the local brick cache (list, info, clear).
 - `splendid_cli help`: Displays help information about commands.
 
@@ -158,6 +184,11 @@ The cache commands help you manage locally cached Mason bricks that are download
 - `--output` (`-o`): Specify custom output directory for the generated test file
 - `--type` (`-t`): Specify test type (auto, widget, class) - defaults to auto-detection
 - `--force`: Overwrite existing test files without confirmation
+
+### GUI Command Options
+
+- `--project-path` (`-p`): Specify initial project directory to open in GUI
+- `--debug`: Launch GUI in debug mode with additional logging
 
 ## Quick Start
 

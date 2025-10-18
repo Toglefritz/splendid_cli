@@ -63,6 +63,12 @@ class CustomHelp {
         example: 'splendid_cli gen-test lib/services/api_service.dart',
       ),
       const CommandInfo(
+        name: 'gui',
+        aliases: ['dashboard'],
+        description: 'Launch GUI dashboard for visual project management',
+        example: 'splendid_cli gui --project-path ~/my_project',
+      ),
+      const CommandInfo(
         name: 'format-dartdoc',
         aliases: ['fmt-doc', 'format-docs'],
         description: 'Reformat and rewrap Dartdoc comments to specified line length',
@@ -162,6 +168,9 @@ class CustomHelp {
       case 'fmt-doc':
       case 'format-docs':
         _showFormatDartdocCommandHelp(logger);
+      case 'gui':
+      case 'dashboard':
+        _showGuiCommandHelp(logger);
       case 'help':
         _showHelpCommandHelp(logger);
       default:
@@ -449,6 +458,67 @@ class CustomHelp {
     logger.info('  1. Review changes in your version control system');
     logger.info('  2. Run tests to ensure no functionality was affected');
     logger.info('  3. Consider running ${cyan.wrap('dart format')} for code formatting');
+    logger.info('');
+  }
+
+  /// Shows detailed help for the GUI command.
+  static void _showGuiCommandHelp(Logger logger) {
+    logger.info('${yellow.wrap('USAGE:')}');
+    logger.info('  splendid_cli gui [options]');
+    logger.info('  splendid_cli dashboard [options]');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DESCRIPTION:')}');
+    logger.info('  Launches a Flutter desktop application that provides a graphical');
+    logger.info('  interface for all Splendid CLI functionality. The GUI offers');
+    logger.info('  point-and-click access to project creation, screen generation,');
+    logger.info('  test file creation, and other CLI tools with real-time feedback.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('OPTIONS:')}');
+    logger.info('  ${green.wrap('-p, --project-path')}  Initial project directory to open in GUI');
+    logger.info('                        Default: current directory');
+    logger.info('  ${green.wrap('--debug')}             Launch GUI in debug mode with additional logging');
+    logger.info('  ${green.wrap('-h, --help')}          Show this help message');
+    logger.info('');
+
+    logger.info('${yellow.wrap('EXAMPLES:')}');
+    logger.info('  ${cyan.wrap('splendid_cli gui')}');
+    logger.info('    Launch GUI dashboard for current directory');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli gui --project-path ~/my_flutter_app')}');
+    logger.info('    Launch GUI with specific project directory');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli dashboard --debug')}');
+    logger.info('    Launch GUI in debug mode with verbose logging');
+    logger.info('');
+
+    logger.info('${yellow.wrap('GUI FEATURES:')}');
+    logger.info('  • Visual project creation wizard with platform selection');
+    logger.info('  • Screen generation interface with MVC architecture preview');
+    logger.info('  • Test file generation with file browser integration');
+    logger.info('  • Real-time command output with copy-to-clipboard');
+    logger.info('  • Project detection and Flutter status indicators');
+    logger.info('  • Cross-platform desktop support (Windows, macOS, Linux)');
+    logger.info('');
+
+    logger.info('${yellow.wrap('REQUIREMENTS:')}');
+    logger.info('  • Flutter SDK installed and available in PATH');
+    logger.info('  • Desktop platform support enabled for Flutter');
+    logger.info('  • Sufficient system resources for Flutter desktop app');
+    logger.info('');
+
+    logger.info('${yellow.wrap('PLATFORM SUPPORT:')}');
+    logger.info('  • Windows: Native Windows desktop application');
+    logger.info('  • macOS: Native macOS desktop application');
+    logger.info('  • Linux: Native Linux desktop application');
+    logger.info('');
+
+    logger.info('${yellow.wrap('NEXT STEPS:')}');
+    logger.info('  After launching the GUI:');
+    logger.info('  1. Select or create a Flutter project directory');
+    logger.info('  2. Use the visual interface to manage your project');
+    logger.info('  3. View real-time output in the expandable output panel');
     logger.info('');
   }
 

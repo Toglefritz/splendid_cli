@@ -18,7 +18,6 @@
 /// splendid_cli screen LoginScreen
 /// splendid_cli test lib/models/user.dart
 /// ```
-library splendid_cli;
 
 import 'dart:io';
 
@@ -31,6 +30,7 @@ import 'package:yaml/yaml.dart';
 import 'src/commands/cache_command.dart';
 import 'src/commands/create_command.dart';
 import 'src/commands/format_command.dart';
+import 'src/commands/gui_command.dart';
 import 'src/commands/screen_command.dart';
 import 'src/commands/setup_command.dart';
 import 'src/commands/test_command.dart';
@@ -67,6 +67,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
     addCommand(CacheCommand());
     addCommand(CreateCommand());
     addCommand(FormatCommand());
+    addCommand(GuiCommand());
     addCommand(ScreenCommand());
     addCommand(SetupCommand());
     addCommand(TestCommand());

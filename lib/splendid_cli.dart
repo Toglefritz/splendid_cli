@@ -1,3 +1,25 @@
+/// A comprehensive CLI tool for scaffolding and managing Flutter applications.
+///
+/// Splendid CLI provides a complete toolkit for Flutter development with
+/// built-in MVC architecture patterns, code generation, and project management
+/// capabilities. It includes MCP (Model Context Protocol) server functionality
+/// for integration with AI development tools.
+///
+/// Key Features:
+/// * Project scaffolding with MVC architecture
+/// * Screen generation with route/controller/view pattern
+/// * Test file generation for widgets and classes
+/// * Code formatting and documentation tools
+/// * MCP server for AI tool integration
+///
+/// Usage:
+/// ```bash
+/// splendid_cli create my_app
+/// splendid_cli screen LoginScreen
+/// splendid_cli test lib/models/user.dart
+/// ```
+library splendid_cli;
+
 import 'dart:io';
 
 import 'package:args/args.dart';

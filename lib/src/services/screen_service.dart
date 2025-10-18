@@ -11,6 +11,12 @@ import 'brick_loader.dart';
 /// interaction. This design enables reuse across different interfaces
 /// (CLI, MCP server, etc.).
 class ScreenService {
+  /// Creates a new instance of [ScreenService].
+  ///
+  /// This service is stateless and can be reused across multiple operations.
+  /// All methods are safe to call concurrently from different isolates.
+  const ScreenService();
+
   /// Adds a new screen to an existing Flutter project with MVC architecture.
   ///
   /// This method handles the complete screen generation workflow:

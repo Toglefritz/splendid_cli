@@ -9,6 +9,12 @@ import 'package:path/path.dart' as path;
 /// interaction. This design enables reuse across different interfaces
 /// (CLI, MCP server, etc.).
 class TestService {
+  /// Creates a new instance of [TestService].
+  ///
+  /// This service is stateless and can be reused across multiple operations.
+  /// All methods are safe to call concurrently from different isolates.
+  const TestService();
+
   /// Generates a test file template for the specified Dart file.
   ///
   /// This method handles the complete test generation workflow:

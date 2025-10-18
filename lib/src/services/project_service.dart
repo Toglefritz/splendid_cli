@@ -9,6 +9,12 @@ import 'package:path/path.dart' as path;
 /// interaction. This design enables reuse across different interfaces
 /// (CLI, MCP server, etc.).
 class ProjectService {
+  /// Creates a new instance of [ProjectService].
+  ///
+  /// This service is stateless and can be reused across multiple operations.
+  /// All methods are safe to call concurrently from different isolates.
+  const ProjectService();
+
   /// Creates a new Flutter project with MVC architecture.
   ///
   /// This method handles the complete project creation workflow:

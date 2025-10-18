@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
+import 'package:path/path.dart' as path;
+import 'package:yaml/yaml.dart';
 
 import 'src/commands/cache_command.dart';
 import 'src/commands/create_command.dart';
@@ -33,6 +37,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
     // Add global version option
     argParser.addFlag(
       'version',
+      abbr: 'v',
       negatable: false,
       help: 'Print the current version.',
     );
@@ -52,6 +57,45 @@ class SplendidCommandRunner extends CommandRunner<int> {
     CustomHelp.showGeneralHelp(logger, this);
   }
 
+  /// Reads the version from pubspec.yaml file.
+  ///
+  /// This method locates the pubspec.yaml file and extracts the version
+  /// field to ensure the CLI always reports the correct version.
+  ///
+  /// Returns the version string from pubspec.yaml, or 'unknown' if the
+  /// version cannot be determined due to file access issues or parsing errors.
+  String _getVersionFromPubspec() {
+    try {
+      // Get the directory where the current script is located
+      final String scriptPath = Platform.script.toFilePath();
+      final String packageRoot = path.dirname(path.dirname(scriptPath));
+      final String pubspecPath = path.join(packageRoot, 'pubspec.yaml');
+
+      // Try to read the pubspec.yaml file
+      final File pubspecFile = File(pubspecPath);
+      if (!pubspecFile.existsSync()) {
+        // If pubspec.yaml is not found in the expected location,
+        // try looking in the current working directory
+        final String currentDirPubspec = path.join(Directory.current.path, 'pubspec.yaml');
+        final File currentPubspecFile = File(currentDirPubspec);
+        if (currentPubspecFile.existsSync()) {
+          final String content = currentPubspecFile.readAsStringSync();
+          final YamlMap yaml = loadYaml(content) as YamlMap;
+          return yaml['version']?.toString() ?? 'unknown';
+        }
+
+        return 'unknown';
+      }
+
+      final String content = pubspecFile.readAsStringSync();
+      final YamlMap yaml = loadYaml(content) as YamlMap;
+      return yaml['version']?.toString() ?? 'unknown';
+    } catch (e) {
+      // If any error occurs during file reading or parsing, return 'unknown'
+      return 'unknown';
+    }
+  }
+
   /// Parses and executes the provided [args] using the registered subcommands.
   ///
   /// Returns a POSIX-style exit code:
@@ -69,7 +113,9 @@ class SplendidCommandRunner extends CommandRunner<int> {
 
       // Handle version flag
       if (topLevelResults['version'] as bool) {
-        logger.info('splendid_cli version 4.0.0');
+        final String version = _getVersionFromPubspec();
+        logger.info('splendid_cli version $version');
+
         return 0;
       }
 
@@ -83,6 +129,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
         } else {
           // Just "help" with no command - show general help
           CustomHelp.showGeneralHelp(logger, this);
+
           return 0;
         }
       }

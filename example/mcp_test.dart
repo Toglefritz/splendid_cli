@@ -9,7 +9,7 @@ import 'dart:io';
 /// Protocol) interface.
 ///
 /// Run with: dart run examples/mcp_test.dart
-// ignore_for_file: avoid_print, avoid_dynamic_calls
+// ignore_for_file: avoid_dynamic_calls
 Future<void> main() async {
   print('🚀 Testing Splendid CLI MCP Server\n');
 

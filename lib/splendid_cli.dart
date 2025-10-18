@@ -18,6 +18,7 @@
 /// splendid_cli screen LoginScreen
 /// splendid_cli test lib/models/user.dart
 /// ```
+library;
 
 import 'dart:io';
 

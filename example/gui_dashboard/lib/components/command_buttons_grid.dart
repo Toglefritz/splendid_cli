@@ -134,11 +134,11 @@ class CommandButtonsGrid extends StatelessWidget {
         ),
 
         // Cache Management button (placeholder for future implementation)
-        _CommandButton(
+        const _CommandButton(
           icon: Icons.storage,
           title: 'Manage Cache',
           subtitle: 'Clear and manage CLI cache',
-          onPressed: null, // TODO: Implement cache management
+          onPressed: null, // TODO(Toglefritz): Implement cache management
           color: Colors.grey,
         ),
       ],
@@ -237,7 +237,7 @@ class _CommandButton extends StatelessWidget {
               Icon(
                 icon,
                 size: 32,
-                color: isEnabled ? color : Theme.of(context).colorScheme.onSurface.withOpacity(0.38),
+                color: isEnabled ? color : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
               ),
 
               const SizedBox(height: 8),
@@ -247,7 +247,7 @@ class _CommandButton extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: isEnabled
                       ? Theme.of(context).colorScheme.onSurface
-                      : Theme.of(context).colorScheme.onSurface.withOpacity(0.38),
+                      : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
                   fontWeight: FontWeight.w600,
                 ),
                 textAlign: TextAlign.center,
@@ -260,7 +260,7 @@ class _CommandButton extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: isEnabled
                       ? Theme.of(context).colorScheme.onSurfaceVariant
-                      : Theme.of(context).colorScheme.onSurface.withOpacity(0.38),
+                      : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,

@@ -15,17 +15,13 @@ void main() {
     ///
     /// This ensures that any test projects created at the root level
     /// during MCP server testing are automatically cleaned up.
-    setUpAll(() {
-      ProjectCleanupHelper.setupAutomaticCleanup();
-    });
+    setUpAll(ProjectCleanupHelper.setupAutomaticCleanup);
 
     /// Clean up any test artifacts created during MCP testing.
     ///
     /// This removes any directories that may have been created at the
     /// project root level during MCP server command execution.
-    tearDownAll(() {
-      ProjectCleanupHelper.cleanupTestArtifacts();
-    });
+    tearDownAll(ProjectCleanupHelper.cleanupTestArtifacts);
 
     /// Tests that the server can initialize properly.
     test('should initialize successfully', () async {

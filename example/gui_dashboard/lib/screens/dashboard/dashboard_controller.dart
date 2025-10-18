@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 
+import '../../services/cli_service.dart';
 import 'dashboard_route.dart';
 import 'dashboard_view.dart';
-import '../../services/cli_service.dart';
 
 /// Controller for the main dashboard screen.
 ///
@@ -277,9 +277,7 @@ class DashboardController extends State<DashboardRoute> {
   ///
   /// Removes any displayed error message and triggers a rebuild to hide error indicators in the interface.
   void clearError() {
-    setState(() {
-      _clearError();
-    });
+    setState(_clearError);
   }
 
   /// Internal method to clear error state without triggering rebuild.

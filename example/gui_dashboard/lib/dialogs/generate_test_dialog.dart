@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 
 /// Dialog widget for generating test files for Dart classes and Flutter widgets.
@@ -107,51 +107,62 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
               ),
               const SizedBox(height: 8),
 
-              Column(
-                children: [
-                  RadioListTile<String>(
-                    title: const Text('Auto-detect'),
-                    subtitle: const Text('Automatically determine test type based on file content'),
-                    value: 'auto',
-                    groupValue: _testType,
-                    onChanged: _isGenerating
-                        ? null
-                        : (String? value) {
-                            setState(() {
-                              _testType = value ?? 'auto';
-                            });
-                          },
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                  RadioListTile<String>(
-                    title: const Text('Widget Test'),
-                    subtitle: const Text('Generate Flutter widget test with testWidgets'),
-                    value: 'widget',
-                    groupValue: _testType,
-                    onChanged: _isGenerating
-                        ? null
-                        : (String? value) {
-                            setState(() {
-                              _testType = value ?? 'auto';
-                            });
-                          },
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                  RadioListTile<String>(
-                    title: const Text('Class Test'),
-                    subtitle: const Text('Generate Dart class test with standard test functions'),
-                    value: 'class',
-                    groupValue: _testType,
-                    onChanged: _isGenerating
-                        ? null
-                        : (String? value) {
-                            setState(() {
-                              _testType = value ?? 'auto';
-                            });
-                          },
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                ],
+              RadioGroup<String>(
+                groupValue: _testType,
+                onChanged: (String? value) {
+                  setState(() {
+                    _testType = value ?? 'auto';
+                  });
+                },
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: const Radio<String>(
+                        value: 'auto',
+                      ),
+                      title: const Text('Auto-detect'),
+                      subtitle: const Text('Automatically determine test type based on file content'),
+                      onTap: _isGenerating
+                          ? null
+                          : () {
+                              setState(() {
+                                _testType = 'auto';
+                              });
+                            },
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    ListTile(
+                      leading: const Radio<String>(
+                        value: 'widget',
+                      ),
+                      title: const Text('Widget Test'),
+                      subtitle: const Text('Generate Flutter widget test with testWidgets'),
+                      onTap: _isGenerating
+                          ? null
+                          : () {
+                              setState(() {
+                                _testType = 'widget';
+                              });
+                            },
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    ListTile(
+                      leading: const Radio<String>(
+                        value: 'class',
+                      ),
+                      title: const Text('Class Test'),
+                      subtitle: const Text('Generate Dart class test with standard test functions'),
+                      onTap: _isGenerating
+                          ? null
+                          : () {
+                              setState(() {
+                                _testType = 'class';
+                              });
+                            },
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                  ],
+                ),
               ),
 
               const SizedBox(height: 16),
@@ -180,10 +191,10 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
+                    color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                     ),
                   ),
                   child: Column(
@@ -230,7 +241,7 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+                    color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
                   ),
                 ),
                 child: Column(
@@ -327,7 +338,7 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
 
         // Make path relative to project if possible
         if (widget.projectPath != null && selectedPath.startsWith(widget.projectPath!)) {
-          selectedPath = path.relative(selectedPath, from: widget.projectPath!);
+          selectedPath = path.relative(selectedPath, from: widget.projectPath);
         }
 
         _targetFileController.text = selectedPath;

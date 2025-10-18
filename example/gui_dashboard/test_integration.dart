@@ -1,14 +1,11 @@
 #!/usr/bin/env dart
+import 'dart:io';
 
 /// Integration test script for the Splendid CLI GUI Dashboard.
 ///
 /// This script verifies that the GUI can be launched and basic functionality
 /// works as expected. It's designed to be run from the command line to
 /// validate the GUI integration with the CLI.
-
-import 'dart:io';
-
-/// Main entry point for the integration test.
 Future<void> main() async {
   print('🧪 Running Splendid CLI GUI Integration Tests\n');
 

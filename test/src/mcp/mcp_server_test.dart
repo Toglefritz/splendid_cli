@@ -23,7 +23,6 @@ import 'package:test/test.dart';
 // ignore_for_file: inference_failure_on_collection_literal, avoid_dynamic_calls
 void main() {
   group('SplendidMcpServer', () {
-    late StreamController<String> inputController;
     late StreamController<String> outputController;
 
     /// Set up test environment with mock communication channel.
@@ -31,7 +30,6 @@ void main() {
     /// Creates a test server instance with mock stream channels that
     /// allow us to simulate MCP client communication without stdio.
     setUp(() {
-      inputController = StreamController<String>();
       outputController = StreamController<String>();
     });
 
@@ -39,9 +37,8 @@ void main() {
     ///
     /// Closes stream controllers and cleans up any server resources
     /// to prevent resource leaks in the test environment.
-    tearDown(() {
-      inputController.close();
-      outputController.close();
+    tearDown(() async {
+      await outputController.close();
     });
 
     group('MCP protocol methods', () {

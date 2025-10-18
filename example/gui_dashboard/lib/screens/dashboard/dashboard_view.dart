@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'dashboard_controller.dart';
-import '../../components/project_info_card.dart';
 import '../../components/command_buttons_grid.dart';
 import '../../components/output_panel.dart';
-import '../../dialogs/create_project_dialog.dart';
+import '../../components/project_info_card.dart';
 import '../../dialogs/add_screen_dialog.dart';
+import '../../dialogs/create_project_dialog.dart';
 import '../../dialogs/generate_test_dialog.dart';
+import 'dashboard_controller.dart';
 
 /// View widget for the main dashboard screen.
 ///
@@ -127,8 +127,8 @@ class DashboardView extends StatelessWidget {
   ///
   /// Parameters:
   /// * [context] - The build context for showing the dialog
-  void _showCreateProjectDialog(BuildContext context) {
-    showDialog<void>(
+  Future<void> _showCreateProjectDialog(BuildContext context) async {
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) => CreateProjectDialog(
         onCreateProject: state.createProject,
@@ -143,8 +143,8 @@ class DashboardView extends StatelessWidget {
   ///
   /// Parameters:
   /// * [context] - The build context for showing the dialog
-  void _showAddScreenDialog(BuildContext context) {
-    showDialog<void>(
+  Future<void> _showAddScreenDialog(BuildContext context) async {
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) => AddScreenDialog(
         onAddScreen: state.addScreen,
@@ -159,8 +159,8 @@ class DashboardView extends StatelessWidget {
   ///
   /// Parameters:
   /// * [context] - The build context for showing the dialog
-  void _showGenerateTestDialog(BuildContext context) {
-    showDialog<void>(
+  Future<void> _showGenerateTestDialog(BuildContext context) async {
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) => GenerateTestDialog(
         projectPath: state.currentProjectPath,

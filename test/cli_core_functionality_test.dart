@@ -30,9 +30,7 @@ void main() {
     ///
     /// This ensures that any test projects created at the root level
     /// are automatically cleaned up when tests complete.
-    setUpAll(() {
-      ProjectCleanupHelper.setupAutomaticCleanup();
-    });
+    setUpAll(ProjectCleanupHelper.setupAutomaticCleanup);
 
     setUp(() {
       runner = SplendidCommandRunner();
@@ -49,9 +47,7 @@ void main() {
     ///
     /// This removes any directories that may have been created at the
     /// project root level during CLI command testing.
-    tearDownAll(() {
-      ProjectCleanupHelper.cleanupTestArtifacts();
-    });
+    tearDownAll(ProjectCleanupHelper.cleanupTestArtifacts);
 
     group('missing arguments', () {
       /// Tests that CLI shows help when no arguments are provided.

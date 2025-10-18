@@ -218,10 +218,9 @@ class CliService {
     try {
       final String scriptPath = Platform.script.toFilePath();
       final String cliPath =
-          scriptPath
+          '${scriptPath
               .replaceAll('/example/gui_dashboard/', '/bin/')
-              .replaceAll('\\example\\gui_dashboard\\', '\\bin\\') +
-          'splendid_cli.dart';
+              .replaceAll(r'\example\gui_dashboard\', r'\bin\')}splendid_cli.dart';
 
       final File cliFile = File(cliPath);
       if (cliFile.existsSync()) {
@@ -255,8 +254,8 @@ class CliService {
 
     if (stderr != null && stderr.toString().trim().isNotEmpty) {
       if (buffer.isNotEmpty) {
-        buffer.writeln();
-        buffer.writeln('--- Errors ---');
+        buffer..writeln()
+        ..writeln('--- Errors ---');
       }
       buffer.writeln(stderr.toString().trim());
     }
@@ -321,8 +320,7 @@ class CliResult {
   const CliResult({
     required this.success,
     required this.output,
-    this.error,
-    required this.exitCode,
+    required this.exitCode, this.error,
   });
 
   /// Whether the CLI command executed successfully.

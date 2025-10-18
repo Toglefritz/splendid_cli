@@ -37,16 +37,12 @@ class SplendidCliGuiApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en', 'US'),
-      ],
 
       // Theme configuration
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF2196F3),
-          brightness: Brightness.light,
         ),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
@@ -94,9 +90,6 @@ class SplendidCliGuiApp extends StatelessWidget {
           ),
         ),
       ),
-
-      // Use system theme mode
-      themeMode: ThemeMode.system,
 
       // Set the dashboard as the home screen
       home: const DashboardRoute(),

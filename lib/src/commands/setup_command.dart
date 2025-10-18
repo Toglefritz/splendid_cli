@@ -44,7 +44,7 @@ import '../services/project_service.dart';
 /// but should not be run multiple times on the same project simultaneously.
 class SetupCommand extends Command<int> {
   /// Service for handling project operations.
-  final ProjectService _projectService = ProjectService();
+  static const ProjectService _projectService = ProjectService();
 
   /// Creates a new instance of [SetupCommand] with configured argument parser.
   ///

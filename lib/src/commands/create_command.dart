@@ -44,7 +44,7 @@ import '../services/project_service.dart';
 /// Thread Safety: This command is not thread-safe and should not be run concurrently for the same target directory.
 class CreateCommand extends Command<int> {
   /// Service for handling project operations.
-  static const ProjectService _projectService = ProjectService();
+  static const ProjectService _projectService = ProjectService.defaultInstance();
 
   /// Creates a new instance of [CreateCommand] with configured argument parser.
   ///

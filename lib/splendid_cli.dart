@@ -1,3 +1,4 @@
+import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
@@ -29,6 +30,13 @@ class SplendidCommandRunner extends CommandRunner<int> {
         'splendid_cli',
         'Scaffold and manage Flutter apps using MVC standards.',
       ) {
+    // Add global version option
+    argParser.addFlag(
+      'version',
+      negatable: false,
+      help: 'Print the current version.',
+    );
+
     addCommand(CacheCommand());
     addCommand(CreateCommand());
     addCommand(FormatCommand());
@@ -56,6 +64,15 @@ class SplendidCommandRunner extends CommandRunner<int> {
     final Logger logger = Logger();
 
     try {
+      // Parse arguments to check for global flags
+      final ArgResults topLevelResults = parse(args.toList());
+
+      // Handle version flag
+      if (topLevelResults['version'] as bool) {
+        logger.info('splendid_cli version 4.0.0');
+        return 0;
+      }
+
       // Check for custom help command pattern: help <command>
       if (args.isNotEmpty && args.first == 'help') {
         final List<String> argsList = args.toList();
@@ -70,9 +87,8 @@ class SplendidCommandRunner extends CommandRunner<int> {
         }
       }
 
-      // Parse the raw [args] into a concrete Command instance + its options. `runCommand` executes the matched
-      // subcommand and may return an integer exit code or `null` depending on the subcommand's contract.
-      final Object? result = await runCommand(parse(args.toList()));
+      // Execute the matched subcommand and may return an integer exit code or `null` depending on the subcommand's contract.
+      final Object? result = await runCommand(topLevelResults);
 
       // Normalize the result to a concrete exit code. If a subcommand does not provide an int exit code, treat it as
       // success (0) to keep behavior consistent across commands.

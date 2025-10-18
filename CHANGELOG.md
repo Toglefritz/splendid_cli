@@ -1,3 +1,11 @@
+## 4.1.0
+
+### Version Support
+
+- **Version Flag**: Added `--version` global option to display current CLI version
+- **Standard Compliance**: Follows standard CLI conventions for version information display
+- **Priority Handling**: Version flag takes precedence over other arguments when provided
+
 ## 4.0.0
 
 ### Dartdoc Comment Formatting
@@ -12,8 +20,6 @@
 - **Dual Comment Support**: Handles both /// single-line and /** */ multi-line Dartdoc comment styles
 - **Command Aliases**: Multiple invocation options (`format-dartdoc`, `fmt-doc`, `format-docs`)
 - **Comprehensive Help**: Detailed usage documentation with examples and formatting behavior explanations
-
-
 
 ## 3.1.1
 

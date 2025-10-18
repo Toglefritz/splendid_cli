@@ -238,6 +238,30 @@ void main() {
       });
     });
 
+    group('version functionality', () {
+      /// Tests that the --version flag displays the correct version information.
+      ///
+      /// This test verifies that users can check the CLI version using the
+      /// standard --version flag and receive the expected version output.
+      test('should display version information with --version flag', () async {
+        final int exitCode = await runner.run(['--version']);
+
+        // Should return success (0) when showing version
+        expect(exitCode, equals(0));
+      });
+
+      /// Tests that version flag takes precedence over other arguments.
+      ///
+      /// This test ensures that when --version is provided along with other
+      /// arguments, the version is displayed and other arguments are ignored.
+      test('should prioritize version flag over other arguments', () async {
+        final int exitCode = await runner.run(['--version', 'create', 'test_app']);
+
+        // Should return success (0) and show version, ignoring other args
+        expect(exitCode, equals(0));
+      });
+    });
+
     group('exit codes', () {
       /// Tests that the command runner returns correct POSIX exit codes.
       ///

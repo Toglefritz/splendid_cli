@@ -1,3 +1,20 @@
+## 4.0.0
+
+### Dartdoc Comment Formatting
+
+- **Comment Reformatting**: New `format-dartdoc` command for automated Dartdoc comment line length adjustment
+- **Line Length Migration**: Seamlessly convert comments from 80 to 120 characters (or any specified length between 40-200)
+- **Intelligent Wrapping**: Smart text wrapping that respects word boundaries and preserves readability
+- **Format Preservation**: Maintains code blocks (```dart), markdown headers, lists, and documentation tags
+- **Batch Processing**: Process individual files or entire directory trees with recursive .dart file discovery
+- **Safety Features**: Dry-run mode for previewing changes without file modification
+- **Build Directory Skipping**: Automatically excludes .dart_tool/, build/, and other generated file directories
+- **Dual Comment Support**: Handles both /// single-line and /** */ multi-line Dartdoc comment styles
+- **Command Aliases**: Multiple invocation options (`format-dartdoc`, `fmt-doc`, `format-docs`)
+- **Comprehensive Help**: Detailed usage documentation with examples and formatting behavior explanations
+
+
+
 ## 3.1.1
 
 ### Screen Template Improvements

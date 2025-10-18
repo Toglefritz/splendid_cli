@@ -133,6 +133,9 @@ class DashboardController extends State<DashboardRoute> {
   ///
   /// Allows users to browse and select a different project directory to work with in the dashboard. Updates the current
   /// project path if a valid directory is selected.
+  ///
+  /// On macOS, this method handles security-scoped access to ensure the app maintains write permissions to the selected
+  /// directory for file operations like creating screens and generating tests.
   Future<void> selectProjectFolder() async {
     try {
       final String? selectedDirectory = await FilePicker.platform.getDirectoryPath(
@@ -141,6 +144,17 @@ class DashboardController extends State<DashboardRoute> {
       );
 
       if (selectedDirectory != null) {
+        // On macOS, we need to verify we have write access to the selected directory
+        if (Platform.isMacOS) {
+          final bool hasWriteAccess = await _verifyWriteAccess(selectedDirectory);
+          if (!hasWriteAccess) {
+            _setError(
+              'No write permission to selected folder. Please ensure the folder is writable or try selecting a different location.',
+            );
+            return;
+          }
+        }
+
         _setProjectPath(selectedDirectory);
       }
     } catch (error) {
@@ -178,7 +192,7 @@ class DashboardController extends State<DashboardRoute> {
   /// Adds a new screen to the current Flutter project.
   ///
   /// Executes the CLI screen command to generate MVC architecture files for a new screen. Requires a valid Flutter
-  /// project to be selected.
+  /// project to be selected and write permissions to the project directory.
   ///
   /// Parameters:
   /// * [screenName] - Name for the new screen
@@ -190,6 +204,17 @@ class DashboardController extends State<DashboardRoute> {
     if (_currentProjectPath == null) {
       _setError('No project selected. Please select a project folder first.');
       return;
+    }
+
+    // Verify write access before attempting to create files
+    if (Platform.isMacOS) {
+      final bool hasWriteAccess = await _verifyWriteAccess(_currentProjectPath!);
+      if (!hasWriteAccess) {
+        _setError(
+          'No write permission to project folder. Please select the project folder again to grant access.',
+        );
+        return;
+      }
     }
 
     await _executeCommand(
@@ -283,6 +308,37 @@ class DashboardController extends State<DashboardRoute> {
   /// Internal method to clear error state without triggering rebuild.
   void _clearError() {
     _errorMessage = null;
+  }
+
+  /// Verifies that the app has write access to the specified directory.
+  ///
+  /// This method attempts to create a temporary file in the directory to test write permissions. This is particularly
+  /// important on macOS where sandboxed apps need explicit permission to write to user-selected directories.
+  ///
+  /// Parameters:
+  /// * [directoryPath] - The directory path to test for write access
+  ///
+  /// Returns:
+  /// * `true` if the app can write to the directory
+  /// * `false` if write access is denied or the directory doesn't exist
+  Future<bool> _verifyWriteAccess(String directoryPath) async {
+    try {
+      final Directory directory = Directory(directoryPath);
+      if (!directory.existsSync()) {
+        return false;
+      }
+
+      // Try to create a temporary file to test write permissions
+      final String tempFileName = '.splendid_write_test_${DateTime.now().millisecondsSinceEpoch}';
+      final File tempFile = File(path.join(directoryPath, tempFileName));
+
+      await tempFile.writeAsString('test');
+      await tempFile.delete();
+
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   /// Sets an error message and updates the UI.

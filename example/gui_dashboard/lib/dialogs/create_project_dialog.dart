@@ -84,80 +84,86 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Project name field
-                TextFormField(
-                  controller: _projectNameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Project Name',
-                    hintText: 'my_awesome_app',
-                    helperText: 'Must be a valid Dart package name',
-                    border: OutlineInputBorder(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: TextFormField(
+                    controller: _projectNameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Project Name',
+                      hintText: 'my_awesome_app',
+                      helperText: 'Must be a valid Dart package name',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: _validateProjectName,
+                    enabled: !_isCreating,
                   ),
-                  validator: _validateProjectName,
-                  enabled: !_isCreating,
                 ),
-
-                const SizedBox(height: 16),
 
                 // Output directory field
-                TextFormField(
-                  controller: _outputDirectoryController,
-                  decoration: InputDecoration(
-                    labelText: 'Output Directory',
-                    hintText: 'Leave empty for current directory',
-                    border: const OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.folder_open),
-                      onPressed: _isCreating ? null : _selectOutputDirectory,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: TextFormField(
+                    controller: _outputDirectoryController,
+                    decoration: InputDecoration(
+                      labelText: 'Output Directory',
+                      hintText: 'Leave empty for current directory',
+                      border: const OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.folder_open),
+                        onPressed: _isCreating ? null : _selectOutputDirectory,
+                      ),
                     ),
+                    enabled: !_isCreating,
                   ),
-                  enabled: !_isCreating,
                 ),
-
-                const SizedBox(height: 16),
 
                 // Platform selection
-                Text(
-                  'Target Platforms',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                const SizedBox(height: 8),
-
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 4,
-                  children: _platforms.entries.map((MapEntry<String, bool> entry) {
-                    return FilterChip(
-                      label: Text(_getPlatformDisplayName(entry.key)),
-                      selected: entry.value,
-                      onSelected: _isCreating
-                          ? null
-                          : (bool selected) {
-                              setState(() {
-                                _platforms[entry.key] = selected;
-                              });
-                            },
-                    );
-                  }).toList(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    'Target Platforms',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
                 ),
 
-                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 4,
+                    children: _platforms.entries.map((MapEntry<String, bool> entry) {
+                      return FilterChip(
+                        label: Text(_getPlatformDisplayName(entry.key)),
+                        selected: entry.value,
+                        onSelected: _isCreating
+                            ? null
+                            : (bool selected) {
+                                setState(() {
+                                  _platforms[entry.key] = selected;
+                                });
+                              },
+                      );
+                    }).toList(),
+                  ),
+                ),
 
                 // Force overwrite option
-                CheckboxListTile(
-                  title: const Text('Force overwrite existing directory'),
-                  subtitle: const Text('Overwrite existing files without confirmation'),
-                  value: _force,
-                  onChanged: _isCreating
-                      ? null
-                      : (bool? value) {
-                          setState(() {
-                            _force = value ?? false;
-                          });
-                        },
-                  controlAffinity: ListTileControlAffinity.leading,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: CheckboxListTile(
+                    title: const Text('Force overwrite existing directory'),
+                    subtitle: const Text('Overwrite existing files without confirmation'),
+                    value: _force,
+                    onChanged: _isCreating
+                        ? null
+                        : (bool? value) {
+                            setState(() {
+                              _force = value ?? false;
+                            });
+                          },
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
                 ),
-
-                const SizedBox(height: 16),
 
                 // Command preview
                 Container(
@@ -173,13 +179,15 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Command Preview:',
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Text(
+                          'Command Preview:',
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 4),
                       Text(
                         _buildCommandPreview(),
                         style: TextStyle(

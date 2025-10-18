@@ -162,6 +162,7 @@ class CommandButtonsGrid extends StatelessWidget {
 
     if (screenWidth < 600) return 2;
     if (screenWidth < 900) return 3;
+
     return 4;
   }
 }
@@ -234,26 +235,28 @@ class _CommandButton extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: 32,
-                color: isEnabled ? color : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
-              ),
-
-              const SizedBox(height: 8),
-
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: isEnabled
-                      ? Theme.of(context).colorScheme.onSurface
-                      : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
-                  fontWeight: FontWeight.w600,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Icon(
+                  icon,
+                  size: 32,
+                  color: isEnabled ? color : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
                 ),
-                textAlign: TextAlign.center,
               ),
 
-              const SizedBox(height: 4),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: isEnabled
+                        ? Theme.of(context).colorScheme.onSurface
+                        : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.38),
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
 
               Text(
                 subtitle,
@@ -268,8 +271,10 @@ class _CommandButton extends StatelessWidget {
               ),
 
               if (showFlutterWarning) ...[
-                const SizedBox(height: 8),
-                Icon(Icons.warning_amber, size: 16, color: Theme.of(context).colorScheme.error),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Icon(Icons.warning_amber, size: 16, color: Theme.of(context).colorScheme.error),
+                ),
               ],
             ],
           ),

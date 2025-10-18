@@ -72,24 +72,28 @@ class OutputPanel extends StatelessWidget {
                 child: Row(
                   children: [
                     if (isLoading) ...[
-                      SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Theme.of(context).colorScheme.primary,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 12),
                     ] else ...[
-                      Icon(
-                        Icons.terminal,
-                        size: 16,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 12),
+                        child: Icon(
+                          Icons.terminal,
+                          size: 16,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
-                      const SizedBox(width: 12),
                     ],
 
                     Text(
@@ -102,13 +106,15 @@ class OutputPanel extends StatelessWidget {
                     const Spacer(),
 
                     if (output.isNotEmpty && !isLoading) ...[
-                      IconButton(
-                        icon: const Icon(Icons.copy),
-                        iconSize: 16,
-                        tooltip: 'Copy Output',
-                        onPressed: () => _copyToClipboard(context),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: IconButton(
+                          icon: const Icon(Icons.copy),
+                          iconSize: 16,
+                          tooltip: 'Copy Output',
+                          onPressed: () => _copyToClipboard(context),
+                        ),
                       ),
-                      const SizedBox(width: 8),
                     ],
 
                     Icon(
@@ -155,19 +161,23 @@ class OutputPanel extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.terminal,
-              size: 32,
-              color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'No output yet',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Icon(
+                Icons.terminal,
+                size: 32,
+                color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
               ),
             ),
-            const SizedBox(height: 4),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(
+                'No output yet',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
             Text(
               'Command output will appear here',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -233,8 +243,10 @@ class OutputPanel extends StatelessWidget {
             content: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.check_circle, color: Colors.white, size: 16),
-                SizedBox(width: 8),
+                Padding(
+                  padding: EdgeInsets.only(right: 8),
+                  child: Icon(Icons.check_circle, color: Colors.white, size: 16),
+                ),
                 Text('Output copied to clipboard'),
               ],
             ),
@@ -253,8 +265,10 @@ class OutputPanel extends StatelessWidget {
             content: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.error, color: Colors.white, size: 16),
-                const SizedBox(width: 8),
+                const Padding(
+                  padding: EdgeInsets.only(right: 8),
+                  child: Icon(Icons.error, color: Colors.white, size: 16),
+                ),
                 Text('Failed to copy: $error'),
               ],
             ),

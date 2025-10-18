@@ -64,20 +64,21 @@ class _AddScreenDialogState extends State<AddScreenDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Screen name field
-              TextFormField(
-                controller: _screenNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Screen Name',
-                  hintText: 'LoginScreen, UserProfile, Settings',
-                  helperText: 'Use PascalCase for screen names',
-                  border: OutlineInputBorder(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: TextFormField(
+                  controller: _screenNameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Screen Name',
+                    hintText: 'LoginScreen, UserProfile, Settings',
+                    helperText: 'Use PascalCase for screen names',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: _validateScreenName,
+                  enabled: !_isAdding,
+                  textCapitalization: TextCapitalization.words,
                 ),
-                validator: _validateScreenName,
-                enabled: !_isAdding,
-                textCapitalization: TextCapitalization.words,
               ),
-
-              const SizedBox(height: 16),
 
               // Generated files preview
               Container(
@@ -90,27 +91,32 @@ class _AddScreenDialogState extends State<AddScreenDialog> {
                     color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                   ),
                 ),
+                margin: const EdgeInsets.only(bottom: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.info_outline,
-                          size: 16,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          'Generated Files:',
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.w600,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 6),
+                            child: Icon(
+                              Icons.info_outline,
+                              size: 16,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
-                        ),
-                      ],
+                          Text(
+                            'Generated Files:',
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 8),
                     ..._getGeneratedFiles().map(
                       (String file) => Padding(
                         padding: const EdgeInsets.only(left: 16, bottom: 2),
@@ -128,25 +134,24 @@ class _AddScreenDialogState extends State<AddScreenDialog> {
                 ),
               ),
 
-              const SizedBox(height: 16),
-
               // Force overwrite option
-              CheckboxListTile(
-                title: const Text('Force overwrite existing files'),
-                subtitle: const Text('Overwrite existing screen files without confirmation'),
-                value: _force,
-                onChanged: _isAdding
-                    ? null
-                    : (bool? value) {
-                        setState(() {
-                          _force = value ?? false;
-                        });
-                      },
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: CheckboxListTile(
+                  title: const Text('Force overwrite existing files'),
+                  subtitle: const Text('Overwrite existing screen files without confirmation'),
+                  value: _force,
+                  onChanged: _isAdding
+                      ? null
+                      : (bool? value) {
+                          setState(() {
+                            _force = value ?? false;
+                          });
+                        },
+                  controlAffinity: ListTileControlAffinity.leading,
+                  contentPadding: EdgeInsets.zero,
+                ),
               ),
-
-              const SizedBox(height: 16),
 
               // Command preview
               Container(
@@ -162,13 +167,15 @@ class _AddScreenDialogState extends State<AddScreenDialog> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Command Preview:',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: Text(
+                        'Command Preview:',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 4),
                     Text(
                       _buildCommandPreview(),
                       style: TextStyle(

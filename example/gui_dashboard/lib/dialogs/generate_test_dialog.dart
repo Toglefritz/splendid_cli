@@ -82,108 +82,113 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Target file field
-              TextFormField(
-                controller: _targetFileController,
-                decoration: InputDecoration(
-                  labelText: 'Target Dart File',
-                  hintText: 'lib/models/user.dart',
-                  helperText: 'Select the Dart file to generate tests for',
-                  border: const OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.file_open),
-                    onPressed: _isGenerating ? null : _selectTargetFile,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: TextFormField(
+                  controller: _targetFileController,
+                  decoration: InputDecoration(
+                    labelText: 'Target Dart File',
+                    hintText: 'lib/models/user.dart',
+                    helperText: 'Select the Dart file to generate tests for',
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.file_open),
+                      onPressed: _isGenerating ? null : _selectTargetFile,
+                    ),
                   ),
+                  validator: _validateTargetFile,
+                  enabled: !_isGenerating,
                 ),
-                validator: _validateTargetFile,
-                enabled: !_isGenerating,
               ),
-
-              const SizedBox(height: 16),
 
               // Test type selection
-              Text(
-                'Test Type',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const SizedBox(height: 8),
-
-              RadioGroup<String>(
-                groupValue: _testType,
-                onChanged: (String? value) {
-                  setState(() {
-                    _testType = value ?? 'auto';
-                  });
-                },
-                child: Column(
-                  children: [
-                    ListTile(
-                      leading: const Radio<String>(
-                        value: 'auto',
-                      ),
-                      title: const Text('Auto-detect'),
-                      subtitle: const Text('Automatically determine test type based on file content'),
-                      onTap: _isGenerating
-                          ? null
-                          : () {
-                              setState(() {
-                                _testType = 'auto';
-                              });
-                            },
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                    ListTile(
-                      leading: const Radio<String>(
-                        value: 'widget',
-                      ),
-                      title: const Text('Widget Test'),
-                      subtitle: const Text('Generate Flutter widget test with testWidgets'),
-                      onTap: _isGenerating
-                          ? null
-                          : () {
-                              setState(() {
-                                _testType = 'widget';
-                              });
-                            },
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                    ListTile(
-                      leading: const Radio<String>(
-                        value: 'class',
-                      ),
-                      title: const Text('Class Test'),
-                      subtitle: const Text('Generate Dart class test with standard test functions'),
-                      onTap: _isGenerating
-                          ? null
-                          : () {
-                              setState(() {
-                                _testType = 'class';
-                              });
-                            },
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                  ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  'Test Type',
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
 
-              const SizedBox(height: 16),
-
-              // Force overwrite option
-              CheckboxListTile(
-                title: const Text('Force overwrite existing test file'),
-                subtitle: const Text('Overwrite existing test files without confirmation'),
-                value: _force,
-                onChanged: _isGenerating
-                    ? null
-                    : (bool? value) {
-                        setState(() {
-                          _force = value ?? false;
-                        });
-                      },
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: RadioGroup<String>(
+                  groupValue: _testType,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _testType = value ?? 'auto';
+                    });
+                  },
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: const Radio<String>(
+                          value: 'auto',
+                        ),
+                        title: const Text('Auto-detect'),
+                        subtitle: const Text('Automatically determine test type based on file content'),
+                        onTap: _isGenerating
+                            ? null
+                            : () {
+                                setState(() {
+                                  _testType = 'auto';
+                                });
+                              },
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                      ListTile(
+                        leading: const Radio<String>(
+                          value: 'widget',
+                        ),
+                        title: const Text('Widget Test'),
+                        subtitle: const Text('Generate Flutter widget test with testWidgets'),
+                        onTap: _isGenerating
+                            ? null
+                            : () {
+                                setState(() {
+                                  _testType = 'widget';
+                                });
+                              },
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                      ListTile(
+                        leading: const Radio<String>(
+                          value: 'class',
+                        ),
+                        title: const Text('Class Test'),
+                        subtitle: const Text('Generate Dart class test with standard test functions'),
+                        onTap: _isGenerating
+                            ? null
+                            : () {
+                                setState(() {
+                                  _testType = 'class';
+                                });
+                              },
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                    ],
+                  ),
+                ),
               ),
 
-              const SizedBox(height: 16),
+              // Force overwrite option
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: CheckboxListTile(
+                  title: const Text('Force overwrite existing test file'),
+                  subtitle: const Text('Overwrite existing test files without confirmation'),
+                  value: _force,
+                  onChanged: _isGenerating
+                      ? null
+                      : (bool? value) {
+                          setState(() {
+                            _force = value ?? false;
+                          });
+                        },
+                  controlAffinity: ListTileControlAffinity.leading,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
 
               // Generated test file preview
               if (_targetFileController.text.isNotEmpty) ...[
@@ -197,27 +202,32 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
                       color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                     ),
                   ),
+                  margin: const EdgeInsets.only(bottom: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.info_outline,
-                            size: 16,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Generated Test File:',
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w600,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 6),
+                              child: Icon(
+                                Icons.info_outline,
+                                size: 16,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
-                          ),
-                        ],
+                            Text(
+                              'Generated Test File:',
+                              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 8),
                       Text(
                         _getTestFilePath(),
                         style: TextStyle(
@@ -229,8 +239,6 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
                     ],
                   ),
                 ),
-
-                const SizedBox(height: 16),
               ],
 
               // Command preview
@@ -247,13 +255,15 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Command Preview:',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Text(
+                        'Command Preview:',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 4),
                     Text(
                       _buildCommandPreview(),
                       style: TextStyle(

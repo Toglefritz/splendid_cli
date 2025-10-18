@@ -50,29 +50,32 @@ class ProjectInfoCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.folder,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Current Project',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Icon(
+                      Icons.folder,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
-                ),
-                const Spacer(),
-                TextButton.icon(
-                  onPressed: onSelectFolder,
-                  icon: const Icon(Icons.folder_open),
-                  label: const Text('Select Folder'),
-                ),
-              ],
+                  Text(
+                    'Current Project',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton.icon(
+                    onPressed: onSelectFolder,
+                    icon: const Icon(Icons.folder_open),
+                    label: const Text('Select Folder'),
+                  ),
+                ],
+              ),
             ),
-
-            const SizedBox(height: 12),
 
             if (projectPath != null) ...[
               // Project path display
@@ -92,27 +95,33 @@ class ProjectInfoCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Path:',
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 2),
+                            child: Text(
+                              'Path:',
+                              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 2),
-                          Text(
-                            projectPath!,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontFamily: 'monospace',
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: Text(
+                              projectPath!,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                fontFamily: 'monospace',
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Project Name:',
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 2),
+                            child: Text(
+                              'Project Name:',
+                              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 2),
                           Text(
                             path.basename(projectPath!),
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(

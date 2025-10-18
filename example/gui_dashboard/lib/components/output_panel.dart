@@ -118,7 +118,7 @@ class OutputPanel extends StatelessWidget {
                     ],
 
                     Icon(
-                      isVisible ? Icons.expand_less : Icons.expand_more,
+                      isVisible ? Icons.expand_more : Icons.expand_less,
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ],

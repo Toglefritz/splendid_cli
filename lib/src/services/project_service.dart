@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 import 'package:path/path.dart' as path;
 
+import 'brick_loader.dart';
+
 /// Service for managing Flutter project creation and setup operations.
 ///
 /// This service encapsulates the core business logic for project operations,
@@ -9,11 +11,17 @@ import 'package:path/path.dart' as path;
 /// interaction. This design enables reuse across different interfaces
 /// (CLI, MCP server, etc.).
 class ProjectService {
+  /// Brick loader for handling template loading and caching.
+  final BrickLoader _brickLoader;
+
   /// Creates a new instance of [ProjectService].
   ///
   /// This service is stateless and can be reused across multiple operations.
   /// All methods are safe to call concurrently from different isolates.
-  const ProjectService();
+  const ProjectService({BrickLoader? brickLoader}) : _brickLoader = brickLoader ?? const BrickLoader();
+
+  /// Creates a new instance with default dependencies.
+  const ProjectService.defaultInstance() : _brickLoader = const BrickLoader();
 
   /// Creates a new Flutter project with MVC architecture.
   ///
@@ -61,8 +69,10 @@ class ProjectService {
       // Remove default Flutter files that will be replaced
       await _removeDefaultFlutterFiles(targetPath);
 
-      // Load and apply MVC template
-      final MasonGenerator generator = await _loadFlutterAppBrick();
+      // Load and apply MVC template using BrickLoader
+      final String brickPath = await _brickLoader.loadBrick('flutter_app');
+      final Brick brick = Brick.path(brickPath);
+      final MasonGenerator generator = await MasonGenerator.fromBrick(brick);
       final Map<String, dynamic> vars = {'name': request.projectName};
 
       await generator.generate(
@@ -75,6 +85,12 @@ class ProjectService {
         projectName: request.projectName,
         targetPath: targetPath,
         platforms: request.platforms,
+      );
+    } on BrickLoadException catch (e) {
+      throw ProjectServiceException(
+        'Failed to load project template: ${e.message}',
+        ProjectServiceErrorType.templateLoadFailed,
+        cause: e,
       );
     } catch (e) {
       if (e is ProjectServiceException) {
@@ -237,19 +253,6 @@ class ProjectService {
         }
       }
     }
-  }
-
-  /// Loads the Flutter app Mason brick.
-  Future<MasonGenerator> _loadFlutterAppBrick() async {
-    final String brickPath = path.join(
-      path.dirname(Platform.script.path),
-      '..',
-      'bricks',
-      'flutter_app',
-    );
-
-    final Brick brick = Brick.path(brickPath);
-    return MasonGenerator.fromBrick(brick);
   }
 
   /// Runs a Flutter command with the specified arguments.
@@ -473,6 +476,9 @@ enum ProjectServiceErrorType {
 
   /// Flutter command execution failed.
   flutterCommandFailed,
+
+  /// Template loading failed.
+  templateLoadFailed,
 
   /// Unknown error occurred.
   unknown,

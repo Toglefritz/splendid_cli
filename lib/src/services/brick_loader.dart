@@ -8,6 +8,9 @@ import 'package:path/path.dart' as path;
 /// (for development) and falls back to downloading from GitHub (for production).
 /// This ensures the CLI works in both development and global installation scenarios.
 class BrickLoader {
+  /// Creates a new BrickLoader instance.
+  const BrickLoader();
+
   /// GitHub repository information for remote brick loading.
   static const String _githubOwner = 'Toglefritz';
   static const String _githubRepo = 'splendid_cli';
@@ -218,12 +221,91 @@ class BrickLoader {
   ///
   /// This method downloads the complete Flutter app template structure.
   Future<void> _downloadFlutterAppTemplates(String localBrickPath) async {
-    // This would need to be implemented based on the flutter_app brick structure
-    // For now, throw an exception to indicate it's not yet supported
-    throw const BrickLoadException(
-      'flutter_app brick remote download not yet implemented',
-      BrickLoadErrorType.unknownBrick,
+    final String brickDir = path.join(localBrickPath, '__brick__');
+    await Directory(brickDir).create(recursive: true);
+
+    // Download root configuration files
+    final List<String> rootFiles = [
+      'analysis_options.yaml',
+      'l10n.yaml',
+      'pubspec.yaml',
+      'README.md',
+    ];
+
+    for (final String fileName in rootFiles) {
+      await _downloadFile(
+        'bricks/flutter_app/__brick__/$fileName',
+        path.join(brickDir, fileName),
+      );
+    }
+
+    // Download lib directory structure
+    await _downloadFlutterAppLibFiles(brickDir);
+  }
+
+  /// Downloads the lib directory files for flutter_app brick.
+  Future<void> _downloadFlutterAppLibFiles(String brickDir) async {
+    // Create lib directory structure
+    final String libDir = path.join(brickDir, 'lib');
+    await Directory(libDir).create(recursive: true);
+
+    // Download main lib files
+    final List<String> libFiles = [
+      'main.dart',
+      'app.dart',
+    ];
+
+    for (final String fileName in libFiles) {
+      await _downloadFile(
+        'bricks/flutter_app/__brick__/lib/$fileName',
+        path.join(libDir, fileName),
+      );
+    }
+
+    // Download l10n files
+    final String l10nDir = path.join(libDir, 'l10n');
+    await Directory(l10nDir).create(recursive: true);
+    await _downloadFile(
+      'bricks/flutter_app/__brick__/lib/l10n/app_en.arb',
+      path.join(l10nDir, 'app_en.arb'),
     );
+
+    // Download theme files
+    final String themeDir = path.join(libDir, 'theme');
+    await Directory(themeDir).create(recursive: true);
+
+    final List<String> themeFiles = [
+      'app_theme.dart',
+      'insets.dart',
+    ];
+
+    for (final String fileName in themeFiles) {
+      await _downloadFile(
+        'bricks/flutter_app/__brick__/lib/theme/$fileName',
+        path.join(themeDir, fileName),
+      );
+    }
+
+    // Download home screen files
+    final String homeDir = path.join(libDir, 'screens', 'home');
+    await Directory(homeDir).create(recursive: true);
+
+    final List<String> homeFiles = [
+      'home_route.dart',
+      'home_controller.dart',
+      'home_view.dart',
+    ];
+
+    for (final String fileName in homeFiles) {
+      await _downloadFile(
+        'bricks/flutter_app/__brick__/lib/screens/home/$fileName',
+        path.join(homeDir, fileName),
+      );
+    }
+
+    // Create empty services directory
+    final String servicesDir = path.join(libDir, 'services');
+    await Directory(servicesDir).create(recursive: true);
   }
 
   /// Downloads test brick templates.

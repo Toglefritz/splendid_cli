@@ -29,9 +29,9 @@ void main() {
     /// Creates fresh service instances for each test to ensure isolation.
     /// Services are real instances but will be tested with mock data.
     setUp(() {
-      projectService = ProjectService();
-      screenService = ScreenService();
-      testService = TestService();
+      projectService = const ProjectService();
+      screenService = const ScreenService();
+      testService = const TestService();
 
       toolRegistry = McpToolRegistry(
         projectService: projectService,

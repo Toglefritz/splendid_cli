@@ -32,13 +32,13 @@ import 'mcp_tool_registry.dart';
 /// The server runs indefinitely, processing MCP requests until terminated.
 class SplendidMcpServer {
   /// Service for project creation and setup operations.
-  final ProjectService _projectService = ProjectService();
+  static const ProjectService _projectService = ProjectService();
 
   /// Service for screen generation operations.
-  final ScreenService _screenService = ScreenService();
+  static const ScreenService _screenService = ScreenService();
 
   /// Service for test generation operations.
-  final TestService _testService = TestService();
+  static const TestService _testService = TestService();
 
   /// Registry of available MCP tools.
   late final McpToolRegistry _toolRegistry;

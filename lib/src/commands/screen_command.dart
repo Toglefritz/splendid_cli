@@ -40,7 +40,7 @@ import '../services/screen_service.dart';
 /// Thread Safety: This command is not thread-safe and should not be run concurrently for the same screen name.
 class ScreenCommand extends Command<int> {
   /// Service for handling screen operations.
-  final ScreenService _screenService = ScreenService();
+  static const ScreenService _screenService = ScreenService();
 
   /// Creates a new instance of [ScreenCommand] with configured argument parser.
   ///

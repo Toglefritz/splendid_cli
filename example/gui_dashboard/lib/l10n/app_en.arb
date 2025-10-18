@@ -1,0 +1,6 @@
+{
+  "appTitle": "Splendid CLI Dashboard",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}

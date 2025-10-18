@@ -30,9 +30,7 @@ void main() {
     ///
     /// This ensures that any test projects created at the root level
     /// are automatically cleaned up when tests complete.
-    setUpAll(() {
-      ProjectCleanupHelper.setupAutomaticCleanup();
-    });
+    setUpAll(ProjectCleanupHelper.setupAutomaticCleanup);
 
     /// Set up test environment with fresh command runner instance.
     ///
@@ -46,9 +44,7 @@ void main() {
     ///
     /// This removes any directories that may have been created at the
     /// project root level during CLI command testing.
-    tearDownAll(() {
-      ProjectCleanupHelper.cleanupTestArtifacts();
-    });
+    tearDownAll(ProjectCleanupHelper.cleanupTestArtifacts);
 
     group('command runner configuration', () {
       /// Verifies that the command runner is properly configured with correct metadata.

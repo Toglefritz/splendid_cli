@@ -134,7 +134,7 @@ class FormatCommand extends Command<int> {
       logger
         ..err('Target path is required.')
         ..info('')
-        ..info('Usage: ${invocation}')
+        ..info('Usage: $invocation')
         ..info('')
         ..info('Examples:')
         ..info('  splendid_cli format-dartdoc .')
@@ -185,7 +185,7 @@ class FormatCommand extends Command<int> {
       ///
       /// Encapsulates the business logic for Dartdoc comment processing
       /// and provides a clean interface for the command layer.
-      final DartdocFormatterService service = DartdocFormatterService();
+      const DartdocFormatterService service = DartdocFormatterService();
 
       /// Request configuration for the formatting operation.
       ///
@@ -198,9 +198,9 @@ class FormatCommand extends Command<int> {
       );
 
       // Display operation summary
-      logger.info('${dryRun ? 'Analyzing' : 'Formatting'} Dartdoc comments...');
-      logger.info('Target: $targetPath');
-      logger.info('Line length: $lineLength characters');
+      logger..info('${dryRun ? 'Analyzing' : 'Formatting'} Dartdoc comments...')
+      ..info('Target: $targetPath')
+      ..info('Line length: $lineLength characters');
       if (dryRun) {
         logger.info('Mode: Dry run (no files will be modified)');
       }
@@ -252,20 +252,20 @@ class FormatCommand extends Command<int> {
       logger.warn('⚠ Formatting completed with errors');
     }
 
-    logger.info('');
+    logger..info('')
 
     // Display statistics
-    logger.info('Statistics:');
-    logger.info('  Files processed: ${result.totalProcessed}');
-    logger.info('  Files modified: ${result.totalModified}');
+    ..info('Statistics:')
+    ..info('  Files processed: ${result.totalProcessed}')
+    ..info('  Files modified: ${result.totalModified}');
     if (result.hasErrors) {
       logger.info('  Errors: ${result.totalErrors}');
     }
 
     // Display file lists in verbose mode
     if (verbose && result.processedFiles.isNotEmpty) {
-      logger.info('');
-      logger.info('Processed files:');
+      logger..info('')
+      ..info('Processed files:');
       for (final String file in result.processedFiles) {
         final bool wasModified = result.modifiedFiles.contains(file);
         final String status = wasModified ? '✓ modified' : '- unchanged';
@@ -275,8 +275,8 @@ class FormatCommand extends Command<int> {
 
     // Display errors if any occurred
     if (result.hasErrors) {
-      logger.info('');
-      logger.err('Errors encountered:');
+      logger..info('')
+      ..err('Errors encountered:');
       for (final String error in result.errors) {
         logger.err('  $error');
       }
@@ -287,19 +287,19 @@ class FormatCommand extends Command<int> {
 
     if (result.dryRun) {
       if (result.hasModifications) {
-        logger.info('Dry run complete. ${result.totalModified} files would be modified.');
-        logger.info('Run without --dry-run to apply changes.');
+        logger..info('Dry run complete. ${result.totalModified} files would be modified.')
+        ..info('Run without --dry-run to apply changes.');
       } else {
         logger.info('Dry run complete. No files require formatting changes.');
       }
     } else {
       if (result.hasModifications) {
-        logger.info('Formatting applied to ${result.totalModified} files.');
-        logger.info('');
-        logger.info('Next steps:');
-        logger.info('  1. Review the changes in your version control system');
-        logger.info('  2. Run your tests to ensure no functionality was affected');
-        logger.info('  3. Consider running dart format to apply code formatting');
+        logger..info('Formatting applied to ${result.totalModified} files.')
+        ..info('')
+        ..info('Next steps:')
+        ..info('  1. Review the changes in your version control system')
+        ..info('  2. Run your tests to ensure no functionality was affected')
+        ..info('  3. Consider running dart format to apply code formatting');
       } else {
         logger.info('All Dartdoc comments are already properly formatted.');
       }
@@ -307,10 +307,10 @@ class FormatCommand extends Command<int> {
 
     // Performance information in verbose mode
     if (verbose) {
-      logger.info('');
-      logger.info('Configuration:');
-      logger.info('  Line length: ${result.lineLength} characters');
-      logger.info('  Dry run: ${result.dryRun}');
+      logger..info('')
+      ..info('Configuration:')
+      ..info('  Line length: ${result.lineLength} characters')
+      ..info('  Dry run: ${result.dryRun}');
     }
   }
 

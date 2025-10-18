@@ -1,9 +1,10 @@
 import 'dart:io';
-import 'package:test/test.dart';
+
 import 'package:path/path.dart' as path;
+import 'package:splendid_cli/src/services/dartdoc_formatter_service.dart';
+import 'package:test/test.dart';
 
 import '../../helpers/temp_directory_helper.dart';
-import '../../../lib/src/services/dartdoc_formatter_service.dart';
 
 /// Test suite for FormatCommand functionality.
 ///
@@ -75,13 +76,9 @@ class TestClass {}
     late TempDirectoryHelper tempDirHelper;
 
     setUp(() {
-      service = DartdocFormatterService();
+      service = const DartdocFormatterService();
       tempDirHelper = TempDirectoryHelper();
     });
-
-    tearDown() {
-      tempDirHelper.cleanup();
-    }
 
     test('should format single-line comments correctly', () async {
       final File testFile = File(path.join(tempDirHelper.directoryPath, 'test.dart'));
@@ -93,7 +90,6 @@ class TestClass {}
       final DartdocFormatterRequest request = DartdocFormatterRequest(
         targetPath: testFile.path,
         lineLength: 80,
-        dryRun: false,
       );
 
       final DartdocFormatterResult result = await service.formatDartdoc(request);

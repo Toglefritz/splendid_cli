@@ -511,7 +511,7 @@ class DartdocFormatterService {
 
     for (final String word in words) {
       // Check if adding this word would exceed the line length
-      final String testLine = currentLine.isEmpty ? word : '${currentLine.toString()} $word';
+      final String testLine = currentLine.isEmpty ? word : '$currentLine $word';
 
       if (testLine.length <= maxLength) {
         if (currentLine.isNotEmpty) {

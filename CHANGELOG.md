@@ -1,3 +1,12 @@
+## 4.1.1
+
+### Version Management
+
+- **Dynamic Version Reading**: Version flag now dynamically reads from `pubspec.yaml` instead of hardcoded value
+- **Automatic Synchronization**: CLI version output always matches the package version without manual updates
+- **Short Flag Support**: Added `-v` shortcut for `--version` flag following standard CLI conventions
+- **Error Resilience**: Graceful fallback to 'unknown' when version cannot be determined from pubspec.yaml
+
 ## 4.1.0
 
 ### Version Support

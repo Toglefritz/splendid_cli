@@ -3,6 +3,7 @@ import 'package:mason_logger/mason_logger.dart';
 
 import 'src/commands/cache_command.dart';
 import 'src/commands/create_command.dart';
+import 'src/commands/format_command.dart';
 import 'src/commands/screen_command.dart';
 import 'src/commands/setup_command.dart';
 import 'src/commands/test_command.dart';
@@ -13,6 +14,7 @@ export 'src/mcp/mcp_server.dart';
 export 'src/mcp/mcp_tool_registry.dart';
 
 // Export services for external use
+export 'src/services/dartdoc_formatter_service.dart';
 export 'src/services/project_service.dart';
 export 'src/services/screen_service.dart';
 export 'src/services/test_service.dart';
@@ -29,6 +31,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
       ) {
     addCommand(CacheCommand());
     addCommand(CreateCommand());
+    addCommand(FormatCommand());
     addCommand(ScreenCommand());
     addCommand(SetupCommand());
     addCommand(TestCommand());

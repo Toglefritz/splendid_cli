@@ -63,6 +63,12 @@ class CustomHelp {
         example: 'splendid_cli gen-test lib/services/api_service.dart',
       ),
       const CommandInfo(
+        name: 'format-dartdoc',
+        aliases: ['fmt-doc', 'format-docs'],
+        description: 'Reformat and rewrap Dartdoc comments to specified line length',
+        example: 'splendid_cli format-dartdoc . --line-length 120',
+      ),
+      const CommandInfo(
         name: 'cache',
         description: 'Manage the local brick cache (list, info, clear)',
         example: 'splendid_cli cache list',
@@ -152,6 +158,10 @@ class CustomHelp {
       case 'generate-test':
       case 'gen-test':
         _showGenerateTestCommandHelp(logger);
+      case 'format-dartdoc':
+      case 'fmt-doc':
+      case 'format-docs':
+        _showFormatDartdocCommandHelp(logger);
       case 'help':
         _showHelpCommandHelp(logger);
       default:
@@ -375,6 +385,70 @@ class CustomHelp {
     logger.info('${yellow.wrap('FILE TYPE DETECTION:')}');
     logger.info('  Widget tests: Files with Flutter imports and widget classes');
     logger.info('  Class tests:  Regular Dart classes without Flutter dependencies');
+    logger.info('');
+  }
+
+  /// Shows detailed help for the format-dartdoc command.
+  static void _showFormatDartdocCommandHelp(Logger logger) {
+    logger.info('${yellow.wrap('USAGE:')}');
+    logger.info('  splendid_cli format-dartdoc <target> [options]');
+    logger.info('  splendid_cli fmt-doc <target> [options]');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DESCRIPTION:')}');
+    logger.info('  Reformats and rewraps Dartdoc comments to a specified line length.');
+    logger.info('  Particularly useful for migrating from 80-character to 120-character');
+    logger.info('  line limits or standardizing comment formatting across team projects.');
+    logger.info('  Intelligently preserves code blocks, lists, and special formatting.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARGUMENTS:')}');
+    logger.info('  ${green.wrap('target')}           Path to Dart file or directory to process');
+    logger.info('                   For directories: processes all .dart files recursively');
+    logger.info('                   Skips build/ and .dart_tool/ directories automatically');
+    logger.info('');
+
+    logger.info('${yellow.wrap('OPTIONS:')}');
+    logger.info('  ${green.wrap('-l, --line-length')} Maximum line length for wrapped text (default: 120)');
+    logger.info('                      Valid range: 40-200 characters');
+    logger.info('  ${green.wrap('--dry-run')}         Preview changes without modifying files');
+    logger.info('  ${green.wrap('-v, --verbose')}     Show detailed progress and file lists');
+    logger.info('  ${green.wrap('-h, --help')}        Show this help message');
+    logger.info('');
+
+    logger.info('${yellow.wrap('EXAMPLES:')}');
+    logger.info('  ${cyan.wrap('splendid_cli format-dartdoc .')}');
+    logger.info('    Format all Dartdoc comments in current directory to 120 characters');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli format-dartdoc lib/services/api_service.dart --line-length 80')}');
+    logger.info('    Format specific file with 80-character line limit');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli format-dartdoc lib/ --dry-run --verbose')}');
+    logger.info('    Preview changes with detailed output, no modifications');
+    logger.info('');
+
+    logger.info('${yellow.wrap('FORMATTING BEHAVIOR:')}');
+    logger.info('  • Wraps /// and /** */ style Dartdoc comments');
+    logger.info('  • Preserves code blocks (```dart ... ```)');
+    logger.info('  • Maintains list formatting and indentation');
+    logger.info('  • Respects word boundaries for clean wrapping');
+    logger.info('  • Leaves regular comments (//) unchanged');
+    logger.info('  • Skips generated files and build directories');
+    logger.info('');
+
+    logger.info('${yellow.wrap('WHAT GETS PRESERVED:')}');
+    logger.info('  • Code examples within ```dart blocks');
+    logger.info('  • Markdown headers (# ## ###)');
+    logger.info('  • List items (* - + numbered)');
+    logger.info('  • Documentation tags (@param, @returns, etc.)');
+    logger.info('  • Original indentation levels');
+    logger.info('');
+
+    logger.info('${yellow.wrap('NEXT STEPS:')}');
+    logger.info('  After formatting:');
+    logger.info('  1. Review changes in your version control system');
+    logger.info('  2. Run tests to ensure no functionality was affected');
+    logger.info('  3. Consider running ${cyan.wrap('dart format')} for code formatting');
     logger.info('');
   }
 

@@ -130,9 +130,10 @@ class CliService {
     return _executeCliCommand(['setup'], workingDirectory: projectPath);
   }
 
-  /// Formats Dart code in the specified Flutter project.
+  /// Formats Dartdoc comments in the specified Flutter project.
   ///
-  /// Executes `splendid_cli format` to apply consistent code formatting across all Dart files in the project.
+  /// Executes `splendid_cli format-dartdoc` to reformat and rewrap Dartdoc comments to the specified line length
+  /// across all Dart files in the project.
   ///
   /// Parameters:
   /// * [projectPath] - Path to the Flutter project directory
@@ -142,7 +143,7 @@ class CliService {
   Future<CliResult> formatProject({
     required String projectPath,
   }) async {
-    return _executeCliCommand(['format'], workingDirectory: projectPath);
+    return _executeCliCommand(['format-dartdoc', projectPath], workingDirectory: projectPath);
   }
 
   /// Executes a Splendid CLI command with the specified arguments.
@@ -218,9 +219,7 @@ class CliService {
     try {
       final String scriptPath = Platform.script.toFilePath();
       final String cliPath =
-          '${scriptPath
-              .replaceAll('/example/gui_dashboard/', '/bin/')
-              .replaceAll(r'\example\gui_dashboard\', r'\bin\')}splendid_cli.dart';
+          '${scriptPath.replaceAll('/example/gui_dashboard/', '/bin/').replaceAll(r'\example\gui_dashboard\', r'\bin\')}splendid_cli.dart';
 
       final File cliFile = File(cliPath);
       if (cliFile.existsSync()) {
@@ -254,8 +253,9 @@ class CliService {
 
     if (stderr != null && stderr.toString().trim().isNotEmpty) {
       if (buffer.isNotEmpty) {
-        buffer..writeln()
-        ..writeln('--- Errors ---');
+        buffer
+          ..writeln()
+          ..writeln('--- Errors ---');
       }
       buffer.writeln(stderr.toString().trim());
     }
@@ -320,7 +320,8 @@ class CliResult {
   const CliResult({
     required this.success,
     required this.output,
-    required this.exitCode, this.error,
+    required this.exitCode,
+    this.error,
   });
 
   /// Whether the CLI command executed successfully.

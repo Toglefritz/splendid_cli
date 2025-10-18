@@ -273,9 +273,10 @@ class DashboardController extends State<DashboardRoute> {
     );
   }
 
-  /// Formats Dart code in the current project.
+  /// Formats Dartdoc comments in the current project.
   ///
-  /// Executes the CLI format command to apply consistent code formatting across all Dart files in the project.
+  /// Executes the CLI format-dartdoc command to reformat and rewrap Dartdoc comments to the specified line length
+  /// across all Dart files in the project.
   Future<void> formatProject() async {
     if (_currentProjectPath == null) {
       _setError('No project selected. Please select a project folder first.');
@@ -283,7 +284,7 @@ class DashboardController extends State<DashboardRoute> {
     }
 
     await _executeCommand(
-      'Formatting project code...',
+      'Formatting Dartdoc comments...',
       () => _cliService.formatProject(projectPath: _currentProjectPath!),
     );
   }

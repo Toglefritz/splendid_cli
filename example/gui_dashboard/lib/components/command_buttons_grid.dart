@@ -22,7 +22,7 @@ class CommandButtonsGrid extends StatelessWidget {
   /// * [onAddScreen] - Callback for adding a new screen to the project
   /// * [onGenerateTest] - Callback for generating test files
   /// * [onSetupProject] - Callback for running project setup commands
-  /// * [onFormatProject] - Callback for formatting project code
+  /// * [onFormatProject] - Callback for formatting Dartdoc comments
   const CommandButtonsGrid({
     required this.isLoading,
     required this.isFlutterProject,
@@ -67,9 +67,10 @@ class CommandButtonsGrid extends StatelessWidget {
   /// Executes the CLI setup command to run pub get, code generation, and other project initialization tasks.
   final VoidCallback onSetupProject;
 
-  /// Callback function for formatting project code.
+  /// Callback function for formatting Dartdoc comments in the project.
   ///
-  /// Executes the CLI format command to apply consistent code formatting across all Dart files in the project.
+  /// Executes the CLI format-dartdoc command to reformat and rewrap Dartdoc comments to the specified line length
+  /// across all Dart files in the project.
   final VoidCallback onFormatProject;
 
   @override
@@ -125,8 +126,8 @@ class CommandButtonsGrid extends StatelessWidget {
         // Format Project button
         _CommandButton(
           icon: Icons.code,
-          title: 'Format Code',
-          subtitle: 'Apply consistent code formatting',
+          title: 'Format Dartdoc',
+          subtitle: 'Reformat and rewrap Dartdoc comments',
           onPressed: (isLoading || !isFlutterProject) ? null : onFormatProject,
           color: Colors.green,
           requiresFlutterProject: true,

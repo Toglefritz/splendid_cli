@@ -241,15 +241,123 @@ class ProjectService {
 
   /// Loads the Flutter app Mason brick.
   Future<MasonGenerator> _loadFlutterAppBrick() async {
-    final String brickPath = path.join(
+    // Try to load from local development path first
+    final String localBrickPath = path.join(
       path.dirname(Platform.script.path),
       '..',
       'bricks',
       'flutter_app',
     );
 
-    final Brick brick = Brick.path(brickPath);
-    return MasonGenerator.fromBrick(brick);
+    final Directory localBrickDir = Directory(localBrickPath);
+    if (localBrickDir.existsSync()) {
+      final Brick brick = Brick.path(localBrickPath);
+      return MasonGenerator.fromBrick(brick);
+    }
+
+    // If local path doesn't exist (global installation), create brick from embedded template
+    return _createEmbeddedBrick();
+  }
+
+  /// Creates a Mason brick from embedded template data.
+  Future<MasonGenerator> _createEmbeddedBrick() async {
+    // Create a temporary directory for the brick
+    final Directory tempDir = Directory.systemTemp.createTempSync('splendid_brick_');
+
+    try {
+      // Create brick.yaml
+      final File brickYaml = File(path.join(tempDir.path, 'brick.yaml'));
+      await brickYaml.writeAsString(_getBrickYamlContent());
+
+      // Create __brick__ directory
+      final Directory brickDir = Directory(path.join(tempDir.path, '__brick__'));
+      await brickDir.create(recursive: true);
+
+      // Create all the template files
+      await _createBrickFiles(brickDir.path);
+
+      final Brick brick = Brick.path(tempDir.path);
+      return MasonGenerator.fromBrick(brick);
+    } catch (e) {
+      // Clean up temp directory on error
+      try {
+        await tempDir.delete(recursive: true);
+      } catch (_) {
+        // Ignore cleanup errors
+      }
+      rethrow;
+    }
+  }
+
+  /// Returns the content for brick.yaml.
+  String _getBrickYamlContent() {
+    return '''
+name: app_mvc
+description: "New Flutter app scaffold using Splendid MVC standards"
+version: 0.1.0+1
+
+vars:
+  name:
+    type: string
+    description: The Flutter project name (e.g., splendid_demo)
+    default: splendid_app
+''';
+  }
+
+  /// Creates all the brick template files in the specified directory.
+  Future<void> _createBrickFiles(String brickPath) async {
+    // Create lib directory structure
+    final Directory libDir = Directory(path.join(brickPath, 'lib'));
+    await libDir.create(recursive: true);
+
+    final Directory srcDir = Directory(path.join(libDir.path, 'src'));
+    await srcDir.create(recursive: true);
+
+    final Directory screensDir = Directory(path.join(srcDir.path, 'screens'));
+    await screensDir.create(recursive: true);
+
+    final Directory homeDir = Directory(path.join(screensDir.path, 'home'));
+    await homeDir.create(recursive: true);
+
+    final Directory l10nDir = Directory(path.join(libDir.path, 'l10n'));
+    await l10nDir.create(recursive: true);
+
+    // Create main.dart
+    final File mainFile = File(path.join(libDir.path, 'main.dart'));
+    await mainFile.writeAsString(_getMainDartContent());
+
+    // Create app.dart
+    final File appFile = File(path.join(libDir.path, 'app.dart'));
+    await appFile.writeAsString(_getAppDartContent());
+
+    // Create home route
+    final File homeRouteFile = File(path.join(homeDir.path, 'home_route.dart'));
+    await homeRouteFile.writeAsString(_getHomeRouteContent());
+
+    // Create home controller
+    final File homeControllerFile = File(path.join(homeDir.path, 'home_controller.dart'));
+    await homeControllerFile.writeAsString(_getHomeControllerContent());
+
+    // Create home view
+    final File homeViewFile = File(path.join(homeDir.path, 'home_view.dart'));
+    await homeViewFile.writeAsString(_getHomeViewContent());
+
+    // Create localization files
+    final File appEnFile = File(path.join(l10nDir.path, 'app_en.arb'));
+    await appEnFile.writeAsString(_getAppEnArbContent());
+
+    // Create other configuration files
+    final File analysisOptionsFile = File(path.join(brickPath, 'analysis_options.yaml'));
+    await analysisOptionsFile.writeAsString(_getAnalysisOptionsContent());
+
+    final File l10nYamlFile = File(path.join(brickPath, 'l10n.yaml'));
+    await l10nYamlFile.writeAsString(_getL10nYamlContent());
+
+    final File pubspecFile = File(path.join(brickPath, 'pubspec.yaml'));
+    await pubspecFile.writeAsString(_getPubspecContent());
+
+    final File readmeFile = File(path.join(brickPath, 'README.md'));
+    await readmeFile.writeAsString(_getReadmeContent());
   }
 
   /// Runs a Flutter command with the specified arguments.

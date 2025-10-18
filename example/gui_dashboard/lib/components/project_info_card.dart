@@ -55,7 +55,7 @@ class ProjectInfoCard extends StatelessWidget {
               child: Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.only(right: 8),
                     child: Icon(
                       Icons.folder,
                       color: Theme.of(context).colorScheme.primary,

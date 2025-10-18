@@ -28,9 +28,10 @@ class CliService {
   ///
   /// Parameters:
   /// * [projectName] - Name for the new Flutter project
-  /// * [outputDirectory] - Directory where the project should be created
+  /// * [outputDirectory] - Directory where the project should be created (empty string uses working directory)
   /// * [platforms] - Comma-separated list of target platforms
   /// * [force] - Whether to overwrite existing directories
+  /// * [workingDirectory] - Working directory for command execution (used when outputDirectory is empty)
   ///
   /// Returns:
   /// * [CliResult] containing success status, output, and any error messages
@@ -39,21 +40,29 @@ class CliService {
     required String outputDirectory,
     required String platforms,
     required bool force,
+    String? workingDirectory,
   }) async {
     final List<String> arguments = [
       'create',
       projectName,
-      '--output-directory',
-      outputDirectory,
-      '--platforms',
-      platforms,
     ];
+
+    // Only add output directory if it's not empty
+    if (outputDirectory.isNotEmpty) {
+      arguments
+        ..add('--output-directory')
+        ..add(outputDirectory);
+    }
+
+    arguments
+      ..add('--platforms')
+      ..add(platforms);
 
     if (force) {
       arguments.add('--force');
     }
 
-    return _executeCliCommand(arguments);
+    return _executeCliCommand(arguments, workingDirectory: workingDirectory);
   }
 
   /// Adds a new screen to an existing Flutter project.

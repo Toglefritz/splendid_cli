@@ -169,7 +169,7 @@ class DashboardController extends State<DashboardRoute> {
   ///
   /// Parameters:
   /// * [projectName] - Name for the new Flutter project
-  /// * [outputDirectory] - Directory where the project should be created
+  /// * [outputDirectory] - Directory where the project should be created (empty uses current project directory)
   /// * [platforms] - Comma-separated list of target platforms
   /// * [force] - Whether to overwrite existing directories
   Future<void> createProject({
@@ -185,6 +185,7 @@ class DashboardController extends State<DashboardRoute> {
         outputDirectory: outputDirectory,
         platforms: platforms,
         force: force,
+        workingDirectory: outputDirectory.isEmpty ? _currentProjectPath : null,
       ),
     );
   }

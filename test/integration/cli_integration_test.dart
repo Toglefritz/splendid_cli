@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
+import '../helpers/project_cleanup_helper.dart';
+
 /// Integration test suite for the complete Splendid CLI workflow.
 ///
 /// This test suite covers end-to-end scenarios that test the complete CLI
@@ -36,6 +38,9 @@ void main() {
       // Determine CLI executable path - look for it relative to current working directory
       // since tests run from project root
       cliExecutable = path.join('bin', 'splendid_cli.dart');
+
+      // Set up automatic cleanup for any test artifacts created at root level
+      ProjectCleanupHelper.setupAutomaticCleanup();
     });
 
     /// Clean up integration test resources.
@@ -46,6 +51,9 @@ void main() {
       if (tempDir.existsSync()) {
         tempDir.deleteSync(recursive: true);
       }
+
+      // Clean up any test artifacts that may have been created at the root level
+      ProjectCleanupHelper.cleanupTestArtifacts();
     });
 
     group('successful project creation', () {

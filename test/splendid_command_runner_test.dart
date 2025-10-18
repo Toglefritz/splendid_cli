@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:splendid_cli/splendid_cli.dart';
 import 'package:test/test.dart';
 
+import 'helpers/project_cleanup_helper.dart';
+
 /// Test suite for SplendidCommandRunner functionality.
 ///
 /// This test suite covers the top-level command runner that manages all CLI
@@ -24,12 +26,28 @@ void main() {
   group('SplendidCommandRunner', () {
     late SplendidCommandRunner runner;
 
+    /// Set up automatic cleanup for test artifacts.
+    ///
+    /// This ensures that any test projects created at the root level
+    /// are automatically cleaned up when tests complete.
+    setUpAll(() {
+      ProjectCleanupHelper.setupAutomaticCleanup();
+    });
+
     /// Set up test environment with fresh command runner instance.
     ///
     /// Creates a new command runner for each test to ensure complete isolation
     /// and prevent state leakage between tests.
     setUp(() {
       runner = SplendidCommandRunner();
+    });
+
+    /// Clean up any test artifacts created during test execution.
+    ///
+    /// This removes any directories that may have been created at the
+    /// project root level during CLI command testing.
+    tearDownAll(() {
+      ProjectCleanupHelper.cleanupTestArtifacts();
     });
 
     group('command runner configuration', () {

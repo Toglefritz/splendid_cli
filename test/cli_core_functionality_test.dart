@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:splendid_cli/splendid_cli.dart';
 import 'package:test/test.dart';
 
+import 'helpers/project_cleanup_helper.dart';
+
 /// Core functionality tests for Splendid CLI.
 ///
 /// This test suite focuses on testing the essential CLI functionality
@@ -24,6 +26,14 @@ void main() {
     late SplendidCommandRunner runner;
     late Directory tempDir;
 
+    /// Set up automatic cleanup for test artifacts.
+    ///
+    /// This ensures that any test projects created at the root level
+    /// are automatically cleaned up when tests complete.
+    setUpAll(() {
+      ProjectCleanupHelper.setupAutomaticCleanup();
+    });
+
     setUp(() {
       runner = SplendidCommandRunner();
       tempDir = Directory.systemTemp.createTempSync('cli_core_test_');
@@ -33,6 +43,14 @@ void main() {
       if (tempDir.existsSync()) {
         tempDir.deleteSync(recursive: true);
       }
+    });
+
+    /// Clean up any test artifacts created during test execution.
+    ///
+    /// This removes any directories that may have been created at the
+    /// project root level during CLI command testing.
+    tearDownAll(() {
+      ProjectCleanupHelper.cleanupTestArtifacts();
     });
 
     group('missing arguments', () {

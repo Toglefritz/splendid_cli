@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:test/test.dart';
 
+import '../helpers/project_cleanup_helper.dart';
+
 /// Basic integration tests for MCP server functionality.
 ///
 /// These tests verify that the MCP server can start, respond to basic requests,
@@ -9,6 +11,22 @@ import 'package:test/test.dart';
 // ignore_for_file: avoid_dynamic_calls, inference_failure_on_collection_literal
 void main() {
   group('MCP Basic Integration', () {
+    /// Set up automatic cleanup for test artifacts.
+    ///
+    /// This ensures that any test projects created at the root level
+    /// during MCP server testing are automatically cleaned up.
+    setUpAll(() {
+      ProjectCleanupHelper.setupAutomaticCleanup();
+    });
+
+    /// Clean up any test artifacts created during MCP testing.
+    ///
+    /// This removes any directories that may have been created at the
+    /// project root level during MCP server command execution.
+    tearDownAll(() {
+      ProjectCleanupHelper.cleanupTestArtifacts();
+    });
+
     /// Tests that the server can initialize properly.
     test('should initialize successfully', () async {
       final Map<String, dynamic> response = await _sendMcpRequest({

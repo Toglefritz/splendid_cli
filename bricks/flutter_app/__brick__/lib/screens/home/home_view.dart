@@ -10,12 +10,12 @@ import 'home_controller.dart';
 /// view contains no business logic and is purely declarative.
 class HomeView extends StatelessWidget {
   /// Creates the home view with the required controller.
-  const HomeView(this.controller, {super.key});
+  const HomeView(this.state, {super.key});
 
   /// Controller instance that manages state and business logic.
   ///
   /// Used to access the current lamp state and trigger toggle actions.
-  final HomeController controller;
+  final HomeController state;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class HomeView extends StatelessWidget {
               height: 120,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                boxShadow: controller.isLampOn
+                boxShadow: state.isLampOn
                     ? [
                         BoxShadow(
                           color: Colors.amber.withValues(alpha: 0.3),
@@ -48,7 +48,7 @@ class HomeView extends StatelessWidget {
               child: Icon(
                 Icons.lightbulb,
                 size: 80,
-                color: controller.isLampOn ? Colors.amber : Colors.grey,
+                color: state.isLampOn ? Colors.amber : Colors.grey,
               ),
             ),
             Padding(
@@ -60,8 +60,8 @@ class HomeView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: Insets.small),
                     child: Switch(
-                      value: controller.isLampOn,
-                      onChanged: controller.toggleLamp,
+                      value: state.isLampOn,
+                      onChanged: state.toggleLamp,
                       activeThumbColor: Colors.amber,
                     ),
                   ),

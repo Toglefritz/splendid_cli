@@ -235,7 +235,7 @@ void main() {
         final File viewFile = File(path.join(screenPath, 'test_screen_view.dart'));
         final String viewContent = viewFile.readAsStringSync();
         expect(viewContent, contains('class TestScreenView extends StatelessWidget'));
-        expect(viewContent, contains('final TestScreenController controller'));
+        expect(viewContent, contains('final TestScreenController state'));
         expect(viewContent, contains('Icons.rocket_launch'));
         expect(viewContent, contains('Icons.restaurant_menu'));
         expect(viewContent, contains('Icons.palette'));

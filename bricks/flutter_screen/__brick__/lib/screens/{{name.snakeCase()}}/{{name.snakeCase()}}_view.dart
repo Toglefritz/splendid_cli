@@ -7,12 +7,12 @@ import '{{name.snakeCase()}}_controller.dart';
 /// view contains no business logic and is purely declarative, displaying the icon selection game interface.
 class {{name.pascalCase()}}View extends StatelessWidget {
   /// Creates the {{name.lowerCase()}} view with the required controller.
-  const {{name.pascalCase()}}View(this.controller, {super.key});
+  const {{name.pascalCase()}}View(this.state, {super.key});
 
   /// Controller instance that manages state and business logic.
   ///
   /// Used to access the current game state and trigger icon selection actions.
-  final {{name.pascalCase()}}Controller controller;
+  final {{name.pascalCase()}}Controller state;
 
    /// Returns a human-readable name for the given icon.
   ///
@@ -40,7 +40,6 @@ class {{name.pascalCase()}}View extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('{{name.titleCase()}}'),
       ),
       body: Center(

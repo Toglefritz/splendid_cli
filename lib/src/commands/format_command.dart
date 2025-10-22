@@ -94,7 +94,7 @@ class FormatCommand extends Command<int> {
 
   /// Alternative shorter names for the command.
   @override
-  List<String> get aliases => ['fmt-doc', 'format-docs'];
+  List<String> get aliases => ['fmt-doc', 'format-docs', 'dartdoc-format'];
 
   /// Usage pattern displayed in help text and error messages.
   @override
@@ -198,9 +198,10 @@ class FormatCommand extends Command<int> {
       );
 
       // Display operation summary
-      logger..info('${dryRun ? 'Analyzing' : 'Formatting'} Dartdoc comments...')
-      ..info('Target: $targetPath')
-      ..info('Line length: $lineLength characters');
+      logger
+        ..info('${dryRun ? 'Analyzing' : 'Formatting'} Dartdoc comments...')
+        ..info('Target: $targetPath')
+        ..info('Line length: $lineLength characters');
       if (dryRun) {
         logger.info('Mode: Dry run (no files will be modified)');
       }
@@ -252,20 +253,21 @@ class FormatCommand extends Command<int> {
       logger.warn('⚠ Formatting completed with errors');
     }
 
-    logger..info('')
-
-    // Display statistics
-    ..info('Statistics:')
-    ..info('  Files processed: ${result.totalProcessed}')
-    ..info('  Files modified: ${result.totalModified}');
+    logger
+      ..info('')
+      // Display statistics
+      ..info('Statistics:')
+      ..info('  Files processed: ${result.totalProcessed}')
+      ..info('  Files modified: ${result.totalModified}');
     if (result.hasErrors) {
       logger.info('  Errors: ${result.totalErrors}');
     }
 
     // Display file lists in verbose mode
     if (verbose && result.processedFiles.isNotEmpty) {
-      logger..info('')
-      ..info('Processed files:');
+      logger
+        ..info('')
+        ..info('Processed files:');
       for (final String file in result.processedFiles) {
         final bool wasModified = result.modifiedFiles.contains(file);
         final String status = wasModified ? '✓ modified' : '- unchanged';
@@ -275,8 +277,9 @@ class FormatCommand extends Command<int> {
 
     // Display errors if any occurred
     if (result.hasErrors) {
-      logger..info('')
-      ..err('Errors encountered:');
+      logger
+        ..info('')
+        ..err('Errors encountered:');
       for (final String error in result.errors) {
         logger.err('  $error');
       }
@@ -287,19 +290,21 @@ class FormatCommand extends Command<int> {
 
     if (result.dryRun) {
       if (result.hasModifications) {
-        logger..info('Dry run complete. ${result.totalModified} files would be modified.')
-        ..info('Run without --dry-run to apply changes.');
+        logger
+          ..info('Dry run complete. ${result.totalModified} files would be modified.')
+          ..info('Run without --dry-run to apply changes.');
       } else {
         logger.info('Dry run complete. No files require formatting changes.');
       }
     } else {
       if (result.hasModifications) {
-        logger..info('Formatting applied to ${result.totalModified} files.')
-        ..info('')
-        ..info('Next steps:')
-        ..info('  1. Review the changes in your version control system')
-        ..info('  2. Run your tests to ensure no functionality was affected')
-        ..info('  3. Consider running dart format to apply code formatting');
+        logger
+          ..info('Formatting applied to ${result.totalModified} files.')
+          ..info('')
+          ..info('Next steps:')
+          ..info('  1. Review the changes in your version control system')
+          ..info('  2. Run your tests to ensure no functionality was affected')
+          ..info('  3. Consider running dart format to apply code formatting');
       } else {
         logger.info('All Dartdoc comments are already properly formatted.');
       }
@@ -307,10 +312,11 @@ class FormatCommand extends Command<int> {
 
     // Performance information in verbose mode
     if (verbose) {
-      logger..info('')
-      ..info('Configuration:')
-      ..info('  Line length: ${result.lineLength} characters')
-      ..info('  Dry run: ${result.dryRun}');
+      logger
+        ..info('')
+        ..info('Configuration:')
+        ..info('  Line length: ${result.lineLength} characters')
+        ..info('  Dry run: ${result.dryRun}');
     }
   }
 

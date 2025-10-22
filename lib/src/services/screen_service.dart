@@ -114,7 +114,7 @@ class ScreenService {
   /// This method uses the BrickLoader to find the brick locally (for development)
   /// or download it from GitHub (for global installations).
   Future<MasonGenerator> _loadScreenBrick() async {
-    final BrickLoader brickLoader = BrickLoader();
+    const BrickLoader brickLoader = BrickLoader();
     final String brickPath = await brickLoader.loadBrick('flutter_screen');
 
     final Brick brick = Brick.path(brickPath);

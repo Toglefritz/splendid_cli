@@ -66,7 +66,7 @@ class _CacheListCommand extends Command<int> {
   @override
   Future<int> run() async {
     final Logger logger = Logger();
-    final BrickLoader brickLoader = BrickLoader();
+    const BrickLoader brickLoader = BrickLoader();
 
     try {
       final List<String> cachedBricks = await brickLoader.getCachedBricks();
@@ -112,7 +112,7 @@ class _CacheClearCommand extends Command<int> {
   @override
   Future<int> run() async {
     final Logger logger = Logger();
-    final BrickLoader brickLoader = BrickLoader();
+    const BrickLoader brickLoader = BrickLoader();
     final bool force = argResults!['force'] as bool;
 
     try {
@@ -162,7 +162,7 @@ class _CacheInfoCommand extends Command<int> {
   @override
   Future<int> run() async {
     final Logger logger = Logger();
-    final BrickLoader brickLoader = BrickLoader();
+    const BrickLoader brickLoader = BrickLoader();
 
     try {
       final List<String> cachedBricks = await brickLoader.getCachedBricks();

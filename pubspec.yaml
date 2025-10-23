@@ -1,6 +1,6 @@
 name: splendid_cli
 description: A Command-Line Interface for scaffolding Flutter projects with MVC architecture, strong typing, and localization best practices.
-version: 5.0.0
+version: 5.0.1
 repository: https://github.com/Toglefritz/splendid_cli
 homepage: https://github.com/Toglefritz/splendid_cli
 issue_tracker: https://github.com/Toglefritz/splendid_cli/issues

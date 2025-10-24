@@ -8,8 +8,8 @@ import '../../helpers/temp_directory_helper.dart';
 
 /// Test suite for FormatCommand functionality.
 ///
-/// This test suite covers the format-dartdoc command including validation,
-/// error handling, and successful Dartdoc comment reformatting operations.
+/// This test suite covers the format-dartdoc command including validation, error handling, and successful Dartdoc
+/// comment reformatting operations.
 void main() {
   group('FormatCommand', () {
     late TempDirectoryHelper tempDirHelper;

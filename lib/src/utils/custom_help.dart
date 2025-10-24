@@ -3,9 +3,8 @@ import 'package:mason_logger/mason_logger.dart';
 
 /// Utility class for generating custom help output.
 ///
-/// This class provides enhanced help formatting with colorized output,
-/// ASCII art branding, and comprehensive command information that
-/// improves upon the default args package help system.
+/// This class provides enhanced help formatting with colorized output, ASCII art branding, and comprehensive command
+/// information that improves upon the default args package help system.
 // ignore_for_file: cascade_invocations
 class CustomHelp {
   /// Creates a new custom help utility.
@@ -544,8 +543,7 @@ class CustomHelp {
 
 /// Information about a CLI command for help display.
 ///
-/// This class contains metadata about commands that is used to generate
-/// consistent and informative help output.
+/// This class contains metadata about commands that is used to generate consistent and informative help output.
 class CommandInfo {
   /// Creates command information for help display.
   const CommandInfo({

@@ -3,8 +3,8 @@ import 'package:path/path.dart' as path;
 
 /// Utilities for executing CLI commands in tests.
 ///
-/// This class provides helper methods for running the CLI in test environments, handling common scenarios like
-/// timeout management and output capture.
+/// This class provides helper methods for running the CLI in test environments, handling common scenarios like timeout
+/// management and output capture.
 class CliTestRunner {
   /// Path to the CLI executable for testing.
   ///
@@ -18,8 +18,7 @@ class CliTestRunner {
 
   /// Executes a CLI command with the specified arguments.
   ///
-  /// This method provides a convenient way to run CLI commands in tests with proper timeout handling and error
-  /// capture.
+  /// This method provides a convenient way to run CLI commands in tests with proper timeout handling and error capture.
   ///
   /// Parameters:
   /// * [args] - Command-line arguments to pass to the CLI
@@ -42,8 +41,7 @@ class CliTestRunner {
 
   /// Executes the create command with specified project name and options.
   ///
-  /// This is a convenience method for the most common CLI operation in tests, reducing boilerplate code in test
-  /// files.
+  /// This is a convenience method for the most common CLI operation in tests, reducing boilerplate code in test files.
   ///
   /// Parameters:
   /// * [projectName] - Name of the project to create

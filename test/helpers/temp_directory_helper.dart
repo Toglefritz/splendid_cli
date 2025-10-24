@@ -14,8 +14,8 @@ class TempDirectoryHelper {
 
   /// Creates a new temporary directory helper.
   ///
-  /// The directory is created immediately and can be accessed through the [directory] property. A unique prefix is
-  /// used to avoid conflicts between concurrent test runs.
+  /// The directory is created immediately and can be accessed through the [directory] property. A unique prefix is used
+  /// to avoid conflicts between concurrent test runs.
   ///
   /// Parameters:
   /// * [prefix] - Optional prefix for the temporary directory name

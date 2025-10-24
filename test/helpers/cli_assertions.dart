@@ -5,8 +5,8 @@ import 'package:test/test.dart';
 
 /// Assertion helpers for CLI-specific testing.
 ///
-/// This class provides custom assertion methods that are commonly used when testing CLI applications, making test
-/// code more readable and reducing duplication.
+/// This class provides custom assertion methods that are commonly used when testing CLI applications, making test code
+/// more readable and reducing duplication.
 class CliAssertions {
   /// Asserts that a process result indicates success.
   ///
@@ -69,8 +69,8 @@ class CliAssertions {
 
   /// Asserts that a directory contains expected Flutter project structure.
   ///
-  /// This helper verifies that a directory contains the basic files and folders expected in a Flutter project,
-  /// making it easier to validate project creation in tests.
+  /// This helper verifies that a directory contains the basic files and folders expected in a Flutter project, making
+  /// it easier to validate project creation in tests.
   ///
   /// Parameters:
   /// * [projectPath] - Path to the project directory to validate

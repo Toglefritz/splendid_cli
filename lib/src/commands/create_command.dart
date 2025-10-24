@@ -5,10 +5,10 @@ import '../services/project_service.dart';
 
 /// Command-line interface for creating new Flutter applications with MVC architecture.
 ///
-/// This command generates a complete Flutter project structure following Splendid's MVC coding standards. It uses
-/// Mason bricks to ensure consistent project layout, proper separation of concerns, and adherence to established
-/// patterns. The command first creates a Flutter project with specified platform support, then applies the MVC
-/// template structure.
+/// This command generates a complete Flutter project structure following Splendid's MVC coding standards. It uses Mason
+/// bricks to ensure consistent project layout, proper separation of concerns, and adherence to established patterns.
+/// The command first creates a Flutter project with specified platform support, then applies the MVC template
+/// structure.
 ///
 /// The generated applications include:
 /// * Route classes for screen entry points (StatefulWidget)
@@ -52,8 +52,8 @@ class CreateCommand extends Command<int> {
   /// * `--output-directory` (-o): Custom target directory for project creation
   /// * `--force`: Overwrite existing directories without confirmation
   ///
-  /// The argument parser is configured during construction to ensure all command-line options are properly defined
-  /// and validated before execution.
+  /// The argument parser is configured during construction to ensure all command-line options are properly defined and
+  /// validated before execution.
   CreateCommand() {
     argParser
       ..addOption(
@@ -78,8 +78,8 @@ class CreateCommand extends Command<int> {
 
   /// Brief description of the command's purpose for help text.
   ///
-  /// This description appears in the CLI help output when users run `splendid_cli help` or
-  /// `splendid_cli create --help`.
+  /// This description appears in the CLI help output when users run `splendid_cli help` or `splendid_cli create
+  /// --help`.
   @override
   String get description => 'Create a new Flutter app with MVC architecture and platform support.';
 
@@ -119,7 +119,7 @@ class CreateCommand extends Command<int> {
   ///
   /// Throws:
   /// * No exceptions are thrown; all errors are handled internally
-  ///   and communicated through return codes and user messages
+  /// and communicated through return codes and user messages
   @override
   Future<int> run() async {
     /// Logger instance for user-facing output and error reporting.

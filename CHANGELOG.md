@@ -1,3 +1,12 @@
+## 5.0.1
+
+### Command Aliases
+
+- **Enhanced Usability**: Added convenient shorter aliases for core commands to improve developer experience
+- **Alias Support**: Commands now support multiple invocation patterns for faster typing and better discoverability
+- **Backward Compatibility**: All existing command names continue to work alongside new aliases
+- **Consistent Patterns**: Aliases follow consistent naming conventions across all commands
+
 ## 5.0.0
 
 ### GUI Dashboard

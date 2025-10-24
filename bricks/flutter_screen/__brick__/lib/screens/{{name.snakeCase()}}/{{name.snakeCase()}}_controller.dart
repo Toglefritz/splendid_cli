@@ -5,8 +5,9 @@ import '{{name.snakeCase()}}_view.dart';
 
 /// Controller for the {{name.lowerCase()}} screen that manages state and business logic.
 ///
-/// Extends `State<{{name.pascalCase()}}Route>` to provide state management capabilities and serves as the bridge between the route and
-/// view components. Manages the icon selection game logic including randomization and user interactions.
+/// Extends `State<{{name.pascalCase()}}Route>` to provide state management capabilities and serves as the bridge
+/// between the route and view components. Manages the icon selection game logic including randomization and user
+/// interactions.
 class {{name.pascalCase()}}Controller extends State<{{name.pascalCase()}}Route> {
   /// Available icons for the selection game.
   ///
@@ -40,8 +41,8 @@ class {{name.pascalCase()}}Controller extends State<{{name.pascalCase()}}Route> 
 
   /// Resets the game by shuffling icons and selecting a new target.
   ///
-  /// This method is called during initialization and after each successful selection
-  /// to provide a new challenge for the user.
+  /// This method is called during initialization and after each successful selection to provide a new challenge for the
+  /// user.
   void _resetGame() {
     setState(() {
       _currentIcons = List.from(_availableIcons)..shuffle(_random);
@@ -51,8 +52,8 @@ class {{name.pascalCase()}}Controller extends State<{{name.pascalCase()}}Route> 
 
   /// Handles user icon selection and game progression.
   ///
-  /// When the user selects the correct icon, the game resets with a new arrangement.
-  /// Incorrect selections have no effect, allowing the user to try again.
+  /// When the user selects the correct icon, the game resets with a new arrangement. Incorrect selections have no
+  /// effect, allowing the user to try again.
   ///
   /// Parameters:
   /// * [selectedIcon] - The icon that the user tapped

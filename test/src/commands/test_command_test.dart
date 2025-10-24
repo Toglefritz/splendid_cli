@@ -6,9 +6,8 @@ import 'package:test/test.dart';
 
 /// Test suite for TestCommand (generate-test) functionality.
 ///
-/// This test suite covers all aspects of the test generation command,
-/// including argument parsing, file analysis, template selection,
-/// and test file generation using Mason bricks.
+/// This test suite covers all aspects of the test generation command, including argument parsing, file analysis,
+/// template selection, and test file generation using Mason bricks.
 ///
 /// Test Categories:
 /// * Command configuration and argument parsing
@@ -23,9 +22,8 @@ import 'package:test/test.dart';
 /// * Sample Dart files for analysis testing
 /// * Mock Mason brick templates (when needed)
 ///
-/// The tests ensure that the TestCommand generates appropriate
-/// test templates for both Flutter widgets and regular Dart classes,
-/// following established testing patterns and documentation standards.
+/// The tests ensure that the TestCommand generates appropriate test templates for both Flutter widgets and regular Dart
+/// classes, following established testing patterns and documentation standards.
 void main() {
   group('TestCommand', () {
     late TestCommand command;
@@ -33,8 +31,8 @@ void main() {
 
     /// Set up test environment with fresh command instance and temp directory.
     ///
-    /// Creates a new TestCommand and temporary directory for each test
-    /// to ensure complete isolation and prevent test interference.
+    /// Creates a new TestCommand and temporary directory for each test to ensure complete isolation and prevent test
+    /// interference.
     setUp(() {
       command = TestCommand();
       tempDir = Directory.systemTemp.createTempSync('test_command_test_');
@@ -42,8 +40,7 @@ void main() {
 
     /// Clean up test environment after each test.
     ///
-    /// Removes temporary directories and files created during testing
-    /// to prevent disk space accumulation.
+    /// Removes temporary directories and files created during testing to prevent disk space accumulation.
     tearDown(() {
       if (tempDir.existsSync()) {
         tempDir.deleteSync(recursive: true);
@@ -53,8 +50,8 @@ void main() {
     group('command configuration', () {
       /// Verifies that TestCommand is properly configured with correct metadata.
       ///
-      /// This test ensures that the command has the expected name, description,
-      /// and argument configuration that users will see in help output.
+      /// This test ensures that the command has the expected name, description, and argument configuration that users
+      /// will see in help output.
       test('should have correct name and description', () {
         expect(command.name, equals('generate-test'));
         expect(command.description, contains('Generate test file templates'));
@@ -63,8 +60,7 @@ void main() {
 
       /// Verifies that TestCommand has all expected command-line options.
       ///
-      /// This test ensures that all documented flags and options are
-      /// properly configured in the argument parser.
+      /// This test ensures that all documented flags and options are properly configured in the argument parser.
       test('should have correct command-line options', () {
         final argParser = command.argParser;
 
@@ -84,8 +80,7 @@ void main() {
     group('argument validation', () {
       /// Tests that TestCommand requires a target file argument.
       ///
-      /// This test verifies that the command fails with appropriate
-      /// error message when no target file is provided.
+      /// This test verifies that the command fails with appropriate error message when no target file is provided.
       test('should require target file argument', () async {
         // Create a mock argument results without target file
         final result = await _runCommandWithArgs(command, []);
@@ -95,8 +90,7 @@ void main() {
 
       /// Tests that TestCommand validates target file existence.
       ///
-      /// This test ensures that the command fails gracefully when
-      /// the specified target file doesn't exist.
+      /// This test ensures that the command fails gracefully when the specified target file doesn't exist.
       test('should validate target file existence', () async {
         final result = await _runCommandWithArgs(command, ['nonexistent.dart']);
 
@@ -105,8 +99,7 @@ void main() {
 
       /// Tests that TestCommand validates Dart file extension.
       ///
-      /// This test verifies that the command only accepts files
-      /// with .dart extension and rejects other file types.
+      /// This test verifies that the command only accepts files with .dart extension and rejects other file types.
       test('should validate Dart file extension', () async {
         // Create a non-Dart file
         final nonDartFile = File(path.join(tempDir.path, 'test.txt'));
@@ -119,8 +112,7 @@ void main() {
 
       /// Tests that TestCommand accepts valid Dart files.
       ///
-      /// This test verifies that properly formatted Dart files
-      /// pass validation and the command proceeds to generation.
+      /// This test verifies that properly formatted Dart files pass validation and the command proceeds to generation.
       test('should accept valid Dart files', () async {
         // Create a valid Dart file
         final dartFile = File(path.join(tempDir.path, 'test_class.dart'));
@@ -142,9 +134,8 @@ class TestClass {
     group('file analysis', () {
       /// Tests file type detection for Flutter widgets.
       ///
-      /// This test verifies that the command correctly identifies
-      /// files containing Flutter widgets and selects the appropriate
-      /// test template type.
+      /// This test verifies that the command correctly identifies files containing Flutter widgets and selects the
+      /// appropriate test template type.
       test('should detect Flutter widget files', () async {
         // Create a Flutter widget file
         final widgetFile = File(path.join(tempDir.path, 'my_widget.dart'));
@@ -166,8 +157,7 @@ class MyWidget extends StatelessWidget {
 
       /// Tests file type detection for regular Dart classes.
       ///
-      /// This test verifies that the command correctly identifies
-      /// files containing regular Dart classes and selects the
+      /// This test verifies that the command correctly identifies files containing regular Dart classes and selects the
       /// appropriate test template type.
       test('should detect regular Dart class files', () async {
         // Create a regular Dart class file
@@ -185,9 +175,8 @@ class MyService {
 
       /// Tests class name extraction from Dart files.
       ///
-      /// This test verifies that the command correctly extracts
-      /// the primary class name from Dart files for use in
-      /// test template generation.
+      /// This test verifies that the command correctly extracts the primary class name from Dart files for use in test
+      /// template generation.
       test('should extract class names correctly', () async {
         // Create a Dart file with multiple classes
         final multiClassFile = File(path.join(tempDir.path, 'multi_class.dart'));
@@ -209,9 +198,8 @@ class SecondClass {
     group('output path determination', () {
       /// Tests default test file path generation.
       ///
-      /// This test verifies that the command correctly mirrors
-      /// the source file structure in the test/ directory when
-      /// no custom output directory is specified.
+      /// This test verifies that the command correctly mirrors the source file structure in the test/ directory when no
+      /// custom output directory is specified.
       test('should generate correct default test file paths', () {
         // Test various source file paths
         final testCases = {
@@ -231,8 +219,8 @@ class SecondClass {
 
       /// Tests custom output directory handling.
       ///
-      /// This test verifies that the command correctly uses
-      /// custom output directories when specified via the --output flag.
+      /// This test verifies that the command correctly uses custom output directories when specified via the --output
+      /// flag.
       test('should handle custom output directories', () async {
         final customOutputDir = path.join(tempDir.path, 'custom_tests');
 
@@ -255,8 +243,7 @@ class SecondClass {
     group('template variable construction', () {
       /// Tests that template variables are constructed correctly.
       ///
-      /// This test verifies that all necessary template variables
-      /// are properly constructed for Mason brick generation,
+      /// This test verifies that all necessary template variables are properly constructed for Mason brick generation,
       /// including class names, import paths, and file names.
       test('should construct template variables correctly', () {
         // This test would verify the internal template variable construction
@@ -266,8 +253,7 @@ class SecondClass {
 
       /// Tests import path calculation for different file structures.
       ///
-      /// This test verifies that the command correctly calculates
-      /// relative import paths from test files to source files
+      /// This test verifies that the command correctly calculates relative import paths from test files to source files
       /// for different project structures.
       test('should calculate import paths correctly', () {
         final testCases = {
@@ -287,8 +273,8 @@ class SecondClass {
     group('error handling', () {
       /// Tests handling of file system permission errors.
       ///
-      /// This test verifies that the command handles file system
-      /// errors gracefully and provides appropriate error messages.
+      /// This test verifies that the command handles file system errors gracefully and provides appropriate error
+      /// messages.
       test('should handle file system permission errors gracefully', () async {
         // This test is difficult to implement reliably across platforms
         // It would require creating files with restricted permissions
@@ -297,8 +283,8 @@ class SecondClass {
 
       /// Tests handling of Mason brick loading failures.
       ///
-      /// This test verifies that the command handles missing or
-      /// corrupted Mason bricks gracefully with appropriate error messages.
+      /// This test verifies that the command handles missing or corrupted Mason bricks gracefully with appropriate
+      /// error messages.
       test('should handle Mason brick loading failures', () async {
         // Create a valid Dart file
         final dartFile = File(path.join(tempDir.path, 'test_class.dart'));
@@ -313,8 +299,8 @@ class SecondClass {
 
       /// Tests handling of existing test files without force flag.
       ///
-      /// This test verifies that the command protects existing test files
-      /// from accidental overwriting and requires explicit --force flag.
+      /// This test verifies that the command protects existing test files from accidental overwriting and requires
+      /// explicit --force flag.
       test('should protect existing test files without force flag', () async {
         // Create source file
         final dartFile = File(path.join(tempDir.path, 'test_class.dart'));
@@ -334,8 +320,8 @@ class SecondClass {
     group('integration scenarios', () {
       /// Tests complete workflow for widget test generation.
       ///
-      /// This integration test verifies the entire workflow from
-      /// command invocation through test file generation for Flutter widgets.
+      /// This integration test verifies the entire workflow from command invocation through test file generation for
+      /// Flutter widgets.
       test(
         'should generate widget test files successfully',
         () async {
@@ -366,8 +352,8 @@ class MyWidget extends StatelessWidget {
 
       /// Tests complete workflow for class test generation.
       ///
-      /// This integration test verifies the entire workflow from
-      /// command invocation through test file generation for regular Dart classes.
+      /// This integration test verifies the entire workflow from command invocation through test file generation for
+      /// regular Dart classes.
       test(
         'should generate class test files successfully',
         () async {
@@ -395,9 +381,8 @@ class MyService {
 
       /// Tests automatic type detection workflow.
       ///
-      /// This integration test verifies that the command correctly
-      /// detects file types automatically and generates appropriate
-      /// test templates without explicit type specification.
+      /// This integration test verifies that the command correctly detects file types automatically and generates
+      /// appropriate test templates without explicit type specification.
       test('should detect file types automatically', () async {
         // Create files of different types
         final widgetFile = File(path.join(tempDir.path, 'auto_widget.dart'));
@@ -438,8 +423,8 @@ class AutoClass {
 
 /// Helper function to run TestCommand with specified arguments.
 ///
-/// This utility function simulates command-line invocation by setting up
-/// the argument parser and running the command with the provided arguments.
+/// This utility function simulates command-line invocation by setting up the argument parser and running the command
+/// with the provided arguments.
 ///
 /// Parameters:
 /// * [command] - The TestCommand instance to run

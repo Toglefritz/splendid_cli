@@ -1,8 +1,7 @@
 /// Test suite for CreateCommand functionality.
 ///
-/// This test suite covers all public methods and edge cases for the
-/// CreateCommand class, ensuring reliable behavior across different
-/// scenarios and error conditions.
+/// This test suite covers all public methods and edge cases for the CreateCommand class, ensuring reliable behavior
+/// across different scenarios and error conditions.
 ///
 /// Test Categories:
 /// * Command initialization and argument parsing
@@ -18,8 +17,8 @@
 /// * Process execution for flutter create command
 /// * Mason brick loading and generation
 ///
-/// The tests use temporary directories to ensure isolation and prevent
-/// interference with the actual file system during test execution.
+/// The tests use temporary directories to ensure isolation and prevent interference with the actual file system during
+/// test execution.
 library;
 
 import 'dart:io';
@@ -37,9 +36,8 @@ void main() {
 
     /// Set up test environment with fresh command instance and temporary directory.
     ///
-    /// Creates a new temporary directory for each test to ensure complete isolation
-    /// and prevent test interference. The temporary directory is automatically
-    /// cleaned up after each test completes.
+    /// Creates a new temporary directory for each test to ensure complete isolation and prevent test interference. The
+    /// temporary directory is automatically cleaned up after each test completes.
     setUp(() {
       command = CreateCommand();
       tempDir = Directory.systemTemp.createTempSync('create_command_test_');
@@ -48,8 +46,7 @@ void main() {
 
     /// Clean up test resources after each test.
     ///
-    /// Removes the temporary directory and all its contents to prevent
-    /// disk space accumulation during test runs.
+    /// Removes the temporary directory and all its contents to prevent disk space accumulation during test runs.
     tearDown(() {
       if (tempDir.existsSync()) {
         tempDir.deleteSync(recursive: true);
@@ -59,8 +56,8 @@ void main() {
     group('command configuration', () {
       /// Verifies that the command is properly configured with correct metadata.
       ///
-      /// This test ensures that the command has the expected name, description,
-      /// and usage pattern that users will see in help text and error messages.
+      /// This test ensures that the command has the expected name, description, and usage pattern that users will see
+      /// in help text and error messages.
       test('should have correct name and description', () {
         expect(command.name, equals('create'));
         expect(
@@ -75,8 +72,8 @@ void main() {
 
       /// Verifies that all expected command-line options are properly configured.
       ///
-      /// This test checks that the argument parser includes all required options
-      /// with correct names, abbreviations, help text, and default values.
+      /// This test checks that the argument parser includes all required options with correct names, abbreviations,
+      /// help text, and default values.
       test('should configure all expected options', () {
         final argParser = command.argParser;
 
@@ -113,8 +110,8 @@ void main() {
     group('argument validation', () {
       /// Tests that the command fails with appropriate error when no project name is provided.
       ///
-      /// This test verifies that the command returns the correct exit code (64 for usage errors)
-      /// and provides helpful error messaging when users forget to specify a project name.
+      /// This test verifies that the command returns the correct exit code (64 for usage errors) and provides helpful
+      /// error messaging when users forget to specify a project name.
       test('should return usage error when project name is missing', () async {
         // Use command runner to test argument parsing
         final int exitCode = await runner.run(['create']);
@@ -125,9 +122,8 @@ void main() {
 
       /// Tests that the command fails when an invalid project name is provided.
       ///
-      /// This test ensures that project names are validated against Dart package
-      /// naming conventions before attempting project creation, preventing issues
-      /// later in the Flutter project generation process.
+      /// This test ensures that project names are validated against Dart package naming conventions before attempting
+      /// project creation, preventing issues later in the Flutter project generation process.
       test('should return usage error for invalid project names', () async {
         // Test various invalid project name patterns
         final List<String> invalidNames = [
@@ -152,9 +148,8 @@ void main() {
 
       /// Tests that the command accepts valid project names.
       ///
-      /// This test verifies that properly formatted Dart package names pass
-      /// validation and allow the command to proceed to project creation.
-      /// Note: This test only validates the name parsing, not full project creation.
+      /// This test verifies that properly formatted Dart package names pass validation and allow the command to proceed
+      /// to project creation. Note: This test only validates the name parsing, not full project creation.
       test('should accept valid project names', () async {
         final List<String> validNames = [
           'my_app',
@@ -187,8 +182,8 @@ void main() {
     group('directory handling', () {
       /// Tests that the command fails when target directory exists and force flag is not used.
       ///
-      /// This test ensures that existing directories are protected from accidental
-      /// overwriting unless the user explicitly provides the --force flag.
+      /// This test ensures that existing directories are protected from accidental overwriting unless the user
+      /// explicitly provides the --force flag.
       test('should fail when target directory exists without force flag', () async {
         const String projectName = 'existing_project';
 
@@ -207,9 +202,9 @@ void main() {
 
       /// Tests that the command succeeds when target directory exists and force flag is used.
       ///
-      /// This test verifies that the --force flag properly overrides directory
-      /// existence checks, allowing users to intentionally overwrite existing projects.
-      /// Note: This test may fail if Flutter CLI is not available in test environment.
+      /// This test verifies that the --force flag properly overrides directory existence checks, allowing users to
+      /// intentionally overwrite existing projects. Note: This test may fail if Flutter CLI is not available in test
+      /// environment.
       test('should proceed when target directory exists with force flag', () async {
         const String projectName = 'existing_project';
 
@@ -232,9 +227,8 @@ void main() {
 
       /// Tests that custom output directory is properly handled.
       ///
-      /// This test verifies that the --output-directory flag correctly specifies
-      /// where the new project should be created, rather than using the current
-      /// working directory.
+      /// This test verifies that the --output-directory flag correctly specifies where the new project should be
+      /// created, rather than using the current working directory.
       test('should use custom output directory when specified', () async {
         const String projectName = 'custom_location_app';
         final String customOutput = path.join(tempDir.path, 'custom');
@@ -256,8 +250,8 @@ void main() {
     group('platform configuration', () {
       /// Tests that default platforms are properly configured.
       ///
-      /// This test verifies that when no --platforms flag is provided,
-      /// the command defaults to enabling all available Flutter platforms.
+      /// This test verifies that when no --platforms flag is provided, the command defaults to enabling all available
+      /// Flutter platforms.
       test('should use all platforms by default', () async {
         const String projectName = 'default_platforms_app';
 
@@ -270,8 +264,8 @@ void main() {
 
       /// Tests that custom platform selection is properly parsed.
       ///
-      /// This test verifies that users can specify a subset of platforms
-      /// using the --platforms flag with comma-separated values.
+      /// This test verifies that users can specify a subset of platforms using the --platforms flag with
+      /// comma-separated values.
       test('should accept custom platform selection', () async {
         const String projectName = 'mobile_only_app';
         const String customPlatforms = 'android,ios';
@@ -290,8 +284,8 @@ void main() {
 
       /// Tests that single platform selection works correctly.
       ///
-      /// This test ensures that users can create projects targeting only
-      /// one platform, which is useful for specialized applications.
+      /// This test ensures that users can create projects targeting only one platform, which is useful for specialized
+      /// applications.
       test('should accept single platform selection', () async {
         const String projectName = 'web_only_app';
         const String singlePlatform = 'web';
@@ -312,9 +306,8 @@ void main() {
     group('error handling', () {
       /// Tests that the command handles missing Flutter CLI gracefully.
       ///
-      /// This test verifies that when the Flutter CLI is not available in the
-      /// system PATH, the command provides a clear error message rather than
-      /// crashing with an obscure exception.
+      /// This test verifies that when the Flutter CLI is not available in the system PATH, the command provides a clear
+      /// error message rather than crashing with an obscure exception.
       test('should handle missing Flutter CLI gracefully', () async {
         const String projectName = 'test_app';
 
@@ -332,9 +325,8 @@ void main() {
 
       /// Tests that the command handles file system permission errors.
       ///
-      /// This test verifies that when the target directory cannot be created
-      /// due to permission restrictions, the command fails gracefully with
-      /// an appropriate error message.
+      /// This test verifies that when the target directory cannot be created due to permission restrictions, the
+      /// command fails gracefully with an appropriate error message.
       test('should handle permission errors gracefully', () async {
         const String projectName = 'permission_test_app';
 
@@ -354,9 +346,8 @@ void main() {
     group('integration scenarios', () {
       /// Tests the complete workflow with minimal valid arguments.
       ///
-      /// This test verifies that the command can process a basic project
-      /// creation request with just a project name, using all default settings.
-      /// Note: This test requires Flutter CLI to be available.
+      /// This test verifies that the command can process a basic project creation request with just a project name,
+      /// using all default settings. Note: This test requires Flutter CLI to be available.
       test('should handle minimal valid arguments', () async {
         const String projectName = 'minimal_app';
 
@@ -374,9 +365,8 @@ void main() {
 
       /// Tests the complete workflow with all options specified.
       ///
-      /// This test verifies that the command properly handles all available
-      /// command-line options when used together, ensuring no conflicts or
-      /// unexpected interactions between different flags and options.
+      /// This test verifies that the command properly handles all available command-line options when used together,
+      /// ensuring no conflicts or unexpected interactions between different flags and options.
       test('should handle all options together', () async {
         const String projectName = 'full_options_app';
 

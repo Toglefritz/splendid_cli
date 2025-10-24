@@ -5,13 +5,11 @@ import '../services/brick_loader.dart';
 
 /// Command-line interface for managing the brick cache.
 ///
-/// This command provides utilities for managing locally cached bricks that
-/// have been downloaded from remote sources. It allows users to view, clear,
-/// and manage their brick cache for troubleshooting and maintenance.
+/// This command provides utilities for managing locally cached bricks that have been downloaded from remote sources. It
+/// allows users to view, clear, and manage their brick cache for troubleshooting and maintenance.
 ///
-/// The cache is stored in the user's home directory at `~/.splendid_cli/bricks/`
-/// and contains downloaded Mason bricks that are used when local development
-/// bricks are not available.
+/// The cache is stored in the user's home directory at `~/.splendid_cli/bricks/` and contains downloaded Mason bricks
+/// that are used when local development bricks are not available.
 ///
 /// Usage Examples:
 /// ```bash
@@ -66,7 +64,7 @@ class _CacheListCommand extends Command<int> {
   @override
   Future<int> run() async {
     final Logger logger = Logger();
-    final BrickLoader brickLoader = BrickLoader();
+    const BrickLoader brickLoader = BrickLoader();
 
     try {
       final List<String> cachedBricks = await brickLoader.getCachedBricks();
@@ -112,7 +110,7 @@ class _CacheClearCommand extends Command<int> {
   @override
   Future<int> run() async {
     final Logger logger = Logger();
-    final BrickLoader brickLoader = BrickLoader();
+    const BrickLoader brickLoader = BrickLoader();
     final bool force = argResults!['force'] as bool;
 
     try {
@@ -162,7 +160,7 @@ class _CacheInfoCommand extends Command<int> {
   @override
   Future<int> run() async {
     final Logger logger = Logger();
-    final BrickLoader brickLoader = BrickLoader();
+    const BrickLoader brickLoader = BrickLoader();
 
     try {
       final List<String> cachedBricks = await brickLoader.getCachedBricks();

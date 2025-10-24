@@ -6,15 +6,14 @@ import 'brick_loader.dart';
 
 /// Service for managing Flutter screen generation operations.
 ///
-/// This service encapsulates the core business logic for screen operations,
-/// separating it from CLI-specific concerns like argument parsing and user
-/// interaction. This design enables reuse across different interfaces
-/// (CLI, MCP server, etc.).
+/// This service encapsulates the core business logic for screen operations, separating it from CLI-specific concerns
+/// like argument parsing and user interaction. This design enables reuse across different interfaces (CLI, MCP server,
+/// etc.).
 class ScreenService {
   /// Creates a new instance of [ScreenService].
   ///
-  /// This service is stateless and can be reused across multiple operations.
-  /// All methods are safe to call concurrently from different isolates.
+  /// This service is stateless and can be reused across multiple operations. All methods are safe to call concurrently
+  /// from different isolates.
   const ScreenService();
 
   /// Adds a new screen to an existing Flutter project with MVC architecture.
@@ -111,10 +110,10 @@ class ScreenService {
 
   /// Loads the Flutter screen Mason brick using the brick loader.
   ///
-  /// This method uses the BrickLoader to find the brick locally (for development)
-  /// or download it from GitHub (for global installations).
+  /// This method uses the BrickLoader to find the brick locally (for development) or download it from GitHub (for
+  /// global installations).
   Future<MasonGenerator> _loadScreenBrick() async {
-    final BrickLoader brickLoader = BrickLoader();
+    const BrickLoader brickLoader = BrickLoader();
     final String brickPath = await brickLoader.loadBrick('flutter_screen');
 
     final Brick brick = Brick.path(brickPath);

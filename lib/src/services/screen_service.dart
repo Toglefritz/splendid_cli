@@ -64,7 +64,7 @@ class ScreenService {
       }
 
       // Load and apply screen template
-      final MasonGenerator generator = await _loadScreenBrick();
+      final MasonGenerator generator = await _loadScreenBrick(request.blank);
       final Map<String, dynamic> vars = {'name': request.screenName};
 
       await generator.generate(
@@ -112,9 +112,13 @@ class ScreenService {
   ///
   /// This method uses the BrickLoader to find the brick locally (for development) or download it from GitHub (for
   /// global installations).
-  Future<MasonGenerator> _loadScreenBrick() async {
+  ///
+  /// Parameters:
+  /// * [blank] - Whether to load the blank screen brick without example content
+  Future<MasonGenerator> _loadScreenBrick(bool blank) async {
     const BrickLoader brickLoader = BrickLoader();
-    final String brickPath = await brickLoader.loadBrick('flutter_screen');
+    final String brickName = blank ? 'flutter_screen_blank' : 'flutter_screen';
+    final String brickPath = await brickLoader.loadBrick(brickName);
 
     final Brick brick = Brick.path(brickPath);
     return MasonGenerator.fromBrick(brick);
@@ -221,6 +225,7 @@ class ScreenCreationRequest {
     required this.screenName,
     required this.projectPath,
     this.force = false,
+    this.blank = false,
   });
 
   /// Name of the screen to create.
@@ -231,6 +236,9 @@ class ScreenCreationRequest {
 
   /// Whether to overwrite existing screen files.
   final bool force;
+
+  /// Whether to create a blank screen without example content.
+  final bool blank;
 }
 
 /// Result of screen creation operation.

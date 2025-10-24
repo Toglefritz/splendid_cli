@@ -26,8 +26,14 @@ import '../services/screen_service.dart';
 /// # Add screen with specific name
 /// splendid_cli screen user_profile
 ///
+/// # Create a blank screen without example content
+/// splendid_cli screen settings --blank
+///
 /// # Force overwrite existing screen files
 /// splendid_cli screen settings --force
+///
+/// # Create blank screen and overwrite existing files
+/// splendid_cli screen settings --blank --force
 /// ```
 ///
 /// Exit Codes:
@@ -46,13 +52,19 @@ class ScreenCommand extends Command<int> {
   ///
   /// Initializes the command with support for:
   /// * `--force`: Overwrite existing screen files without confirmation
+  /// * `--blank`: Create a blank screen without example content
   ///
   /// The argument parser is configured during construction to ensure all command-line options are properly defined and
   /// validated before execution.
   ScreenCommand() {
-    argParser.addFlag(
+    argParser..addFlag(
       'force',
       help: 'Whether to force screen generation, overwriting existing files.',
+      negatable: false,
+    )
+    ..addFlag(
+      'blank',
+      help: 'Create a blank screen without example content.',
       negatable: false,
     );
   }
@@ -123,11 +135,15 @@ class ScreenCommand extends Command<int> {
     /// Whether to force overwrite existing screen files (--force flag).
     final bool force = argResults!['force'] as bool;
 
+    /// Whether to create a blank screen without example content (--blank flag).
+    final bool blank = argResults!['blank'] as bool;
+
     // Create request object
     final ScreenCreationRequest request = ScreenCreationRequest(
       screenName: screenName,
       projectPath: Directory.current.path,
       force: force,
+      blank: blank,
     );
 
     try {
@@ -139,7 +155,8 @@ class ScreenCommand extends Command<int> {
         logger.warn('Overwriting existing screen: $screenName');
       }
 
-      logger.info('Generating screen: $screenName');
+      final String screenType = blank ? 'blank screen' : 'screen';
+      logger.info('Generating $screenType: $screenName');
 
       // Use service to create screen
       final ScreenCreationResult result = await _screenService.createScreen(request);

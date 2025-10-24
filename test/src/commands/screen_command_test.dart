@@ -197,6 +197,133 @@ void main() {
       });
     });
 
+    group('blank flag functionality', () {
+      /// Tests that --blank flag generates minimal screen without example content.
+      ///
+      /// This test verifies that the blank flag creates clean MVC scaffolding without the icon selection game logic.
+      test('should generate blank screen without example content', () async {
+        // Create minimal Flutter project structure
+        await _createMinimalFlutterProject(tempDirHelper.directoryPath);
+
+        final ProcessResult result = await Process.run(
+          'dart',
+          ['run', path.join(Directory.current.path, 'bin/splendid_cli.dart'), 'screen', 'blank_screen', '--blank'],
+          workingDirectory: tempDirHelper.directoryPath,
+        );
+
+        expect(result.exitCode, equals(0));
+        expect(result.stdout, contains('Generating blank screen: blank_screen'));
+        expect(result.stdout, contains('✓ Generated screen: blank_screen'));
+
+        final String screenPath = path.join(tempDirHelper.directoryPath, 'lib', 'screens', 'blank_screen');
+
+        // Verify controller file has minimal content
+        final File controllerFile = File(path.join(screenPath, 'blank_screen_controller.dart'));
+        final String controllerContent = controllerFile.readAsStringSync();
+        expect(controllerContent, contains('class BlankScreenController extends State<BlankScreenRoute>'));
+        expect(controllerContent, contains('BlankScreenView(this)'));
+        expect(controllerContent, contains('Add your business logic and state management here'));
+
+        // Should NOT contain game logic
+        expect(controllerContent, isNot(contains('_availableIcons')));
+        expect(controllerContent, isNot(contains('onIconSelected')));
+        expect(controllerContent, isNot(contains('_resetGame')));
+        expect(controllerContent, isNot(contains('Random')));
+
+        // Verify view file has minimal content
+        final File viewFile = File(path.join(screenPath, 'blank_screen_view.dart'));
+        final String viewContent = viewFile.readAsStringSync();
+        expect(viewContent, contains('class BlankScreenView extends StatelessWidget'));
+        expect(viewContent, contains('Welcome to Blank Screen'));
+
+        // Should NOT contain game UI
+        expect(viewContent, isNot(contains('Select the')));
+        expect(viewContent, isNot(contains('GestureDetector')));
+        expect(viewContent, isNot(contains('onIconSelected')));
+        expect(viewContent, isNot(contains('_getIconName')));
+        expect(viewContent, isNot(contains('Icons.rocket_launch')));
+      });
+
+      /// Tests that regular screen generation still includes example content.
+      ///
+      /// This test ensures that the default behavior (without --blank) still generates the icon selection game.
+      test('should generate regular screen with example content when blank flag not used', () async {
+        // Create minimal Flutter project structure
+        await _createMinimalFlutterProject(tempDirHelper.directoryPath);
+
+        final ProcessResult result = await Process.run(
+          'dart',
+          ['run', path.join(Directory.current.path, 'bin/splendid_cli.dart'), 'screen', 'regular_screen'],
+          workingDirectory: tempDirHelper.directoryPath,
+        );
+
+        expect(result.exitCode, equals(0));
+        expect(result.stdout, contains('Generating screen: regular_screen'));
+        expect(result.stdout, contains('✓ Generated screen: regular_screen'));
+
+        final String screenPath = path.join(tempDirHelper.directoryPath, 'lib', 'screens', 'regular_screen');
+
+        // Verify controller file has game logic
+        final File controllerFile = File(path.join(screenPath, 'regular_screen_controller.dart'));
+        final String controllerContent = controllerFile.readAsStringSync();
+        expect(controllerContent, contains('_availableIcons'));
+        expect(controllerContent, contains('onIconSelected'));
+        expect(controllerContent, contains('_resetGame'));
+        expect(controllerContent, contains('Random'));
+
+        // Verify view file has game UI
+        final File viewFile = File(path.join(screenPath, 'regular_screen_view.dart'));
+        final String viewContent = viewFile.readAsStringSync();
+        expect(viewContent, contains('Select the'));
+        expect(viewContent, contains('GestureDetector'));
+        expect(viewContent, contains('onIconSelected'));
+        expect(viewContent, contains('Icons.rocket_launch'));
+      });
+
+      /// Tests that --blank flag can be combined with --force flag.
+      ///
+      /// This test verifies that both flags work together correctly.
+      test('should handle blank and force flags together', () async {
+        // Create minimal Flutter project structure
+        await _createMinimalFlutterProject(tempDirHelper.directoryPath);
+
+        // Create regular screen first
+        final ProcessResult firstResult = await Process.run(
+          'dart',
+          ['run', path.join(Directory.current.path, 'bin/splendid_cli.dart'), 'screen', 'test_screen'],
+          workingDirectory: tempDirHelper.directoryPath,
+        );
+        expect(firstResult.exitCode, equals(0));
+
+        // Overwrite with blank screen using both flags
+        final ProcessResult secondResult = await Process.run(
+          'dart',
+          [
+            'run',
+            path.join(Directory.current.path, 'bin/splendid_cli.dart'),
+            'screen',
+            'test_screen',
+            '--blank',
+            '--force',
+          ],
+          workingDirectory: tempDirHelper.directoryPath,
+        );
+
+        expect(secondResult.exitCode, equals(0));
+        final String output = '${secondResult.stdout}${secondResult.stderr}';
+        expect(output, contains('Overwriting existing screen: test_screen'));
+        expect(output, contains('Generating blank screen: test_screen'));
+        expect(secondResult.stdout, contains('✓ Generated screen: test_screen'));
+
+        // Verify the screen is now blank (no game logic)
+        final String screenPath = path.join(tempDirHelper.directoryPath, 'lib', 'screens', 'test_screen');
+        final File controllerFile = File(path.join(screenPath, 'test_screen_controller.dart'));
+        final String controllerContent = controllerFile.readAsStringSync();
+        expect(controllerContent, isNot(contains('_availableIcons')));
+        expect(controllerContent, isNot(contains('onIconSelected')));
+      });
+    });
+
     group('file content validation', () {
       /// Verifies that generated files contain expected MVC structure.
       ///

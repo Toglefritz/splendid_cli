@@ -178,6 +178,8 @@ class BrickLoader {
     switch (brickName) {
       case 'flutter_screen':
         await _downloadFlutterScreenTemplates(localBrickPath);
+      case 'flutter_screen_blank':
+        await _downloadFlutterScreenBlankTemplates(localBrickPath);
       case 'flutter_app':
         await _downloadFlutterAppTemplates(localBrickPath);
       case 'flutter_widget_test':
@@ -186,7 +188,7 @@ class BrickLoader {
 
       default:
         throw BrickLoadException(
-          'Unknown brick type: $brickName. Supported bricks: flutter_screen, flutter_app, flutter_widget_test, dart_class_test',
+          'Unknown brick type: $brickName. Supported bricks: flutter_screen, flutter_screen_blank, flutter_app, flutter_widget_test, dart_class_test',
           BrickLoadErrorType.unknownBrick,
         );
     }
@@ -209,6 +211,29 @@ class BrickLoader {
     for (final String fileName in templateFiles) {
       await _downloadFile(
         'bricks/flutter_screen/__brick__/lib/screens/{{name.snakeCase()}}/$fileName',
+        path.join(brickDir, fileName),
+      );
+    }
+  }
+
+  /// Downloads the flutter_screen_blank brick templates.
+  ///
+  /// This method knows the specific structure of the flutter_screen_blank brick and downloads all necessary template files
+  /// for creating minimal screens without example content.
+  Future<void> _downloadFlutterScreenBlankTemplates(String localBrickPath) async {
+    final String brickDir = path.join(localBrickPath, '__brick__', 'lib', 'screens', '{{name.snakeCase()}}');
+    await Directory(brickDir).create(recursive: true);
+
+    // Download template files
+    final List<String> templateFiles = [
+      '{{name.snakeCase()}}_route.dart',
+      '{{name.snakeCase()}}_controller.dart',
+      '{{name.snakeCase()}}_view.dart',
+    ];
+
+    for (final String fileName in templateFiles) {
+      await _downloadFile(
+        'bricks/flutter_screen_blank/__brick__/lib/screens/{{name.snakeCase()}}/$fileName',
         path.join(brickDir, fileName),
       );
     }

@@ -1,3 +1,15 @@
+## 5.1.0
+
+### Blank Screen Generation
+
+- **Minimal Scaffolding**: New `--blank` flag for the `screen` command creates clean MVC structure without example content
+- **Developer Choice**: Option to generate screens with or without the icon selection game placeholder
+- **Clean Templates**: Blank screens include only essential MVC components (route, controller, view) with helpful comments
+- **Flexible Workflow**: Developers can start with minimal scaffolding and add functionality as needed
+- **Flag Combination**: `--blank` flag works seamlessly with existing `--force` flag for overwriting screens
+- **Dual Brick System**: Separate Mason bricks for regular and blank screen generation ensure optimal templates
+- **Comprehensive Testing**: Full test coverage for blank screen generation and flag combinations
+
 ## 5.0.1
 
 ### Command Aliases

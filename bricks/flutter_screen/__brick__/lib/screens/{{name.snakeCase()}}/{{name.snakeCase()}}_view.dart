@@ -15,14 +15,14 @@ class {{name.pascalCase()}}View extends StatelessWidget {
   final {{name.pascalCase()}}Controller state;
 
    /// Returns a human-readable name for the given icon.
-  ///
-  /// Maps Material icon constants to user-friendly names for display in the instruction text.
-  ///
-  /// Parameters:
-  /// * [icon] - The IconData to get a name for
-  ///
-  /// Returns:
-  /// * String representation of the icon name
+   ///
+   /// Maps Material icon constants to user-friendly names for display in the instruction text.
+   ///
+   /// Parameters:
+   /// * [icon] - The IconData to get a name for
+   ///
+   /// Returns:
+   /// * String representation of the icon name
   String _getIconName(IconData icon) {
     switch (icon) {
       case Icons.rocket_launch:

@@ -1,9 +1,8 @@
 /// A comprehensive CLI tool for scaffolding and managing Flutter applications.
 ///
-/// Splendid CLI provides a complete toolkit for Flutter development with
-/// built-in MVC architecture patterns, code generation, and project management
-/// capabilities. It includes MCP (Model Context Protocol) server functionality
-/// for integration with AI development tools.
+/// Splendid CLI provides a complete toolkit for Flutter development with built-in MVC architecture patterns, code
+/// generation, and project management capabilities. It includes MCP (Model Context Protocol) server functionality for
+/// integration with AI development tools.
 ///
 /// Key Features:
 /// * Project scaffolding with MVC architecture
@@ -83,11 +82,11 @@ class SplendidCommandRunner extends CommandRunner<int> {
 
   /// Reads the version from pubspec.yaml file.
   ///
-  /// This method locates the pubspec.yaml file and extracts the version
-  /// field to ensure the CLI always reports the correct version.
+  /// This method locates the pubspec.yaml file and extracts the version field to ensure the CLI always reports the
+  /// correct version.
   ///
-  /// Returns the version string from pubspec.yaml, or 'unknown' if the
-  /// version cannot be determined due to file access issues or parsing errors.
+  /// Returns the version string from pubspec.yaml, or 'unknown' if the version cannot be determined due to file access
+  /// issues or parsing errors.
   String _getVersionFromPubspec() {
     try {
       // Get the directory where the current script is located

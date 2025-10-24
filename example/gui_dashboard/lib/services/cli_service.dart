@@ -141,8 +141,8 @@ class CliService {
 
   /// Formats Dartdoc comments in the specified Flutter project.
   ///
-  /// Executes `splendid_cli format-dartdoc` to reformat and rewrap Dartdoc comments to the specified line length
-  /// across all Dart files in the project.
+  /// Executes `splendid_cli format-dartdoc` to reformat and rewrap Dartdoc comments to the specified line length across
+  /// all Dart files in the project.
   ///
   /// Parameters:
   /// * [projectPath] - Path to the Flutter project directory

@@ -6,18 +6,17 @@ import 'brick_loader.dart';
 
 /// Service for managing Flutter project creation and setup operations.
 ///
-/// This service encapsulates the core business logic for project operations,
-/// separating it from CLI-specific concerns like argument parsing and user
-/// interaction. This design enables reuse across different interfaces
-/// (CLI, MCP server, etc.).
+/// This service encapsulates the core business logic for project operations, separating it from CLI-specific concerns
+/// like argument parsing and user interaction. This design enables reuse across different interfaces (CLI, MCP server,
+/// etc.).
 class ProjectService {
   /// Brick loader for handling template loading and caching.
   final BrickLoader _brickLoader;
 
   /// Creates a new instance of [ProjectService].
   ///
-  /// This service is stateless and can be reused across multiple operations.
-  /// All methods are safe to call concurrently from different isolates.
+  /// This service is stateless and can be reused across multiple operations. All methods are safe to call concurrently
+  /// from different isolates.
   const ProjectService({BrickLoader? brickLoader}) : _brickLoader = brickLoader ?? const BrickLoader();
 
   /// Creates a new instance with default dependencies.

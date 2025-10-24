@@ -5,13 +5,11 @@ import '../services/brick_loader.dart';
 
 /// Command-line interface for managing the brick cache.
 ///
-/// This command provides utilities for managing locally cached bricks that
-/// have been downloaded from remote sources. It allows users to view, clear,
-/// and manage their brick cache for troubleshooting and maintenance.
+/// This command provides utilities for managing locally cached bricks that have been downloaded from remote sources. It
+/// allows users to view, clear, and manage their brick cache for troubleshooting and maintenance.
 ///
-/// The cache is stored in the user's home directory at `~/.splendid_cli/bricks/`
-/// and contains downloaded Mason bricks that are used when local development
-/// bricks are not available.
+/// The cache is stored in the user's home directory at `~/.splendid_cli/bricks/` and contains downloaded Mason bricks
+/// that are used when local development bricks are not available.
 ///
 /// Usage Examples:
 /// ```bash

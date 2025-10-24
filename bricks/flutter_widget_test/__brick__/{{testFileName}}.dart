@@ -4,9 +4,8 @@ import '{{{importPath}}}';
 
 /// Test suite for {{className}} widget functionality.
 ///
-/// This test suite covers all aspects of the {{className}} widget,
-/// including rendering, user interactions, state management, and
-/// integration with the Flutter framework.
+/// This test suite covers all aspects of the {{className}} widget, including rendering, user interactions, state
+/// management, and integration with the Flutter framework.
 ///
 /// Test Categories:
 /// * Widget rendering and layout
@@ -27,15 +26,14 @@ import '{{{importPath}}}';
 /// * Example: MockController - Simulates controller behavior
 /// * Example: MockApiService - Simulates data fetching
 ///
-/// The tests ensure that {{className}} renders correctly, responds
-/// to user input appropriately, and maintains proper state throughout
-/// its lifecycle.
+/// The tests ensure that {{className}} renders correctly, responds to user input appropriately, and maintains proper
+/// state throughout its lifecycle.
 void main() {
   group('{{className}} Widget Tests', () {
     /// Set up test environment for widget testing.
     ///
-    /// Configures any necessary test fixtures, mock dependencies,
-    /// and shared resources needed across multiple widget tests.
+    /// Configures any necessary test fixtures, mock dependencies, and shared resources needed across multiple widget
+    /// tests.
     setUpAll(() {
       // Add global test setup here if needed
       // Example: TestWidgetsFlutterBinding.ensureInitialized();
@@ -43,8 +41,7 @@ void main() {
 
     /// Clean up test environment after all tests complete.
     ///
-    /// Disposes of resources and clears any global state that
-    /// might affect other test suites.
+    /// Disposes of resources and clears any global state that might affect other test suites.
     tearDownAll(() {
       // Add global test cleanup here if needed
     });
@@ -52,8 +49,7 @@ void main() {
     group('widget rendering', () {
       /// Tests that {{className}} renders without errors.
       ///
-      /// This fundamental test ensures that the widget can be
-      /// instantiated and rendered in the widget tree without
+      /// This fundamental test ensures that the widget can be instantiated and rendered in the widget tree without
       /// throwing exceptions or causing framework errors.
       testWidgets('should render without errors', (WidgetTester tester) async {
         // Build the widget
@@ -78,8 +74,7 @@ void main() {
 
       /// Tests that {{className}} displays expected content.
       ///
-      /// This test verifies that the widget renders the correct
-      /// visual elements, text, and UI components as specified
+      /// This test verifies that the widget renders the correct visual elements, text, and UI components as specified
       /// in the design requirements.
       testWidgets('should display expected content', (WidgetTester tester) async {
         // Build the widget
@@ -108,9 +103,8 @@ void main() {
 
       /// Tests that {{className}} has correct layout and positioning.
       ///
-      /// This test verifies that the widget's layout properties,
-      /// sizing, and positioning work correctly within different
-      /// parent widget constraints.
+      /// This test verifies that the widget's layout properties, sizing, and positioning work correctly within
+      /// different parent widget constraints.
       testWidgets('should have correct layout and positioning', (WidgetTester tester) async {
         // Build the widget with specific constraints
         await tester.pumpWidget(
@@ -142,9 +136,8 @@ void main() {
 
       /// Tests that {{className}} handles different screen sizes correctly.
       ///
-      /// This test ensures that the widget is responsive and
-      /// adapts appropriately to different screen dimensions
-      /// and device orientations.
+      /// This test ensures that the widget is responsive and adapts appropriately to different screen dimensions and
+      /// device orientations.
       testWidgets('should handle different screen sizes', (WidgetTester tester) async {
         // Test with different screen sizes
         await tester.binding.setSurfaceSize(const Size(800, 600));
@@ -185,9 +178,8 @@ void main() {
     group('user interactions', () {
       /// Tests that {{className}} responds to tap gestures correctly.
       ///
-      /// This test verifies that the widget handles tap events
-      /// appropriately and triggers the expected actions or
-      /// state changes when tapped.
+      /// This test verifies that the widget handles tap events appropriately and triggers the expected actions or state
+      /// changes when tapped.
       testWidgets('should respond to tap gestures', (WidgetTester tester) async {
         // Build the widget
         await tester.pumpWidget(
@@ -223,9 +215,8 @@ void main() {
 
       /// Tests that {{className}} handles long press gestures correctly.
       ///
-      /// This test ensures that the widget responds appropriately
-      /// to long press events and provides the expected user feedback
-      /// or functionality.
+      /// This test ensures that the widget responds appropriately to long press events and provides the expected user
+      /// feedback or functionality.
       testWidgets('should handle long press gestures', (WidgetTester tester) async {
         // Build the widget
         await tester.pumpWidget(
@@ -260,8 +251,7 @@ void main() {
 
       /// Tests that {{className}} handles text input correctly.
       ///
-      /// This test verifies that the widget processes text input
-      /// appropriately if it contains input fields or accepts
+      /// This test verifies that the widget processes text input appropriately if it contains input fields or accepts
       /// text-based user interactions.
       testWidgets('should handle text input correctly', (WidgetTester tester) async {
         // Build the widget
@@ -298,9 +288,8 @@ void main() {
     group('state management', () {
       /// Tests that {{className}} manages internal state correctly.
       ///
-      /// This test verifies that the widget's internal state
-      /// changes appropriately in response to user interactions
-      /// and external events.
+      /// This test verifies that the widget's internal state changes appropriately in response to user interactions and
+      /// external events.
       testWidgets('should manage internal state correctly', (WidgetTester tester) async {
         // Build the widget
         await tester.pumpWidget(
@@ -331,8 +320,7 @@ void main() {
 
       /// Tests that {{className}} updates correctly when properties change.
       ///
-      /// This test ensures that the widget rebuilds and updates
-      /// its appearance when its properties are modified by
+      /// This test ensures that the widget rebuilds and updates its appearance when its properties are modified by
       /// parent widgets.
       testWidgets('should update when properties change', (WidgetTester tester) async {
         // Build the widget with initial properties
@@ -369,8 +357,7 @@ void main() {
 
       /// Tests that {{className}} handles async operations correctly.
       ///
-      /// This test verifies that the widget manages asynchronous
-      /// operations like data loading and updates the UI
+      /// This test verifies that the widget manages asynchronous operations like data loading and updates the UI
       /// appropriately during different async states.
       testWidgets('should handle async operations correctly', (WidgetTester tester) async {
         // Build the widget
@@ -410,8 +397,7 @@ void main() {
     group('accessibility', () {
       /// Tests that {{className}} provides proper accessibility support.
       ///
-      /// This test ensures that the widget includes appropriate
-      /// semantic labels, hints, and navigation support for
+      /// This test ensures that the widget includes appropriate semantic labels, hints, and navigation support for
       /// users with accessibility needs.
       testWidgets('should provide proper accessibility support', (WidgetTester tester) async {
         // Build the widget
@@ -444,9 +430,8 @@ void main() {
 
       /// Tests that {{className}} supports keyboard navigation.
       ///
-      /// This test verifies that the widget can be navigated
-      /// and operated using keyboard input for users who
-      /// cannot use touch or mouse interactions.
+      /// This test verifies that the widget can be navigated and operated using keyboard input for users who cannot use
+      /// touch or mouse interactions.
       testWidgets('should support keyboard navigation', (WidgetTester tester) async {
         // Build the widget
         await tester.pumpWidget(
@@ -479,9 +464,8 @@ void main() {
     group('performance', () {
       /// Tests that {{className}} renders efficiently.
       ///
-      /// This test verifies that the widget doesn't cause
-      /// performance issues during rendering and maintains
-      /// acceptable frame rates.
+      /// This test verifies that the widget doesn't cause performance issues during rendering and maintains acceptable
+      /// frame rates.
       testWidgets('should render efficiently', (WidgetTester tester) async {
         // Build the widget
         await tester.pumpWidget(
@@ -513,9 +497,8 @@ void main() {
 
       /// Tests that {{className}} doesn't cause memory leaks.
       ///
-      /// This test ensures that the widget properly disposes
-      /// of resources and doesn't retain references that
-      /// could cause memory leaks.
+      /// This test ensures that the widget properly disposes of resources and doesn't retain references that could
+      /// cause memory leaks.
       testWidgets('should not cause memory leaks', (WidgetTester tester) async {
         // Build and dispose the widget multiple times
         for (int i = 0; i < 10; i++) {
@@ -546,8 +529,8 @@ void main() {
     group('error handling', () {
       /// Tests that {{className}} handles error states gracefully.
       ///
-      /// This test verifies that the widget displays appropriate
-      /// error messages and maintains stability when errors occur.
+      /// This test verifies that the widget displays appropriate error messages and maintains stability when errors
+      /// occur.
       testWidgets('should handle error states gracefully', (WidgetTester tester) async {
         // Build the widget with error conditions
         await tester.pumpWidget(
@@ -579,9 +562,8 @@ void main() {
 
       /// Tests that {{className}} recovers from error states.
       ///
-      /// This test ensures that the widget can recover from
-      /// error conditions and return to normal operation
-      /// when the error is resolved.
+      /// This test ensures that the widget can recover from error conditions and return to normal operation when the
+      /// error is resolved.
       testWidgets('should recover from error states', (WidgetTester tester) async {
         // Build the widget
         await tester.pumpWidget(

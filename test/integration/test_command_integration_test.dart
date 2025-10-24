@@ -4,9 +4,8 @@ import 'package:test/test.dart';
 
 /// Integration test suite for the generate-test command.
 ///
-/// This test suite covers end-to-end scenarios for the test command,
-/// verifying that it correctly generates test files for both Flutter
-/// widgets and regular Dart classes using the CLI interface.
+/// This test suite covers end-to-end scenarios for the test command, verifying that it correctly generates test files
+/// for both Flutter widgets and regular Dart classes using the CLI interface.
 ///
 /// Test Categories:
 /// * Complete test generation workflow
@@ -15,9 +14,8 @@ import 'package:test/test.dart';
 /// * Command-line argument handling
 /// * Error recovery scenarios
 ///
-/// Note: These tests require Mason bricks to be available in the bricks/
-/// directory for complete validation. Tests are skipped in environments
-/// where the bricks are not available to prevent false failures.
+/// Note: These tests require Mason bricks to be available in the bricks/ directory for complete validation. Tests are
+/// skipped in environments where the bricks are not available to prevent false failures.
 void main() {
   group('Generate-Test Command Integration Tests', () {
     late Directory tempDir;
@@ -25,8 +23,8 @@ void main() {
 
     /// Set up integration test environment.
     ///
-    /// Creates a temporary directory for test files and determines the
-    /// path to the CLI executable for process invocation testing.
+    /// Creates a temporary directory for test files and determines the path to the CLI executable for process
+    /// invocation testing.
     setUpAll(() {
       tempDir = Directory.systemTemp.createTempSync('test_command_integration_');
 
@@ -36,8 +34,7 @@ void main() {
 
     /// Clean up integration test resources.
     ///
-    /// Removes the temporary directory and all created test files to
-    /// prevent disk space accumulation during test runs.
+    /// Removes the temporary directory and all created test files to prevent disk space accumulation during test runs.
     tearDownAll(() {
       if (tempDir.existsSync()) {
         tempDir.deleteSync(recursive: true);
@@ -47,9 +44,8 @@ void main() {
     group('successful test generation', () {
       /// Tests complete test generation for a Flutter widget.
       ///
-      /// This test verifies the entire workflow from CLI invocation through
-      /// test file generation for a Flutter widget, ensuring that the
-      /// generated test follows widget testing patterns.
+      /// This test verifies the entire workflow from CLI invocation through test file generation for a Flutter widget,
+      /// ensuring that the generated test follows widget testing patterns.
       test('should generate widget test file successfully', () async {
         // Create a Flutter widget file
         final widgetFile = File(path.join(tempDir.path, 'my_widget.dart'));
@@ -96,9 +92,8 @@ class MyWidget extends StatelessWidget {
 
       /// Tests complete test generation for a regular Dart class.
       ///
-      /// This test verifies the entire workflow from CLI invocation through
-      /// test file generation for a regular Dart class, ensuring that the
-      /// generated test follows standard unit testing patterns.
+      /// This test verifies the entire workflow from CLI invocation through test file generation for a regular Dart
+      /// class, ensuring that the generated test follows standard unit testing patterns.
       test('should generate class test file successfully', () async {
         // Create a regular Dart class file
         final classFile = File(path.join(tempDir.path, 'my_service.dart'));
@@ -146,9 +141,8 @@ class MyService {
 
       /// Tests automatic type detection for widget files.
       ///
-      /// This test verifies that the command correctly detects Flutter
-      /// widgets automatically and generates appropriate widget tests
-      /// without explicit type specification.
+      /// This test verifies that the command correctly detects Flutter widgets automatically and generates appropriate
+      /// widget tests without explicit type specification.
       test('should auto-detect widget files and generate widget tests', () async {
         // Create a Flutter widget file
         final widgetFile = File(path.join(tempDir.path, 'auto_widget.dart'));
@@ -193,9 +187,8 @@ class _AutoWidgetState extends State<AutoWidget> {
 
       /// Tests automatic type detection for class files.
       ///
-      /// This test verifies that the command correctly detects regular
-      /// Dart classes automatically and generates appropriate unit tests
-      /// without explicit type specification.
+      /// This test verifies that the command correctly detects regular Dart classes automatically and generates
+      /// appropriate unit tests without explicit type specification.
       test('should auto-detect class files and generate class tests', () async {
         // Create a regular Dart class file
         final classFile = File(path.join(tempDir.path, 'auto_class.dart'));
@@ -237,8 +230,8 @@ class AutoClass {
 
       /// Tests custom output directory functionality.
       ///
-      /// This test verifies that the --output flag correctly places
-      /// generated test files in the specified custom directory.
+      /// This test verifies that the --output flag correctly places generated test files in the specified custom
+      /// directory.
       test('should generate test in custom output directory', () async {
         // Create a Dart class file
         final classFile = File(path.join(tempDir.path, 'custom_class.dart'));
@@ -275,8 +268,8 @@ class CustomClass {
     group('error handling scenarios', () {
       /// Tests CLI behavior when no target file is provided.
       ///
-      /// This test verifies that the CLI provides helpful usage information
-      /// when the required target file argument is missing.
+      /// This test verifies that the CLI provides helpful usage information when the required target file argument is
+      /// missing.
       test('should return usage error when target file is missing', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -290,8 +283,7 @@ class CustomClass {
 
       /// Tests CLI behavior when target file doesn't exist.
       ///
-      /// This test ensures that the CLI provides clear error messages when
-      /// the specified target file cannot be found.
+      /// This test ensures that the CLI provides clear error messages when the specified target file cannot be found.
       test('should return usage error when target file does not exist', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -305,8 +297,7 @@ class CustomClass {
 
       /// Tests CLI behavior with non-Dart files.
       ///
-      /// This test verifies that the CLI validates file extensions and
-      /// only accepts .dart files for test generation.
+      /// This test verifies that the CLI validates file extensions and only accepts .dart files for test generation.
       test('should return usage error for non-Dart files', () async {
         // Create a non-Dart file
         final nonDartFile = File(path.join(tempDir.path, 'not_dart.txt'));
@@ -324,8 +315,8 @@ class CustomClass {
 
       /// Tests CLI behavior when test file already exists without force flag.
       ///
-      /// This test ensures that the CLI protects existing test files from
-      /// accidental overwriting and requires explicit --force flag.
+      /// This test ensures that the CLI protects existing test files from accidental overwriting and requires explicit
+      /// --force flag.
       test('should fail when test file exists without force flag', () async {
         // Create source file
         final sourceFile = File(path.join(tempDir.path, 'existing_test.dart'));
@@ -347,8 +338,8 @@ class CustomClass {
 
       /// Tests CLI behavior with invalid command-line flags.
       ///
-      /// This test verifies that the CLI properly validates command-line options
-      /// and provides helpful error messages for invalid flags.
+      /// This test verifies that the CLI properly validates command-line options and provides helpful error messages
+      /// for invalid flags.
       test('should return usage error for invalid flags', () async {
         // Create a valid Dart file
         final dartFile = File(path.join(tempDir.path, 'valid.dart'));
@@ -365,8 +356,8 @@ class CustomClass {
 
       /// Tests CLI behavior with invalid type option values.
       ///
-      /// This test ensures that the CLI validates the --type option and
-      /// only accepts allowed values (auto, widget, class).
+      /// This test ensures that the CLI validates the --type option and only accepts allowed values (auto, widget,
+      /// class).
       test('should return usage error for invalid type values', () async {
         // Create a valid Dart file
         final dartFile = File(path.join(tempDir.path, 'valid.dart'));
@@ -385,8 +376,8 @@ class CustomClass {
     group('help and usage', () {
       /// Tests that help flag displays comprehensive usage information.
       ///
-      /// This test verifies that users can get detailed help information
-      /// about the generate-test command and its available options.
+      /// This test verifies that users can get detailed help information about the generate-test command and its
+      /// available options.
       test('should display help with --help flag', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -402,8 +393,7 @@ class CustomClass {
 
       /// Tests that type option help shows allowed values.
       ///
-      /// This test ensures that users can see the available options
-      /// for the --type flag and understand their purposes.
+      /// This test ensures that users can see the available options for the --type flag and understand their purposes.
       test('should show type option allowed values in help', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -421,8 +411,8 @@ class CustomClass {
     group('file content validation', () {
       /// Tests that generated test files contain expected structure.
       ///
-      /// This test verifies that the generated test files follow the
-      /// established testing patterns and include all necessary components.
+      /// This test verifies that the generated test files follow the established testing patterns and include all
+      /// necessary components.
       test('should generate test files with correct structure', () async {
         // Create a simple Dart class
         final classFile = File(path.join(tempDir.path, 'structured_class.dart'));
@@ -474,8 +464,7 @@ class StructuredClass {
 
       /// Tests that generated widget tests include Flutter-specific patterns.
       ///
-      /// This test verifies that widget test files include the appropriate
-      /// Flutter testing utilities and patterns.
+      /// This test verifies that widget test files include the appropriate Flutter testing utilities and patterns.
       test('should generate widget tests with Flutter patterns', () async {
         // Create a Flutter widget
         final widgetFile = File(path.join(tempDir.path, 'flutter_widget.dart'));

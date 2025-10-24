@@ -1,13 +1,13 @@
 /// Collection of test data and fixtures for CLI testing.
 ///
-/// This class provides commonly used test data such as valid and invalid project names, sample file contents, and
-/// other fixtures that are used across multiple test files.
+/// This class provides commonly used test data such as valid and invalid project names, sample file contents, and other
+/// fixtures that are used across multiple test files.
 library;
 
 /// Collection of test data and fixtures for CLI testing.
 ///
-/// This class provides commonly used test data such as valid and invalid project names, sample file contents, and
-/// other fixtures that are used across multiple test files.
+/// This class provides commonly used test data such as valid and invalid project names, sample file contents, and other
+/// fixtures that are used across multiple test files.
 class TestFixtures {
   /// List of valid Dart package names for testing.
   ///
@@ -88,7 +88,7 @@ import 'package:flutter/material.dart';
 import 'app.dart';
 
 /// Entry point for the Flutter application.
-/// 
+///
 /// Initializes the app and runs the main application widget.
 void main() {
   runApp(const App());
@@ -97,8 +97,8 @@ void main() {
 
   /// Sample app.dart content for MVC architecture.
   ///
-  /// This fixture represents the expected structure of an app.dart file that serves as the root application widget
-  /// in the MVC pattern.
+  /// This fixture represents the expected structure of an app.dart file that serves as the root application widget in
+  /// the MVC pattern.
   static String sampleAppDart(String projectName) =>
       '''
 import 'package:flutter/material.dart';
@@ -109,7 +109,7 @@ import 'screens/home/home_route.dart';
 import 'theme/app_theme.dart';
 
 /// Root application widget for $projectName.
-/// 
+///
 /// Configures the MaterialApp with theme, localization, and routing.
 class App extends StatelessWidget {
   const App({super.key});

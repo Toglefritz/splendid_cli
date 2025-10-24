@@ -4,9 +4,9 @@ import 'package:path/path.dart' as path;
 
 /// Service for loading Mason bricks from local or remote sources.
 ///
-/// This service implements a hybrid approach that prioritizes local bricks
-/// (for development) and falls back to downloading from GitHub (for production).
-/// This ensures the CLI works in both development and global installation scenarios.
+/// This service implements a hybrid approach that prioritizes local bricks (for development) and falls back to
+/// downloading from GitHub (for production). This ensures the CLI works in both development and global installation
+/// scenarios.
 class BrickLoader {
   /// Creates a new BrickLoader instance.
   const BrickLoader();
@@ -79,8 +79,8 @@ class BrickLoader {
 
   /// Gets the local development brick path.
   ///
-  /// This path is used when running the CLI from the development environment
-  /// where the bricks directory is available relative to the script location.
+  /// This path is used when running the CLI from the development environment where the bricks directory is available
+  /// relative to the script location.
   String _getLocalBrickPath(String brickName) {
     return path.join(
       path.dirname(Platform.script.path),
@@ -92,8 +92,7 @@ class BrickLoader {
 
   /// Gets the cached brick path in the user's home directory.
   ///
-  /// Downloaded bricks are cached here to avoid repeated downloads and
-  /// to work offline after the first download.
+  /// Downloaded bricks are cached here to avoid repeated downloads and to work offline after the first download.
   String _getCachedBrickPath(String brickName) {
     return path.join(_cacheDir, brickName);
   }
@@ -142,8 +141,8 @@ class BrickLoader {
 
   /// Downloads a brick from GitHub and caches it locally.
   ///
-  /// This method downloads the entire brick directory structure from GitHub,
-  /// including the brick.yaml metadata and all template files in __brick__.
+  /// This method downloads the entire brick directory structure from GitHub, including the brick.yaml metadata and all
+  /// template files in __brick__.
   ///
   /// Parameters:
   /// * [brickName] - Name of the brick to download
@@ -169,8 +168,7 @@ class BrickLoader {
 
   /// Downloads all template files from the __brick__ directory.
   ///
-  /// This method recursively downloads all files in the brick's template
-  /// directory, preserving the directory structure.
+  /// This method recursively downloads all files in the brick's template directory, preserving the directory structure.
   ///
   /// Parameters:
   /// * [brickName] - Name of the brick being downloaded
@@ -196,8 +194,7 @@ class BrickLoader {
 
   /// Downloads the flutter_screen brick templates.
   ///
-  /// This method knows the specific structure of the flutter_screen brick
-  /// and downloads all necessary template files.
+  /// This method knows the specific structure of the flutter_screen brick and downloads all necessary template files.
   Future<void> _downloadFlutterScreenTemplates(String localBrickPath) async {
     final String brickDir = path.join(localBrickPath, '__brick__', 'lib', 'screens', '{{name.snakeCase()}}');
     await Directory(brickDir).create(recursive: true);
@@ -344,8 +341,8 @@ class BrickLoader {
 
   /// Clears the brick cache.
   ///
-  /// This method removes all cached bricks, forcing fresh downloads
-  /// on the next brick load. Useful for development and troubleshooting.
+  /// This method removes all cached bricks, forcing fresh downloads on the next brick load. Useful for development and
+  /// troubleshooting.
   Future<void> clearCache() async {
     final Directory cacheDirectory = Directory(_cacheDir);
     if (cacheDirectory.existsSync()) {

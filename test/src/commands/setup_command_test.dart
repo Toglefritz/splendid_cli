@@ -14,9 +14,8 @@ import '../../helpers/temp_directory_helper.dart';
 /// * Handle error conditions gracefully
 /// * Provide appropriate user feedback
 ///
-/// Note: These tests focus on command validation and error handling.
-/// Integration tests that actually run Flutter commands are in the
-/// integration test suite to avoid dependencies on Flutter SDK in unit tests.
+/// Note: These tests focus on command validation and error handling. Integration tests that actually run Flutter
+/// commands are in the integration test suite to avoid dependencies on Flutter SDK in unit tests.
 void main() {
   group('SetupCommand', () {
     late SetupCommand command;
@@ -24,8 +23,7 @@ void main() {
 
     /// Set up test dependencies and command instance.
     ///
-    /// Creates fresh instances for each test to ensure isolation
-    /// and prevent test interference.
+    /// Creates fresh instances for each test to ensure isolation and prevent test interference.
     setUp(() {
       command = SetupCommand();
       tempDirHelper = TempDirectoryHelper();
@@ -33,8 +31,7 @@ void main() {
 
     /// Clean up temporary directories after each test.
     ///
-    /// Ensures no test artifacts are left behind that could
-    /// affect subsequent tests or consume disk space.
+    /// Ensures no test artifacts are left behind that could affect subsequent tests or consume disk space.
     tearDown(() {
       tempDirHelper.cleanup();
     });
@@ -98,8 +95,8 @@ void main() {
     group('Flutter project detection', () {
       /// Tests detection of valid Flutter projects with proper structure.
       ///
-      /// Creates a minimal Flutter project structure and verifies that
-      /// the command correctly identifies it as a valid project.
+      /// Creates a minimal Flutter project structure and verifies that the command correctly identifies it as a valid
+      /// project.
       test('should detect valid Flutter project', () async {
         final Directory projectDir = tempDirHelper.createSubdirectory('test_project');
 
@@ -114,8 +111,8 @@ void main() {
 
       /// Tests rejection of directories without pubspec.yaml.
       ///
-      /// Verifies that the command correctly identifies directories
-      /// that are not Flutter projects when pubspec.yaml is missing.
+      /// Verifies that the command correctly identifies directories that are not Flutter projects when pubspec.yaml is
+      /// missing.
       test('should reject directory without pubspec.yaml', () async {
         final Directory projectDir = tempDirHelper.createSubdirectory('no_pubspec');
 
@@ -129,8 +126,8 @@ void main() {
 
       /// Tests rejection of directories without lib directory.
       ///
-      /// Verifies that the command correctly identifies directories
-      /// that are not Flutter projects when the lib directory is missing.
+      /// Verifies that the command correctly identifies directories that are not Flutter projects when the lib
+      /// directory is missing.
       test('should reject directory without lib directory', () async {
         final Directory projectDir = tempDirHelper.createSubdirectory('no_lib');
 
@@ -154,8 +151,8 @@ dependencies:
 
       /// Tests rejection of projects without Flutter dependency.
       ///
-      /// Verifies that the command correctly identifies Dart projects
-      /// that are not Flutter projects (missing Flutter SDK dependency).
+      /// Verifies that the command correctly identifies Dart projects that are not Flutter projects (missing Flutter
+      /// SDK dependency).
       test('should reject Dart project without Flutter dependency', () async {
         final Directory projectDir = tempDirHelper.createSubdirectory('dart_only');
 
@@ -182,8 +179,8 @@ dependencies:
 
 /// Creates a minimal Flutter project structure for testing.
 ///
-/// This helper function creates the minimum files and directories
-/// needed for a directory to be recognized as a valid Flutter project:
+/// This helper function creates the minimum files and directories needed for a directory to be recognized as a valid
+/// Flutter project:
 /// * pubspec.yaml with Flutter dependency
 /// * lib/ directory
 ///
@@ -214,8 +211,7 @@ flutter:
 
 /// Checks if the specified directory contains a valid Flutter project.
 ///
-/// This is a copy of the private method from SetupCommand for testing purposes.
-/// A valid Flutter project must have:
+/// This is a copy of the private method from SetupCommand for testing purposes. A valid Flutter project must have:
 /// * A pubspec.yaml file in the root directory
 /// * Flutter SDK dependency declared in pubspec.yaml
 /// * A lib/ directory (created by flutter create)

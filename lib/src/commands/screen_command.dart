@@ -8,8 +8,8 @@ import '../services/screen_service.dart';
 /// Command-line interface for adding new screens to existing Flutter applications.
 ///
 /// This command generates a new screen following Splendid's MVC architecture patterns. It uses Mason bricks to ensure
-/// consistent screen structure with proper separation of concerns between route, controller, and view components.
-/// The generated screen includes a simple icon selection game as placeholder content.
+/// consistent screen structure with proper separation of concerns between route, controller, and view components. The
+/// generated screen includes a simple icon selection game as placeholder content.
 ///
 /// The generated screen includes:
 /// * Route class for screen entry point (StatefulWidget)
@@ -47,8 +47,8 @@ class ScreenCommand extends Command<int> {
   /// Initializes the command with support for:
   /// * `--force`: Overwrite existing screen files without confirmation
   ///
-  /// The argument parser is configured during construction to ensure all command-line options are properly defined
-  /// and validated before execution.
+  /// The argument parser is configured during construction to ensure all command-line options are properly defined and
+  /// validated before execution.
   ScreenCommand() {
     argParser.addFlag(
       'force',
@@ -59,8 +59,8 @@ class ScreenCommand extends Command<int> {
 
   /// Brief description of the command's purpose for help text.
   ///
-  /// This description appears in the CLI help output when users run `splendid_cli help` or
-  /// `splendid_cli screen --help`.
+  /// This description appears in the CLI help output when users run `splendid_cli help` or `splendid_cli screen
+  /// --help`.
   @override
   String get description => 'Add a new screen with MVC architecture to an existing Flutter app.';
 
@@ -102,7 +102,7 @@ class ScreenCommand extends Command<int> {
   ///
   /// Throws:
   /// * No exceptions are thrown; all errors are handled internally
-  ///   and communicated through return codes and user messages
+  /// and communicated through return codes and user messages
   @override
   Future<int> run() async {
     /// Logger instance for user-facing output and error reporting.
@@ -197,8 +197,8 @@ class ScreenCommand extends Command<int> {
 
   /// Converts a string to snake_case format.
   ///
-  /// Transforms the input string to follow snake_case naming conventions used for file names and some variable names
-  /// in Dart projects.
+  /// Transforms the input string to follow snake_case naming conventions used for file names and some variable names in
+  /// Dart projects.
   ///
   /// Conversion rules:
   /// * Converts uppercase letters to lowercase

@@ -7,8 +7,8 @@ import '../../helpers/temp_directory_helper.dart';
 
 /// Test suite for ScreenCommand functionality.
 ///
-/// This test suite covers the screen generation command including validation,
-/// error handling, and successful screen creation with MVC architecture.
+/// This test suite covers the screen generation command including validation, error handling, and successful screen
+/// creation with MVC architecture.
 ///
 /// Test Categories:
 /// * Command validation and error handling
@@ -27,16 +27,15 @@ void main() {
 
     /// Set up test environment with temporary directory management.
     ///
-    /// Creates a fresh temporary directory for each test to ensure isolation
-    /// and prevent test interference.
+    /// Creates a fresh temporary directory for each test to ensure isolation and prevent test interference.
     setUp(() {
       tempDirHelper = TempDirectoryHelper();
     });
 
     /// Clean up test environment after each test.
     ///
-    /// Removes temporary directories and any generated files to prevent
-    /// test artifacts from accumulating on the file system.
+    /// Removes temporary directories and any generated files to prevent test artifacts from accumulating on the file
+    /// system.
     tearDown(() {
       tempDirHelper.cleanup();
     });
@@ -44,8 +43,7 @@ void main() {
     group('validation', () {
       /// Verifies that the command fails when no screen name is provided.
       ///
-      /// This test ensures that the command provides clear error messages
-      /// when required arguments are missing.
+      /// This test ensures that the command provides clear error messages when required arguments are missing.
       test('should fail when no screen name provided', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -58,8 +56,8 @@ void main() {
 
       /// Verifies that the command fails when run outside a Flutter project.
       ///
-      /// This test ensures that the command properly detects Flutter project
-      /// structure and prevents execution in inappropriate directories.
+      /// This test ensures that the command properly detects Flutter project structure and prevents execution in
+      /// inappropriate directories.
       test('should fail when not in Flutter project', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -73,8 +71,8 @@ void main() {
 
       /// Verifies that the command rejects invalid screen names.
       ///
-      /// This test ensures that screen names follow Dart identifier rules
-      /// and provides helpful error messages for invalid names.
+      /// This test ensures that screen names follow Dart identifier rules and provides helpful error messages for
+      /// invalid names.
       test('should fail with invalid screen name', () async {
         // Create minimal Flutter project structure
         await _createMinimalFlutterProject(tempDirHelper.directoryPath);
@@ -133,8 +131,8 @@ void main() {
 
       /// Tests screen generation with PascalCase input name.
       ///
-      /// This test verifies that the command properly handles different naming
-      /// conventions and converts them to appropriate file and class names.
+      /// This test verifies that the command properly handles different naming conventions and converts them to
+      /// appropriate file and class names.
       test('should handle PascalCase screen names', () async {
         // Create minimal Flutter project structure
         await _createMinimalFlutterProject(tempDirHelper.directoryPath);
@@ -202,8 +200,8 @@ void main() {
     group('file content validation', () {
       /// Verifies that generated files contain expected MVC structure.
       ///
-      /// This test ensures that the generated files follow the established
-      /// MVC patterns and contain the required classes and methods.
+      /// This test ensures that the generated files follow the established MVC patterns and contain the required
+      /// classes and methods.
       test('should generate files with correct MVC structure', () async {
         // Create minimal Flutter project structure
         await _createMinimalFlutterProject(tempDirHelper.directoryPath);
@@ -243,8 +241,8 @@ void main() {
 
       /// Verifies that generated files contain the icon selection game logic.
       ///
-      /// This test ensures that the placeholder content includes the required
-      /// icon selection game with proper randomization and user interaction.
+      /// This test ensures that the placeholder content includes the required icon selection game with proper
+      /// randomization and user interaction.
       test('should generate icon selection game content', () async {
         // Create minimal Flutter project structure
         await _createMinimalFlutterProject(tempDirHelper.directoryPath);
@@ -281,8 +279,8 @@ void main() {
 
 /// Creates a minimal Flutter project structure for testing.
 ///
-/// This helper function creates the minimum files and directories needed
-/// for the screen command to recognize a valid Flutter project.
+/// This helper function creates the minimum files and directories needed for the screen command to recognize a valid
+/// Flutter project.
 ///
 /// Parameters:
 /// * [projectPath] - Path where the Flutter project structure should be created

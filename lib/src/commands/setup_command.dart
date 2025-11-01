@@ -49,6 +49,7 @@ class SetupCommand extends Command<int> {
   ///
   /// Initializes the command with support for:
   /// * `--project` (-p): Specify a specific project directory to setup
+  /// * `--device` (-d): Specify a device ID for flutter run
   /// * `--no-run`: Skip the flutter run step
   /// * `--verbose` (-v): Enable verbose output from Flutter commands
   SetupCommand() {
@@ -57,6 +58,11 @@ class SetupCommand extends Command<int> {
         'project',
         abbr: 'p',
         help: 'The Flutter project directory to setup. Defaults to current directory.',
+      )
+      ..addOption(
+        'device',
+        abbr: 'd',
+        help: 'Device ID to use for flutter run. If not specified, automatically selects the best available device.',
       )
       ..addFlag(
         'run',
@@ -106,6 +112,9 @@ class SetupCommand extends Command<int> {
     final String? projectPath = argResults!['project'] as String?;
     final String targetPath = projectPath ?? Directory.current.path;
 
+    /// Optional device ID to use for flutter run.
+    final String? deviceId = argResults!['device'] as String?;
+
     /// Whether to run the Flutter app after completing setup.
     final bool shouldRun = argResults!['run'] as bool;
 
@@ -117,20 +126,38 @@ class SetupCommand extends Command<int> {
       projectPath: targetPath,
       runApp: shouldRun,
       verbose: verbose,
+      deviceId: deviceId,
     );
 
     try {
       final String projectName = path.basename(targetPath);
-      logger..info('Setting up Flutter project: $projectName')
+      logger
+        ..info('Setting up Flutter project: $projectName')
+        // Show progress messages
+        ..info('📦 Installing dependencies...')
+        ..info('🌐 Generating localizations...');
 
-      // Show progress messages
-      ..info('📦 Installing dependencies...')
-      ..info('🌐 Generating localizations...');
-
+      // Get device selection info before running if we're going to run the app
+      DeviceSelectionInfo? deviceInfo;
       if (shouldRun) {
-        logger
-          ..info('🚀 Starting application...')
-          ..info('Press Ctrl+C to stop the application when ready.');
+        try {
+          deviceInfo = await _projectService.getDeviceSelection(
+            targetPath,
+            deviceId: deviceId,
+          );
+
+          // Show device selection information before running
+          _showDeviceSelectionInfo(logger, deviceInfo);
+
+          logger
+            ..info('🚀 Starting application...')
+            ..info('Press Ctrl+C to stop the application when ready.');
+        } catch (e) {
+          // If device selection fails, we'll let the setup process handle it
+          logger
+            ..info('🚀 Starting application...')
+            ..info('Press Ctrl+C to stop the application when ready.');
+        }
       }
 
       // Use service to setup project
@@ -178,6 +205,34 @@ class SetupCommand extends Command<int> {
     } catch (error) {
       logger.err('Setup failed: $error');
       return 1;
+    }
+  }
+
+  /// Shows device selection information to the user.
+  ///
+  /// Provides feedback about which device was selected and why, especially useful
+  /// when multiple devices are available and automatic selection occurs.
+  void _showDeviceSelectionInfo(Logger logger, DeviceSelectionInfo deviceInfo) {
+    final FlutterDevice selectedDevice = deviceInfo.selectedDevice;
+    final List<FlutterDevice> availableDevices = deviceInfo.availableDevices;
+    final String reason = deviceInfo.selectionReason;
+
+    // Only show device selection info if there were multiple devices or if user specified one
+    if (availableDevices.length > 1 || reason == 'User specified') {
+      logger.info('');
+      logger.info('📱 Device Selection:');
+      logger.info('   Selected: ${selectedDevice.name} (${selectedDevice.id})');
+      logger.info('   Reason: $reason');
+
+      // Show other available devices if there were multiple options
+      if (availableDevices.length > 1) {
+        final List<FlutterDevice> otherDevices = availableDevices.where((d) => d.id != selectedDevice.id).toList();
+
+        if (otherDevices.isNotEmpty) {
+          logger.info('   Other available: ${otherDevices.map((d) => '${d.name} (${d.id})').join(', ')}');
+          logger.info('   💡 Use --device=<id> to specify a different device');
+        }
+      }
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:mason/mason.dart';
 import 'package:path/path.dart' as path;
@@ -146,11 +147,13 @@ class ProjectService {
       executedCommands.add('flutter gen-l10n');
 
       // Optionally run the application
+      DeviceSelectionInfo? deviceInfo;
       if (request.runApp) {
-        await _runFlutterCommand(
+        deviceInfo = await _runFlutterCommand(
           ['run'],
           workingDirectory: request.projectPath,
           verbose: request.verbose,
+          deviceId: request.deviceId,
         );
         executedCommands.add('flutter run');
       }
@@ -158,6 +161,9 @@ class ProjectService {
       return ProjectSetupResult.success(
         projectPath: request.projectPath,
         executedCommands: executedCommands,
+        selectedDevice: deviceInfo?.selectedDevice,
+        availableDevices: deviceInfo?.availableDevices,
+        deviceSelectionReason: deviceInfo?.selectionReason,
       );
     } catch (e) {
       if (e is ProjectServiceException) {
@@ -266,11 +272,24 @@ class ProjectService {
   }
 
   /// Runs a Flutter command with the specified arguments.
-  Future<void> _runFlutterCommand(
+  ///
+  /// Returns device selection information if this was a flutter run command with device selection.
+  Future<DeviceSelectionInfo?> _runFlutterCommand(
     List<String> args, {
     required String workingDirectory,
     bool verbose = false,
+    String? deviceId,
   }) async {
+    // Special handling for 'flutter run' command to handle multiple devices
+    if (args.isNotEmpty && args.first == 'run') {
+      return await _runFlutterRunCommand(
+        args,
+        workingDirectory: workingDirectory,
+        verbose: verbose,
+        deviceId: deviceId,
+      );
+    }
+
     final ProcessResult result = await Process.run(
       'flutter',
       args,
@@ -282,6 +301,234 @@ class ProjectService {
         'Flutter command failed: flutter ${args.join(' ')}\n${result.stderr}',
         ProjectServiceErrorType.flutterCommandFailed,
       );
+    }
+
+    return null; // No device selection info for non-run commands
+  }
+
+  /// Runs the Flutter run command with intelligent device selection.
+  ///
+  /// This method handles the case where multiple devices are available by:
+  /// 1. Using the specified device ID if provided
+  /// 2. Otherwise, checking available devices and selecting the best one
+  /// 3. Running flutter run with the selected device
+  ///
+  /// Device selection priority (when no device specified):
+  /// 1. Desktop devices (Windows, macOS, Linux)
+  /// 2. Web browsers (Chrome)
+  /// 3. Mobile devices (Android, iOS)
+  /// 4. Other devices
+  ///
+  /// Returns device selection information for user feedback.
+  Future<DeviceSelectionInfo?> _runFlutterRunCommand(
+    List<String> args, {
+    required String workingDirectory,
+    bool verbose = false,
+    String? deviceId,
+  }) async {
+    try {
+      // Get list of available devices first
+      final List<FlutterDevice> devices = await _getAvailableDevices(workingDirectory);
+
+      if (devices.isEmpty) {
+        throw ProjectServiceException(
+          'No devices available. Please connect a device or start an emulator.',
+          ProjectServiceErrorType.flutterCommandFailed,
+        );
+      }
+
+      List<String> runArgs = [...args];
+      FlutterDevice selectedDevice;
+      String selectionReason;
+
+      // Determine device selection logic
+      if (deviceId != null) {
+        // Device ID was specified, validate it exists
+        final FlutterDevice? specifiedDevice = devices.where((d) => d.id == deviceId).firstOrNull;
+
+        if (specifiedDevice == null) {
+          throw ProjectServiceException(
+            'Specified device "$deviceId" not found. Available devices: ${devices.map((d) => d.id).join(', ')}',
+            ProjectServiceErrorType.flutterCommandFailed,
+          );
+        }
+
+        selectedDevice = specifiedDevice;
+        selectionReason = 'User specified';
+        runArgs = [...args, '-d', deviceId];
+      } else if (devices.length == 1) {
+        // Only one device available
+        selectedDevice = devices.first;
+        selectionReason = 'Only device available';
+        // Don't add -d flag for single device
+      } else {
+        // Multiple devices available - select the best one
+        selectedDevice = _selectBestDevice(devices);
+        selectionReason = _getSelectionReason(selectedDevice, devices);
+        runArgs = [...args, '-d', selectedDevice.id];
+      }
+
+      final ProcessResult result = await Process.run(
+        'flutter',
+        runArgs,
+        workingDirectory: workingDirectory,
+      );
+
+      if (result.exitCode != 0) {
+        throw ProjectServiceException(
+          'Flutter run failed on device ${selectedDevice.name}: ${result.stderr}',
+          ProjectServiceErrorType.flutterCommandFailed,
+        );
+      }
+
+      // Return device selection information
+      return DeviceSelectionInfo(
+        selectedDevice: selectedDevice,
+        availableDevices: devices,
+        selectionReason: selectionReason,
+      );
+    } catch (e) {
+      if (e is ProjectServiceException) {
+        rethrow;
+      }
+      throw ProjectServiceException(
+        'Failed to run Flutter app: $e',
+        ProjectServiceErrorType.flutterCommandFailed,
+        cause: e,
+      );
+    }
+  }
+
+  /// Determines which device would be selected for flutter run without actually running.
+  ///
+  /// This method performs device detection and selection logic to provide user feedback
+  /// before actually executing the flutter run command.
+  Future<DeviceSelectionInfo> getDeviceSelection(
+    String workingDirectory, {
+    String? deviceId,
+  }) async {
+    // Get list of available devices
+    final List<FlutterDevice> devices = await _getAvailableDevices(workingDirectory);
+
+    if (devices.isEmpty) {
+      throw ProjectServiceException(
+        'No devices available. Please connect a device or start an emulator.',
+        ProjectServiceErrorType.flutterCommandFailed,
+      );
+    }
+
+    FlutterDevice selectedDevice;
+    String selectionReason;
+
+    // Determine device selection logic (same as in _runFlutterRunCommand)
+    if (deviceId != null) {
+      // Device ID was specified, validate it exists
+      final FlutterDevice? specifiedDevice = devices.where((d) => d.id == deviceId).firstOrNull;
+
+      if (specifiedDevice == null) {
+        throw ProjectServiceException(
+          'Specified device "$deviceId" not found. Available devices: ${devices.map((d) => d.id).join(', ')}',
+          ProjectServiceErrorType.flutterCommandFailed,
+        );
+      }
+
+      selectedDevice = specifiedDevice;
+      selectionReason = 'User specified';
+    } else if (devices.length == 1) {
+      // Only one device available
+      selectedDevice = devices.first;
+      selectionReason = 'Only device available';
+    } else {
+      // Multiple devices available - select the best one
+      selectedDevice = _selectBestDevice(devices);
+      selectionReason = _getSelectionReason(selectedDevice, devices);
+    }
+
+    return DeviceSelectionInfo(
+      selectedDevice: selectedDevice,
+      availableDevices: devices,
+      selectionReason: selectionReason,
+    );
+  }
+
+  /// Gets the list of available Flutter devices.
+  Future<List<FlutterDevice>> _getAvailableDevices(String workingDirectory) async {
+    final ProcessResult result = await Process.run(
+      'flutter',
+      ['devices', '--machine'],
+      workingDirectory: workingDirectory,
+    );
+
+    if (result.exitCode != 0) {
+      throw ProjectServiceException(
+        'Failed to get device list: ${result.stderr}',
+        ProjectServiceErrorType.flutterCommandFailed,
+      );
+    }
+
+    try {
+      final String output = result.stdout as String;
+      final List<dynamic> deviceList = jsonDecode(output) as List<dynamic>;
+
+      return deviceList.map((dynamic device) => FlutterDevice.fromJson(device as Map<String, dynamic>)).toList();
+    } catch (e) {
+      throw ProjectServiceException(
+        'Failed to parse device list: $e',
+        ProjectServiceErrorType.flutterCommandFailed,
+        cause: e,
+      );
+    }
+  }
+
+  /// Selects the best device from available devices based on priority.
+  ///
+  /// Priority order:
+  /// 1. Desktop devices (better for development)
+  /// 2. Web browsers (universal compatibility)
+  /// 3. Mobile devices (Android/iOS)
+  /// 4. Other devices
+  FlutterDevice _selectBestDevice(List<FlutterDevice> devices) {
+    // Priority 1: Desktop devices
+    final FlutterDevice? desktopDevice = devices.where((device) => _isDesktopDevice(device)).firstOrNull;
+    if (desktopDevice != null) return desktopDevice;
+
+    // Priority 2: Web browsers
+    final FlutterDevice? webDevice = devices.where((device) => _isWebDevice(device)).firstOrNull;
+    if (webDevice != null) return webDevice;
+
+    // Priority 3: Mobile devices
+    final FlutterDevice? mobileDevice = devices.where((device) => _isMobileDevice(device)).firstOrNull;
+    if (mobileDevice != null) return mobileDevice;
+
+    // Fallback: Return first available device
+    return devices.first;
+  }
+
+  /// Checks if a device is a desktop device.
+  /// Checks if a device is a desktop device.
+  bool _isDesktopDevice(FlutterDevice device) => device.isDesktop;
+
+  /// Checks if a device is a web device.
+  bool _isWebDevice(FlutterDevice device) => device.isWeb;
+
+  /// Checks if a device is a mobile device.
+  bool _isMobileDevice(FlutterDevice device) => device.isMobile;
+
+  /// Gets a human-readable explanation for why a device was selected.
+  String _getSelectionReason(FlutterDevice selectedDevice, List<FlutterDevice> availableDevices) {
+    if (selectedDevice.isDesktop) {
+      return 'Automatically selected (desktop preferred for development)';
+    } else if (selectedDevice.isWeb) {
+      final bool hasDesktop = availableDevices.any((d) => d.isDesktop);
+      if (hasDesktop) {
+        return 'Automatically selected (web device)';
+      } else {
+        return 'Automatically selected (web preferred over mobile)';
+      }
+    } else if (selectedDevice.isMobile) {
+      return 'Automatically selected (mobile device)';
+    } else {
+      return 'Automatically selected';
     }
   }
 
@@ -392,6 +639,7 @@ class ProjectSetupRequest {
     required this.projectPath,
     this.runApp = true,
     this.verbose = false,
+    this.deviceId,
   });
 
   /// Path to the Flutter project to setup.
@@ -402,6 +650,12 @@ class ProjectSetupRequest {
 
   /// Whether to enable verbose output.
   final bool verbose;
+
+  /// Optional device ID to use for flutter run.
+  ///
+  /// If not specified, the system will automatically select the best available device
+  /// based on platform priority (desktop > web > mobile).
+  final String? deviceId;
 }
 
 /// Result of project creation operation.
@@ -465,16 +719,25 @@ class ProjectSetupResult {
     required this.projectPath,
     required this.executedCommands,
     this.error,
+    this.selectedDevice,
+    this.availableDevices,
+    this.deviceSelectionReason,
   });
 
   /// Creates a successful result.
   const ProjectSetupResult.success({
     required String projectPath,
     required List<String> executedCommands,
+    FlutterDevice? selectedDevice,
+    List<FlutterDevice>? availableDevices,
+    String? deviceSelectionReason,
   }) : this(
          success: true,
          projectPath: projectPath,
          executedCommands: executedCommands,
+         selectedDevice: selectedDevice,
+         availableDevices: availableDevices,
+         deviceSelectionReason: deviceSelectionReason,
        );
 
   /// Creates a failed result.
@@ -499,6 +762,21 @@ class ProjectSetupResult {
 
   /// Error message if operation failed.
   final String? error;
+
+  /// The device that was selected for running the application.
+  ///
+  /// This is null if the app was not run or if device selection was not needed.
+  final FlutterDevice? selectedDevice;
+
+  /// List of all available devices when selection occurred.
+  ///
+  /// This is null if device detection was not performed or if the app was not run.
+  final List<FlutterDevice>? availableDevices;
+
+  /// Human-readable explanation of why this device was selected.
+  ///
+  /// Examples: "Automatically selected (desktop preferred)", "User specified", "Only device available"
+  final String? deviceSelectionReason;
 }
 
 /// Exception thrown by project service operations.
@@ -521,6 +799,25 @@ class ProjectServiceException implements Exception {
 
   @override
   String toString() => 'ProjectServiceException: $message';
+}
+
+/// Information about device selection during flutter run operations.
+class DeviceSelectionInfo {
+  /// Creates device selection information.
+  const DeviceSelectionInfo({
+    required this.selectedDevice,
+    required this.availableDevices,
+    required this.selectionReason,
+  });
+
+  /// The device that was selected for running the application.
+  final FlutterDevice selectedDevice;
+
+  /// List of all available devices when selection occurred.
+  final List<FlutterDevice> availableDevices;
+
+  /// Human-readable explanation of why this device was selected.
+  final String selectionReason;
 }
 
 /// Types of errors that can occur in project service operations.
@@ -548,4 +845,128 @@ enum ProjectServiceErrorType {
 
   /// Unknown error occurred.
   unknown,
+}
+
+/// Represents a Flutter device available for running applications.
+///
+/// This class encapsulates device information returned by `flutter devices --machine`,
+/// providing structured access to device properties for intelligent device selection.
+class FlutterDevice {
+  /// Creates a Flutter device instance.
+  const FlutterDevice({
+    required this.id,
+    required this.name,
+    required this.targetPlatform,
+    required this.emulator,
+    this.category,
+    this.platformType,
+  });
+
+  /// Creates a Flutter device from JSON data returned by `flutter devices --machine`.
+  ///
+  /// The JSON structure follows Flutter's device listing format:
+  /// ```json
+  /// {
+  ///   "id": "chrome",
+  ///   "name": "Chrome",
+  ///   "targetPlatform": "web-javascript",
+  ///   "emulator": false,
+  ///   "category": "web",
+  ///   "platformType": "web"
+  /// }
+  /// ```
+  factory FlutterDevice.fromJson(Map<String, dynamic> json) {
+    return FlutterDevice(
+      id: _safeStringFromJson(json['id']) ?? '',
+      name: _safeStringFromJson(json['name']) ?? 'Unknown Device',
+      targetPlatform: _safeStringFromJson(json['targetPlatform']) ?? '',
+      emulator: _safeBoolFromJson(json['emulator']) ?? false,
+      category: _safeStringFromJson(json['category']),
+      platformType: _safeStringFromJson(json['platformType']),
+    );
+  }
+
+  /// Safely extracts a string value from JSON, handling type mismatches.
+  static String? _safeStringFromJson(dynamic value) {
+    if (value == null) return null;
+    if (value is String) return value;
+    return value.toString();
+  }
+
+  /// Safely extracts a boolean value from JSON, handling type mismatches.
+  static bool? _safeBoolFromJson(dynamic value) {
+    if (value == null) return null;
+    if (value is bool) return value;
+    if (value is String) {
+      return value.toLowerCase() == 'true';
+    }
+    if (value is int) {
+      return value != 0;
+    }
+    return false;
+  }
+
+  /// Unique identifier for the device (used with flutter run -d).
+  final String id;
+
+  /// Human-readable name of the device.
+  final String name;
+
+  /// Target platform identifier (e.g., 'android-arm64', 'web-javascript').
+  final String targetPlatform;
+
+  /// Whether this device is an emulator or physical device.
+  final bool emulator;
+
+  /// Optional category classification of the device.
+  final String? category;
+
+  /// Optional platform type classification.
+  final String? platformType;
+
+  /// Returns a string representation of the device for debugging.
+  @override
+  String toString() => 'FlutterDevice(id: $id, name: $name, platform: $targetPlatform)';
+
+  /// Converts the device back to JSON format.
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'targetPlatform': targetPlatform,
+      'emulator': emulator,
+      if (category != null) 'category': category,
+      if (platformType != null) 'platformType': platformType,
+    };
+  }
+
+  /// Checks if this device is a desktop device.
+  ///
+  /// Desktop devices include Windows, macOS, and Linux platforms.
+  /// These are typically preferred for development due to better tooling and performance.
+  bool get isDesktop {
+    final String platform = targetPlatform.toLowerCase();
+    return platform.contains('windows') ||
+        platform.contains('macos') ||
+        platform.contains('linux') ||
+        platform.contains('darwin');
+  }
+
+  /// Checks if this device is a web device.
+  ///
+  /// Web devices include browsers and web-based targets.
+  /// These provide universal compatibility and are good for testing responsive designs.
+  bool get isWeb {
+    final String platform = targetPlatform.toLowerCase();
+    return platform.contains('web') || platform.contains('chrome');
+  }
+
+  /// Checks if this device is a mobile device.
+  ///
+  /// Mobile devices include Android and iOS platforms, both physical devices and emulators.
+  /// These are essential for testing mobile-specific functionality and performance.
+  bool get isMobile {
+    final String platform = targetPlatform.toLowerCase();
+    return platform.contains('android') || platform.contains('ios');
+  }
 }

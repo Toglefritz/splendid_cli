@@ -1,3 +1,18 @@
+## 5.3.0
+
+### Intelligent Device Selection
+
+- **Multi-Device Support**: Setup command now handles multiple connected devices automatically without user prompts
+- **Smart Device Priority**: Intelligent selection prioritizes desktop > web > mobile devices for optimal development experience
+- **Manual Device Selection**: New `--device` flag allows users to specify exact device ID for flutter run
+- **Pre-Run Device Feedback**: Shows device selection information before starting the app, allowing users to cancel if needed
+- **Clear Selection Reasoning**: Explains why each device was selected (user specified, automatic priority, only available)
+- **Alternative Device Display**: Lists other available devices with instructions on how to select them
+- **Graceful Error Handling**: Clear error messages when specified devices are not found, with list of available alternatives
+- **Backward Compatibility**: Existing setup workflows continue unchanged when only one device is available
+- **Device Validation**: Robust validation ensures specified devices exist before attempting to run applications
+- **Comprehensive Testing**: Full test coverage for device selection logic and error scenarios
+
 ## 5.2.0
 
 ### Organization Identifier Support

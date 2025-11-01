@@ -63,6 +63,7 @@ class ProjectService {
         request.projectName,
         targetPath,
         request.platforms,
+        request.organization,
       );
 
       // Remove default Flutter files that will be replaced
@@ -179,6 +180,14 @@ class ProjectService {
       );
     }
 
+    // Validate organization format
+    if (!_isValidOrganization(request.organization)) {
+      throw ProjectServiceException(
+        'Invalid organization: ${request.organization}. Must be in reverse domain name notation (e.g., com.example).',
+        ProjectServiceErrorType.invalidOrganization,
+      );
+    }
+
     // Validate platforms
     const List<String> validPlatforms = ['android', 'ios', 'web', 'windows', 'macos', 'linux'];
 
@@ -199,6 +208,7 @@ class ProjectService {
     String projectName,
     String targetPath,
     String platforms,
+    String organization,
   ) async {
     const List<String> validPlatforms = ['android', 'ios', 'web', 'windows', 'macos', 'linux'];
 
@@ -218,6 +228,7 @@ class ProjectService {
     final List<String> createArgs = [
       'create',
       '--platforms=${enabledPlatforms.join(',')}',
+      '--org=$organization',
       projectName,
     ];
 
@@ -280,6 +291,52 @@ class ProjectService {
     return validName.hasMatch(name) && !name.startsWith('_');
   }
 
+  /// Validates that an organization follows reverse domain name notation.
+  ///
+  /// Valid organization formats:
+  /// * com.example
+  /// * org.mycompany
+  /// * io.github.username
+  /// * net.domain.subdomain
+  ///
+  /// The organization must:
+  /// * Contain at least one dot
+  /// * Have segments separated by dots
+  /// * Each segment must start with a letter
+  /// * Each segment can contain letters, numbers, and hyphens
+  /// * Each segment must end with a letter or number
+  bool _isValidOrganization(String organization) {
+    if (organization.isEmpty || !organization.contains('.')) {
+      return false;
+    }
+
+    final List<String> segments = organization.split('.');
+
+    // Must have at least 2 segments (e.g., com.example)
+    if (segments.length < 2) {
+      return false;
+    }
+
+    // Validate each segment
+    for (final String segment in segments) {
+      if (segment.isEmpty) {
+        return false;
+      }
+
+      // Each segment must match domain name rules:
+      // - Start with lowercase letter
+      // - Contain only lowercase letters, numbers, and hyphens
+      // - End with lowercase letter or number
+      // - Single letter segments are allowed
+      final RegExp validSegment = RegExp(r'^[a-z]([a-z0-9-]*[a-z0-9])?$');
+      if (!validSegment.hasMatch(segment)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   /// Checks if a directory contains a Flutter project.
   bool _isFlutterProject(String projectPath) {
     final File pubspecFile = File(path.join(projectPath, 'pubspec.yaml'));
@@ -305,6 +362,7 @@ class ProjectCreationRequest {
     required this.projectName,
     this.outputDirectory,
     this.platforms = 'android,ios,web,windows,macos,linux',
+    this.organization = 'com.example',
     this.force = false,
   });
 
@@ -316,6 +374,12 @@ class ProjectCreationRequest {
 
   /// Comma-separated list of platforms to enable.
   final String platforms;
+
+  /// Organization responsible for the project in reverse domain name notation.
+  ///
+  /// This string is used in Java package names and as prefix in the iOS bundle identifier.
+  /// Must follow reverse domain name format (e.g., 'com.example', 'org.mycompany').
+  final String organization;
 
   /// Whether to overwrite existing directories.
   final bool force;
@@ -463,6 +527,9 @@ class ProjectServiceException implements Exception {
 enum ProjectServiceErrorType {
   /// Invalid project name provided.
   invalidProjectName,
+
+  /// Invalid organization format provided.
+  invalidOrganization,
 
   /// Invalid platforms specified.
   invalidPlatforms,

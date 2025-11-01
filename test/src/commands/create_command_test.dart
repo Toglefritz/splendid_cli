@@ -85,6 +85,21 @@ void main() {
           equals('The desired output directory when creating a new project.'),
         );
 
+        // Verify org option
+        expect(argParser.options.containsKey('org'), isTrue);
+        expect(
+          argParser.options['org']?.defaultsTo,
+          equals('com.example'),
+        );
+        expect(
+          argParser.options['org']?.help,
+          contains('The organization responsible for your new Flutter project'),
+        );
+        expect(
+          argParser.options['org']?.help,
+          contains('reverse domain name notation'),
+        );
+
         // Verify platforms option
         expect(argParser.options.containsKey('platforms'), isTrue);
         expect(
@@ -247,6 +262,97 @@ void main() {
       }, skip: 'Requires Flutter CLI for full validation');
     });
 
+    group('organization validation', () {
+      /// Tests that the command accepts valid organization formats.
+      ///
+      /// This test verifies that properly formatted reverse domain name notation passes validation and allows the
+      /// command to proceed to project creation.
+      test('should accept valid organization formats', () async {
+        const String projectName = 'test_app';
+        final List<String> validOrganizations = [
+          'com.example',
+          'org.mycompany',
+          'io.github.username',
+          'net.domain.subdomain',
+          'co.uk.company',
+          'edu.university.department',
+        ];
+
+        for (final String org in validOrganizations) {
+          final int exitCode = await runner.run([
+            'create',
+            projectName,
+            '--org=$org',
+            '--output-directory=${tempDir.path}',
+            '--force',
+          ]);
+
+          // Should not return usage error (64) for valid organizations
+          // May return 0 (success) or 1 (Flutter CLI error) depending on environment
+          expect(
+            exitCode,
+            isNot(equals(64)),
+            reason: 'Valid organization "$org" should not return usage error',
+          );
+        }
+      }, skip: 'Requires Flutter CLI for full validation');
+
+      /// Tests that the command rejects invalid organization formats.
+      ///
+      /// This test ensures that organization names are validated against reverse domain name notation rules and
+      /// provides helpful error messages for invalid formats.
+      test('should reject invalid organization formats', () async {
+        const String projectName = 'test_app';
+        final List<String> invalidOrganizations = [
+          'example', // Missing domain separator
+          'com', // Only one segment
+          'com.', // Trailing dot
+          '.com.example', // Leading dot
+          'com..example', // Double dot
+          'com.123example', // Segment starting with number
+          'com.example-', // Segment ending with hyphen
+          'com.-example', // Segment starting with hyphen
+          'com.exam ple', // Space in segment
+          'com.exam_ple', // Underscore not allowed in domain names
+          '', // Empty string
+        ];
+
+        for (final String org in invalidOrganizations) {
+          final int exitCode = await runner.run([
+            'create',
+            projectName,
+            '--org=$org',
+            '--output-directory=${tempDir.path}',
+            '--force',
+          ]);
+
+          expect(
+            exitCode,
+            equals(64),
+            reason: 'Invalid organization "$org" should return usage error',
+          );
+        }
+      });
+
+      /// Tests that the default organization is used when no --org flag is provided.
+      ///
+      /// This test verifies that the command uses 'com.example' as the default organization when users don't specify
+      /// a custom organization.
+      test('should use default organization when not specified', () async {
+        const String projectName = 'default_org_app';
+
+        final int exitCode = await runner.run([
+          'create',
+          projectName,
+          '--output-directory=${tempDir.path}',
+          '--force',
+        ]);
+
+        // Should not fail due to organization issues when using default
+        expect(exitCode, anyOf(equals(0), equals(1)));
+      }, skip: 'Requires Flutter CLI for full validation');
+    });
+
     group('platform configuration', () {
       /// Tests that default platforms are properly configured.
       ///
@@ -279,6 +385,28 @@ void main() {
         ]);
 
         // Should not fail due to platform parsing issues
+        expect(exitCode, anyOf(equals(0), equals(1)));
+      }, skip: 'Requires Flutter CLI for full validation');
+
+      /// Tests that custom organization and platforms work together.
+      ///
+      /// This test verifies that users can specify both custom organization and platforms simultaneously without
+      /// conflicts or parsing issues.
+      test('should handle custom organization and platforms together', () async {
+        const String projectName = 'custom_config_app';
+        const String customOrg = 'io.github.myusername';
+        const String customPlatforms = 'android,ios,web';
+
+        final int exitCode = await runner.run([
+          'create',
+          projectName,
+          '--org=$customOrg',
+          '--platforms=$customPlatforms',
+          '--output-directory=${tempDir.path}',
+          '--force',
+        ]);
+
+        // Should handle both options without argument parsing errors
         expect(exitCode, anyOf(equals(0), equals(1)));
       }, skip: 'Requires Flutter CLI for full validation');
 

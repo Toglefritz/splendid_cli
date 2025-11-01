@@ -50,6 +50,8 @@ class CreateCommand extends Command<int> {
   ///
   /// Initializes the command with support for:
   /// * `--output-directory` (-o): Custom target directory for project creation
+  /// * `--org`: Organization in reverse domain name notation for app identifiers
+  /// * `--platforms`: Comma-separated list of platforms to enable
   /// * `--force`: Overwrite existing directories without confirmation
   ///
   /// The argument parser is configured during construction to ensure all command-line options are properly defined and
@@ -60,6 +62,14 @@ class CreateCommand extends Command<int> {
         'output-directory',
         abbr: 'o',
         help: 'The desired output directory when creating a new project.',
+      )
+      ..addOption(
+        'org',
+        help:
+            'The organization responsible for your new Flutter project, in reverse domain name notation.\n'
+            'This string is used in Java package names and as prefix in the iOS bundle identifier.\n'
+            'Examples: com.example, org.mycompany, io.github.username',
+        defaultsTo: 'com.example',
       )
       ..addOption(
         'platforms',
@@ -143,6 +153,9 @@ class CreateCommand extends Command<int> {
     /// Optional custom output directory specified via --output-directory flag.
     final String? outputDirectory = argResults!['output-directory'] as String?;
 
+    /// Organization in reverse domain name notation for app identifiers.
+    final String organization = argResults!['org'] as String;
+
     /// Whether to force overwrite existing directories (--force flag).
     final bool force = argResults!['force'] as bool;
 
@@ -154,6 +167,7 @@ class CreateCommand extends Command<int> {
       projectName: projectName,
       outputDirectory: outputDirectory,
       platforms: platforms,
+      organization: organization,
       force: force,
     );
 
@@ -191,6 +205,11 @@ class CreateCommand extends Command<int> {
           logger
             ..err(e.message)
             ..info('Project name must be a valid Dart package name.');
+          return 64;
+        case ProjectServiceErrorType.invalidOrganization:
+          logger
+            ..err(e.message)
+            ..info('Organization must be in reverse domain name notation (e.g., com.example).');
           return 64;
         case ProjectServiceErrorType.directoryExists:
           logger

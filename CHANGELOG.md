@@ -1,3 +1,15 @@
+## 5.2.0
+
+### Organization Identifier Support
+
+- **Custom Organization**: New `--org` flag for the `create` command sets organization in reverse domain name notation
+- **Platform Integration**: Organization automatically applied to Android application ID and iOS bundle identifier
+- **Format Validation**: Robust validation ensures proper reverse domain format (e.g., com.example, org.mycompany)
+- **Default Behavior**: Uses 'com.example' when no organization specified, maintaining backward compatibility
+- **Error Handling**: Clear error messages with examples guide users toward correct organization format
+- **Comprehensive Testing**: Full test coverage for organization validation and platform-specific configuration
+- **Flutter CLI Alignment**: Matches Flutter's native `--org` flag behavior for consistency and familiarity
+
 ## 5.1.0
 
 ### Blank Screen Generation

@@ -16,7 +16,7 @@
 /// * Device availability scenarios
 library;
 
-import 'package:splendid_cli/src/services/project_service.dart';
+import 'package:splendid_cli/src/services/project_service/flutter_device.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -123,7 +123,7 @@ void main() {
             targetPlatform: 'android-x64',
             emulator: true,
           ),
-          FlutterDevice(
+          const FlutterDevice(
             id: 'chrome',
             name: 'Chrome',
             targetPlatform: 'web-javascript',
@@ -157,13 +157,13 @@ void main() {
       /// devices due to their universal compatibility and ease of development.
       test('should prioritize web over mobile devices', () {
         final List<FlutterDevice> devices = [
-          FlutterDevice(
+          const FlutterDevice(
             id: 'android-emulator',
             name: 'Android Emulator',
             targetPlatform: 'android-x64',
             emulator: true,
           ),
-          FlutterDevice(
+          const FlutterDevice(
             id: 'chrome',
             name: 'Chrome',
             targetPlatform: 'web-javascript',
@@ -185,13 +185,13 @@ void main() {
       /// available option, maintaining functionality across different development environments.
       test('should select mobile devices as fallback', () {
         final List<FlutterDevice> devices = [
-          FlutterDevice(
+          const FlutterDevice(
             id: 'android-emulator',
             name: 'Android Emulator',
             targetPlatform: 'android-x64',
             emulator: true,
           ),
-          FlutterDevice(
+          const FlutterDevice(
             id: 'ios-simulator',
             name: 'iOS Simulator',
             targetPlatform: 'ios',
@@ -215,19 +215,19 @@ void main() {
       /// their target platform strings.
       test('should correctly identify desktop devices', () {
         final List<FlutterDevice> desktopDevices = [
-          FlutterDevice(
+          const FlutterDevice(
             id: 'windows',
             name: 'Windows',
             targetPlatform: 'windows-x64',
             emulator: false,
           ),
-          FlutterDevice(
+          const FlutterDevice(
             id: 'macos',
             name: 'macOS',
             targetPlatform: 'darwin-x64',
             emulator: false,
           ),
-          FlutterDevice(
+          const FlutterDevice(
             id: 'linux',
             name: 'Linux',
             targetPlatform: 'linux-x64',
@@ -253,13 +253,13 @@ void main() {
       /// distinguishing them from native mobile or desktop applications.
       test('should correctly identify web devices', () {
         final List<FlutterDevice> webDevices = [
-          FlutterDevice(
+          const FlutterDevice(
             id: 'chrome',
             name: 'Chrome',
             targetPlatform: 'web-javascript',
             emulator: false,
           ),
-          FlutterDevice(
+          const FlutterDevice(
             id: 'web-server',
             name: 'Web Server',
             targetPlatform: 'web',
@@ -285,19 +285,19 @@ void main() {
       /// platforms, handling various target platform string formats.
       test('should correctly identify mobile devices', () {
         final List<FlutterDevice> mobileDevices = [
-          FlutterDevice(
+          const FlutterDevice(
             id: 'android-device',
             name: 'Android Device',
             targetPlatform: 'android-arm64',
             emulator: false,
           ),
-          FlutterDevice(
+          const FlutterDevice(
             id: 'ios-simulator',
             name: 'iOS Simulator',
             targetPlatform: 'ios',
             emulator: true,
           ),
-          FlutterDevice(
+          const FlutterDevice(
             id: 'android-emulator',
             name: 'Android Emulator',
             targetPlatform: 'android-x64',
@@ -325,19 +325,19 @@ void main() {
       /// like empty platform strings, unusual formats, and case variations.
       test('should handle edge cases in platform detection', () {
         final List<FlutterDevice> edgeCaseDevices = [
-          FlutterDevice(
+          const FlutterDevice(
             id: 'empty-platform',
             name: 'Empty Platform',
             targetPlatform: '',
             emulator: false,
           ),
-          FlutterDevice(
+          const FlutterDevice(
             id: 'mixed-case',
             name: 'Mixed Case',
             targetPlatform: 'ANDROID-ARM64',
             emulator: false,
           ),
-          FlutterDevice(
+          const FlutterDevice(
             id: 'darwin-variant',
             name: 'Darwin Variant',
             targetPlatform: 'darwin-arm64',
@@ -388,12 +388,12 @@ void main() {
       /// and that the classification logic is consistent across different device configurations.
       test('should have mutually exclusive device types', () {
         final List<FlutterDevice> testDevices = [
-          FlutterDevice(id: 'win', name: 'Windows', targetPlatform: 'windows-x64', emulator: false),
-          FlutterDevice(id: 'chrome', name: 'Chrome', targetPlatform: 'web-javascript', emulator: false),
-          FlutterDevice(id: 'android', name: 'Android', targetPlatform: 'android-arm64', emulator: false),
-          FlutterDevice(id: 'ios', name: 'iOS', targetPlatform: 'ios', emulator: true),
-          FlutterDevice(id: 'macos', name: 'macOS', targetPlatform: 'darwin', emulator: false),
-          FlutterDevice(id: 'linux', name: 'Linux', targetPlatform: 'linux-x64', emulator: false),
+          const FlutterDevice(id: 'win', name: 'Windows', targetPlatform: 'windows-x64', emulator: false),
+          const FlutterDevice(id: 'chrome', name: 'Chrome', targetPlatform: 'web-javascript', emulator: false),
+          const FlutterDevice(id: 'android', name: 'Android', targetPlatform: 'android-arm64', emulator: false),
+          const FlutterDevice(id: 'ios', name: 'iOS', targetPlatform: 'ios', emulator: true),
+          const FlutterDevice(id: 'macos', name: 'macOS', targetPlatform: 'darwin', emulator: false),
+          const FlutterDevice(id: 'linux', name: 'Linux', targetPlatform: 'linux-x64', emulator: false),
         ];
 
         for (final FlutterDevice device in testDevices) {

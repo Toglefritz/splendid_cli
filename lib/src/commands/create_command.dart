@@ -2,6 +2,10 @@ import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart';
 
 import '../services/project_service.dart';
+import '../services/project_service/project_creation_request.dart';
+import '../services/project_service/project_creation_result.dart';
+import '../services/project_service/project_service_error_type.dart';
+import '../services/project_service/project_service_exception.dart';
 
 /// Command-line interface for creating new Flutter applications with MVC architecture.
 ///

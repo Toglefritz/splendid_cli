@@ -2,6 +2,12 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 import 'package:path/path.dart' as path;
 
+import 'test_service/test_generation_request.dart';
+import 'test_service/test_generation_result.dart';
+import 'test_service/test_service_error_type.dart';
+import 'test_service/test_service_exception.dart';
+import 'test_service/test_type.dart';
+
 /// Service for managing test file generation operations.
 ///
 /// This service encapsulates the core business logic for test generation, separating it from CLI-specific concerns like
@@ -178,127 +184,4 @@ class TestService {
   String _toPascalCase(String input) {
     return input.split('_').map((word) => word.isEmpty ? '' : '${word[0].toUpperCase()}${word.substring(1)}').join();
   }
-}
-
-/// Request configuration for test generation.
-class TestGenerationRequest {
-  /// Creates a test generation request.
-  const TestGenerationRequest({
-    required this.targetFile,
-    this.outputDirectory,
-    this.testType = TestType.auto,
-    this.force = false,
-  });
-
-  /// Path to the Dart file to generate tests for.
-  final String targetFile;
-
-  /// Optional custom output directory for the test file.
-  final String? outputDirectory;
-
-  /// Type of test to generate.
-  final TestType testType;
-
-  /// Whether to overwrite existing test files.
-  final bool force;
-}
-
-/// Result of test generation operation.
-class TestGenerationResult {
-  /// Creates a test generation result.
-  const TestGenerationResult({
-    required this.success,
-    required this.targetFile,
-    required this.outputPath,
-    required this.testType,
-    this.error,
-  });
-
-  /// Creates a successful result.
-  const TestGenerationResult.success({
-    required String targetFile,
-    required String outputPath,
-    required TestType testType,
-  }) : this(
-         success: true,
-         targetFile: targetFile,
-         outputPath: outputPath,
-         testType: testType,
-       );
-
-  /// Creates a failed result.
-  const TestGenerationResult.failure({
-    required String targetFile,
-    required String error,
-  }) : this(
-         success: false,
-         targetFile: targetFile,
-         outputPath: '',
-         testType: TestType.auto,
-         error: error,
-       );
-
-  /// Whether the operation was successful.
-  final bool success;
-
-  /// Path to the target file that was tested.
-  final String targetFile;
-
-  /// Path where the test file was created.
-  final String outputPath;
-
-  /// Type of test that was generated.
-  final TestType testType;
-
-  /// Error message if operation failed.
-  final String? error;
-}
-
-/// Types of tests that can be generated.
-enum TestType {
-  /// Automatically detect based on file content.
-  auto,
-
-  /// Generate Flutter widget test.
-  widget,
-
-  /// Generate Dart class test.
-  class_,
-}
-
-/// Exception thrown by test service operations.
-class TestServiceException implements Exception {
-  /// Creates a test service exception.
-  const TestServiceException(
-    this.message,
-    this.type, {
-    this.cause,
-  });
-
-  /// Human-readable error message.
-  final String message;
-
-  /// Type of error that occurred.
-  final TestServiceErrorType type;
-
-  /// Optional underlying cause.
-  final Object? cause;
-
-  @override
-  String toString() => 'TestServiceException: $message';
-}
-
-/// Types of errors that can occur in test service operations.
-enum TestServiceErrorType {
-  /// Target file was not found.
-  targetFileNotFound,
-
-  /// Target file is not a valid Dart file.
-  invalidTargetFile,
-
-  /// Test file already exists.
-  testFileExists,
-
-  /// Unknown error occurred.
-  unknown,
 }

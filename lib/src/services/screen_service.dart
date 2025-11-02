@@ -3,6 +3,15 @@ import 'package:mason/mason.dart';
 import 'package:path/path.dart' as path;
 
 import 'brick_loader.dart';
+import 'screen_service/screen_creation_request.dart';
+import 'screen_service/screen_creation_result.dart';
+import 'screen_service/screen_service_error_type.dart';
+import 'screen_service/screen_service_exception.dart';
+
+export 'screen_service/screen_creation_request.dart';
+export 'screen_service/screen_creation_result.dart';
+export 'screen_service/screen_service_error_type.dart';
+export 'screen_service/screen_service_exception.dart';
 
 /// Service for managing Flutter screen generation operations.
 ///
@@ -216,115 +225,4 @@ class ScreenService {
         .replaceAllMapped(RegExp('[A-Z]'), (Match match) => '_${match.group(0)!.toLowerCase()}')
         .replaceFirst(RegExp('^_'), '');
   }
-}
-
-/// Request configuration for screen creation.
-class ScreenCreationRequest {
-  /// Creates a screen creation request.
-  const ScreenCreationRequest({
-    required this.screenName,
-    required this.projectPath,
-    this.force = false,
-    this.blank = false,
-  });
-
-  /// Name of the screen to create.
-  final String screenName;
-
-  /// Path to the Flutter project.
-  final String projectPath;
-
-  /// Whether to overwrite existing screen files.
-  final bool force;
-
-  /// Whether to create a blank screen without example content.
-  final bool blank;
-}
-
-/// Result of screen creation operation.
-class ScreenCreationResult {
-  /// Creates a screen creation result.
-  const ScreenCreationResult({
-    required this.success,
-    required this.screenName,
-    required this.screenPath,
-    required this.createdFiles,
-    this.error,
-  });
-
-  /// Creates a successful result.
-  const ScreenCreationResult.success({
-    required String screenName,
-    required String screenPath,
-    required List<String> createdFiles,
-  }) : this(
-         success: true,
-         screenName: screenName,
-         screenPath: screenPath,
-         createdFiles: createdFiles,
-       );
-
-  /// Creates a failed result.
-  const ScreenCreationResult.failure({
-    required String screenName,
-    required String error,
-  }) : this(
-         success: false,
-         screenName: screenName,
-         screenPath: '',
-         createdFiles: const [],
-         error: error,
-       );
-
-  /// Whether the operation was successful.
-  final bool success;
-
-  /// Name of the screen that was created.
-  final String screenName;
-
-  /// Path where the screen files were created.
-  final String screenPath;
-
-  /// List of files that were created.
-  final List<String> createdFiles;
-
-  /// Error message if operation failed.
-  final String? error;
-}
-
-/// Exception thrown by screen service operations.
-class ScreenServiceException implements Exception {
-  /// Creates a screen service exception.
-  const ScreenServiceException(
-    this.message,
-    this.type, {
-    this.cause,
-  });
-
-  /// Human-readable error message.
-  final String message;
-
-  /// Type of error that occurred.
-  final ScreenServiceErrorType type;
-
-  /// Optional underlying cause.
-  final Object? cause;
-
-  @override
-  String toString() => 'ScreenServiceException: $message';
-}
-
-/// Types of errors that can occur in screen service operations.
-enum ScreenServiceErrorType {
-  /// Invalid screen name provided.
-  invalidScreenName,
-
-  /// Directory is not a Flutter project.
-  notFlutterProject,
-
-  /// Screen already exists.
-  screenExists,
-
-  /// Unknown error occurred.
-  unknown,
 }

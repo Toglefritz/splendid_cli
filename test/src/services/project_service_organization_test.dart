@@ -16,6 +16,9 @@
 library;
 
 import 'package:splendid_cli/src/services/project_service.dart';
+import 'package:splendid_cli/src/services/project_service/project_creation_request.dart';
+import 'package:splendid_cli/src/services/project_service/project_service_error_type.dart';
+import 'package:splendid_cli/src/services/project_service/project_service_exception.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -212,7 +215,7 @@ void main() {
       test('should provide helpful error messages for invalid organizations', () async {
         const String invalidOrg = 'invalid-org';
 
-        final ProjectCreationRequest request = ProjectCreationRequest(
+        const ProjectCreationRequest request = ProjectCreationRequest(
           projectName: 'test_app',
           organization: invalidOrg,
         );
@@ -236,7 +239,7 @@ void main() {
       test('should include invalid organization in error message', () async {
         const String invalidOrg = 'not.a.valid.org.format.123';
 
-        final ProjectCreationRequest request = ProjectCreationRequest(
+        const ProjectCreationRequest request = ProjectCreationRequest(
           projectName: 'test_app',
           organization: invalidOrg,
         );
@@ -259,7 +262,7 @@ void main() {
       test('should validate organization before attempting project creation', () async {
         const String invalidOrg = 'invalid';
 
-        final ProjectCreationRequest request = ProjectCreationRequest(
+        const ProjectCreationRequest request = ProjectCreationRequest(
           projectName: 'test_app',
           organization: invalidOrg,
           outputDirectory: '/nonexistent/path', // This should not be reached
@@ -285,7 +288,7 @@ void main() {
       test('should allow project creation with valid organization', () async {
         const String validOrg = 'com.example.test';
 
-        final ProjectCreationRequest request = ProjectCreationRequest(
+        const ProjectCreationRequest request = ProjectCreationRequest(
           projectName: 'test_app',
           organization: validOrg,
           force: true,

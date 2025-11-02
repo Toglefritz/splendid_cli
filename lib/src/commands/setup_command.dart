@@ -1,9 +1,16 @@
 import 'dart:io';
+
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
 
 import '../services/project_service.dart';
+import '../services/project_service/device_selection_info.dart';
+import '../services/project_service/flutter_device.dart';
+import '../services/project_service/project_service_error_type.dart';
+import '../services/project_service/project_service_exception.dart';
+import '../services/project_service/project_setup_request.dart';
+import '../services/project_service/project_setup_result.dart';
 
 /// Command-line interface for setting up a Flutter project after creation.
 ///
@@ -219,18 +226,18 @@ class SetupCommand extends Command<int> {
 
     // Only show device selection info if there were multiple devices or if user specified one
     if (availableDevices.length > 1 || reason == 'User specified') {
-      logger.info('');
-      logger.info('📱 Device Selection:');
-      logger.info('   Selected: ${selectedDevice.name} (${selectedDevice.id})');
-      logger.info('   Reason: $reason');
+      logger..info('')
+      ..info('📱 Device Selection:')
+      ..info('   Selected: ${selectedDevice.name} (${selectedDevice.id})')
+      ..info('   Reason: $reason');
 
       // Show other available devices if there were multiple options
       if (availableDevices.length > 1) {
         final List<FlutterDevice> otherDevices = availableDevices.where((d) => d.id != selectedDevice.id).toList();
 
         if (otherDevices.isNotEmpty) {
-          logger.info('   Other available: ${otherDevices.map((d) => '${d.name} (${d.id})').join(', ')}');
-          logger.info('   💡 Use --device=<id> to specify a different device');
+          logger..info('   Other available: ${otherDevices.map((d) => '${d.name} (${d.id})').join(', ')}')
+          ..info('   💡 Use --device=<id> to specify a different device');
         }
       }
     }

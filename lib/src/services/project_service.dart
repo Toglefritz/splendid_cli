@@ -1,9 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:mason/mason.dart';
 import 'package:path/path.dart' as path;
 
 import 'brick_loader.dart';
+import 'project_service/device_selection_info.dart';
+import 'project_service/flutter_device.dart';
+import 'project_service/project_creation_request.dart';
+import 'project_service/project_creation_result.dart';
+import 'project_service/project_service_error_type.dart';
+import 'project_service/project_service_exception.dart';
+import 'project_service/project_setup_request.dart';
+import 'project_service/project_setup_result.dart';
 
 /// Service for managing Flutter project creation and setup operations.
 ///
@@ -282,7 +291,7 @@ class ProjectService {
   }) async {
     // Special handling for 'flutter run' command to handle multiple devices
     if (args.isNotEmpty && args.first == 'run') {
-      return await _runFlutterRunCommand(
+      return _runFlutterRunCommand(
         args,
         workingDirectory: workingDirectory,
         verbose: verbose,
@@ -331,7 +340,7 @@ class ProjectService {
       final List<FlutterDevice> devices = await _getAvailableDevices(workingDirectory);
 
       if (devices.isEmpty) {
-        throw ProjectServiceException(
+        throw const ProjectServiceException(
           'No devices available. Please connect a device or start an emulator.',
           ProjectServiceErrorType.flutterCommandFailed,
         );
@@ -411,7 +420,7 @@ class ProjectService {
     final List<FlutterDevice> devices = await _getAvailableDevices(workingDirectory);
 
     if (devices.isEmpty) {
-      throw ProjectServiceException(
+      throw const ProjectServiceException(
         'No devices available. Please connect a device or start an emulator.',
         ProjectServiceErrorType.flutterCommandFailed,
       );
@@ -489,15 +498,15 @@ class ProjectService {
   /// 4. Other devices
   FlutterDevice _selectBestDevice(List<FlutterDevice> devices) {
     // Priority 1: Desktop devices
-    final FlutterDevice? desktopDevice = devices.where((device) => _isDesktopDevice(device)).firstOrNull;
+    final FlutterDevice? desktopDevice = devices.where(_isDesktopDevice).firstOrNull;
     if (desktopDevice != null) return desktopDevice;
 
     // Priority 2: Web browsers
-    final FlutterDevice? webDevice = devices.where((device) => _isWebDevice(device)).firstOrNull;
+    final FlutterDevice? webDevice = devices.where(_isWebDevice).firstOrNull;
     if (webDevice != null) return webDevice;
 
     // Priority 3: Mobile devices
-    final FlutterDevice? mobileDevice = devices.where((device) => _isMobileDevice(device)).firstOrNull;
+    final FlutterDevice? mobileDevice = devices.where(_isMobileDevice).firstOrNull;
     if (mobileDevice != null) return mobileDevice;
 
     // Fallback: Return first available device
@@ -599,374 +608,5 @@ class ProjectService {
     } catch (e) {
       return false;
     }
-  }
-}
-
-/// Request configuration for project creation.
-class ProjectCreationRequest {
-  /// Creates a project creation request.
-  const ProjectCreationRequest({
-    required this.projectName,
-    this.outputDirectory,
-    this.platforms = 'android,ios,web,windows,macos,linux',
-    this.organization = 'com.example',
-    this.force = false,
-  });
-
-  /// Name of the project to create.
-  final String projectName;
-
-  /// Optional custom output directory.
-  final String? outputDirectory;
-
-  /// Comma-separated list of platforms to enable.
-  final String platforms;
-
-  /// Organization responsible for the project in reverse domain name notation.
-  ///
-  /// This string is used in Java package names and as prefix in the iOS bundle identifier.
-  /// Must follow reverse domain name format (e.g., 'com.example', 'org.mycompany').
-  final String organization;
-
-  /// Whether to overwrite existing directories.
-  final bool force;
-}
-
-/// Request configuration for project setup.
-class ProjectSetupRequest {
-  /// Creates a project setup request.
-  const ProjectSetupRequest({
-    required this.projectPath,
-    this.runApp = true,
-    this.verbose = false,
-    this.deviceId,
-  });
-
-  /// Path to the Flutter project to setup.
-  final String projectPath;
-
-  /// Whether to run the app after setup.
-  final bool runApp;
-
-  /// Whether to enable verbose output.
-  final bool verbose;
-
-  /// Optional device ID to use for flutter run.
-  ///
-  /// If not specified, the system will automatically select the best available device
-  /// based on platform priority (desktop > web > mobile).
-  final String? deviceId;
-}
-
-/// Result of project creation operation.
-class ProjectCreationResult {
-  /// Creates a project creation result.
-  const ProjectCreationResult({
-    required this.success,
-    required this.projectName,
-    required this.targetPath,
-    required this.platforms,
-    this.error,
-  });
-
-  /// Creates a successful result.
-  const ProjectCreationResult.success({
-    required String projectName,
-    required String targetPath,
-    required String platforms,
-  }) : this(
-         success: true,
-         projectName: projectName,
-         targetPath: targetPath,
-         platforms: platforms,
-       );
-
-  /// Creates a failed result.
-  const ProjectCreationResult.failure({
-    required String projectName,
-    required String targetPath,
-    required String platforms,
-    required String error,
-  }) : this(
-         success: false,
-         projectName: projectName,
-         targetPath: targetPath,
-         platforms: platforms,
-         error: error,
-       );
-
-  /// Whether the operation was successful.
-  final bool success;
-
-  /// Name of the project.
-  final String projectName;
-
-  /// Path where the project was created.
-  final String targetPath;
-
-  /// Platforms that were enabled.
-  final String platforms;
-
-  /// Error message if operation failed.
-  final String? error;
-}
-
-/// Result of project setup operation.
-class ProjectSetupResult {
-  /// Creates a project setup result.
-  const ProjectSetupResult({
-    required this.success,
-    required this.projectPath,
-    required this.executedCommands,
-    this.error,
-    this.selectedDevice,
-    this.availableDevices,
-    this.deviceSelectionReason,
-  });
-
-  /// Creates a successful result.
-  const ProjectSetupResult.success({
-    required String projectPath,
-    required List<String> executedCommands,
-    FlutterDevice? selectedDevice,
-    List<FlutterDevice>? availableDevices,
-    String? deviceSelectionReason,
-  }) : this(
-         success: true,
-         projectPath: projectPath,
-         executedCommands: executedCommands,
-         selectedDevice: selectedDevice,
-         availableDevices: availableDevices,
-         deviceSelectionReason: deviceSelectionReason,
-       );
-
-  /// Creates a failed result.
-  const ProjectSetupResult.failure({
-    required String projectPath,
-    required String error,
-  }) : this(
-         success: false,
-         projectPath: projectPath,
-         executedCommands: const [],
-         error: error,
-       );
-
-  /// Whether the operation was successful.
-  final bool success;
-
-  /// Path to the project that was setup.
-  final String projectPath;
-
-  /// List of commands that were executed.
-  final List<String> executedCommands;
-
-  /// Error message if operation failed.
-  final String? error;
-
-  /// The device that was selected for running the application.
-  ///
-  /// This is null if the app was not run or if device selection was not needed.
-  final FlutterDevice? selectedDevice;
-
-  /// List of all available devices when selection occurred.
-  ///
-  /// This is null if device detection was not performed or if the app was not run.
-  final List<FlutterDevice>? availableDevices;
-
-  /// Human-readable explanation of why this device was selected.
-  ///
-  /// Examples: "Automatically selected (desktop preferred)", "User specified", "Only device available"
-  final String? deviceSelectionReason;
-}
-
-/// Exception thrown by project service operations.
-class ProjectServiceException implements Exception {
-  /// Creates a project service exception.
-  const ProjectServiceException(
-    this.message,
-    this.type, {
-    this.cause,
-  });
-
-  /// Human-readable error message.
-  final String message;
-
-  /// Type of error that occurred.
-  final ProjectServiceErrorType type;
-
-  /// Optional underlying cause.
-  final Object? cause;
-
-  @override
-  String toString() => 'ProjectServiceException: $message';
-}
-
-/// Information about device selection during flutter run operations.
-class DeviceSelectionInfo {
-  /// Creates device selection information.
-  const DeviceSelectionInfo({
-    required this.selectedDevice,
-    required this.availableDevices,
-    required this.selectionReason,
-  });
-
-  /// The device that was selected for running the application.
-  final FlutterDevice selectedDevice;
-
-  /// List of all available devices when selection occurred.
-  final List<FlutterDevice> availableDevices;
-
-  /// Human-readable explanation of why this device was selected.
-  final String selectionReason;
-}
-
-/// Types of errors that can occur in project service operations.
-enum ProjectServiceErrorType {
-  /// Invalid project name provided.
-  invalidProjectName,
-
-  /// Invalid organization format provided.
-  invalidOrganization,
-
-  /// Invalid platforms specified.
-  invalidPlatforms,
-
-  /// Target directory already exists.
-  directoryExists,
-
-  /// Directory is not a Flutter project.
-  notFlutterProject,
-
-  /// Flutter command execution failed.
-  flutterCommandFailed,
-
-  /// Template loading failed.
-  templateLoadFailed,
-
-  /// Unknown error occurred.
-  unknown,
-}
-
-/// Represents a Flutter device available for running applications.
-///
-/// This class encapsulates device information returned by `flutter devices --machine`,
-/// providing structured access to device properties for intelligent device selection.
-class FlutterDevice {
-  /// Creates a Flutter device instance.
-  const FlutterDevice({
-    required this.id,
-    required this.name,
-    required this.targetPlatform,
-    required this.emulator,
-    this.category,
-    this.platformType,
-  });
-
-  /// Creates a Flutter device from JSON data returned by `flutter devices --machine`.
-  ///
-  /// The JSON structure follows Flutter's device listing format:
-  /// ```json
-  /// {
-  ///   "id": "chrome",
-  ///   "name": "Chrome",
-  ///   "targetPlatform": "web-javascript",
-  ///   "emulator": false,
-  ///   "category": "web",
-  ///   "platformType": "web"
-  /// }
-  /// ```
-  factory FlutterDevice.fromJson(Map<String, dynamic> json) {
-    return FlutterDevice(
-      id: _safeStringFromJson(json['id']) ?? '',
-      name: _safeStringFromJson(json['name']) ?? 'Unknown Device',
-      targetPlatform: _safeStringFromJson(json['targetPlatform']) ?? '',
-      emulator: _safeBoolFromJson(json['emulator']) ?? false,
-      category: _safeStringFromJson(json['category']),
-      platformType: _safeStringFromJson(json['platformType']),
-    );
-  }
-
-  /// Safely extracts a string value from JSON, handling type mismatches.
-  static String? _safeStringFromJson(dynamic value) {
-    if (value == null) return null;
-    if (value is String) return value;
-    return value.toString();
-  }
-
-  /// Safely extracts a boolean value from JSON, handling type mismatches.
-  static bool? _safeBoolFromJson(dynamic value) {
-    if (value == null) return null;
-    if (value is bool) return value;
-    if (value is String) {
-      return value.toLowerCase() == 'true';
-    }
-    if (value is int) {
-      return value != 0;
-    }
-    return false;
-  }
-
-  /// Unique identifier for the device (used with flutter run -d).
-  final String id;
-
-  /// Human-readable name of the device.
-  final String name;
-
-  /// Target platform identifier (e.g., 'android-arm64', 'web-javascript').
-  final String targetPlatform;
-
-  /// Whether this device is an emulator or physical device.
-  final bool emulator;
-
-  /// Optional category classification of the device.
-  final String? category;
-
-  /// Optional platform type classification.
-  final String? platformType;
-
-  /// Returns a string representation of the device for debugging.
-  @override
-  String toString() => 'FlutterDevice(id: $id, name: $name, platform: $targetPlatform)';
-
-  /// Converts the device back to JSON format.
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'targetPlatform': targetPlatform,
-      'emulator': emulator,
-      if (category != null) 'category': category,
-      if (platformType != null) 'platformType': platformType,
-    };
-  }
-
-  /// Checks if this device is a desktop device.
-  ///
-  /// Desktop devices include Windows, macOS, and Linux platforms.
-  /// These are typically preferred for development due to better tooling and performance.
-  bool get isDesktop {
-    final String platform = targetPlatform.toLowerCase();
-    return platform.contains('windows') ||
-        platform.contains('macos') ||
-        platform.contains('linux') ||
-        platform.contains('darwin');
-  }
-
-  /// Checks if this device is a web device.
-  ///
-  /// Web devices include browsers and web-based targets.
-  /// These provide universal compatibility and are good for testing responsive designs.
-  bool get isWeb {
-    final String platform = targetPlatform.toLowerCase();
-    return platform.contains('web') || platform.contains('chrome');
-  }
-
-  /// Checks if this device is a mobile device.
-  ///
-  /// Mobile devices include Android and iOS platforms, both physical devices and emulators.
-  /// These are essential for testing mobile-specific functionality and performance.
-  bool get isMobile {
-    final String platform = targetPlatform.toLowerCase();
-    return platform.contains('android') || platform.contains('ios');
   }
 }

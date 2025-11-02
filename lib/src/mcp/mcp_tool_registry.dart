@@ -1,6 +1,12 @@
 import '../services/project_service.dart';
+import '../services/project_service/project_creation_request.dart';
+import '../services/project_service/project_service_exception.dart';
+import '../services/project_service/project_setup_request.dart';
 import '../services/screen_service.dart';
 import '../services/test_service.dart';
+import '../services/test_service/test_generation_request.dart';
+import '../services/test_service/test_service_exception.dart';
+import '../services/test_service/test_type.dart';
 
 /// Registry for MCP tools that maps CLI functionality to MCP tool definitions.
 ///

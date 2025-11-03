@@ -112,6 +112,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
 
       final String content = pubspecFile.readAsStringSync();
       final YamlMap yaml = loadYaml(content) as YamlMap;
+      
       return yaml['version']?.toString() ?? 'unknown';
     } catch (e) {
       // If any error occurs during file reading or parsing, return 'unknown'

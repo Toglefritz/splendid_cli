@@ -84,6 +84,7 @@ class _CacheListCommand extends Command<int> {
       return 0;
     } catch (e) {
       logger.err('Failed to list cached bricks: $e');
+
       return 1;
     }
   }
@@ -118,6 +119,7 @@ class _CacheClearCommand extends Command<int> {
 
       if (cachedBricks.isEmpty) {
         logger.info('No cached bricks to clear.');
+
         return 0;
       }
 
@@ -189,6 +191,7 @@ class _CacheInfoCommand extends Command<int> {
       return 0;
     } catch (e) {
       logger.err('Failed to get cache info: $e');
+      
       return 1;
     }
   }

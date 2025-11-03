@@ -34,14 +34,6 @@ class ProjectServiceException implements Exception {
   /// * [message] - Human-readable error message for user display
   /// * [type] - Categorized error type for programmatic handling
   /// * [cause] - Optional underlying exception that caused this error
-  ///
-  /// Example:
-  /// ```dart
-  /// throw ProjectServiceException(
-  ///   'Invalid project name: must follow Dart package naming conventions',
-  ///   ProjectServiceErrorType.invalidProjectName,
-  /// );
-  /// ```
   const ProjectServiceException(
     this.message,
     this.type, {

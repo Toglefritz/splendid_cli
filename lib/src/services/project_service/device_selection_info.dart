@@ -39,15 +39,7 @@ class DeviceSelectionInfo {
   /// * [selectedDevice] - The device that was chosen for execution
   /// * [availableDevices] - All devices available during selection
   /// * [selectionReason] - Human-readable explanation of the selection logic
-  ///
-  /// Example:
-  /// ```dart
-  /// final info = DeviceSelectionInfo(
-  ///   selectedDevice: chromeDevice,
-  ///   availableDevices: [chromeDevice, androidDevice, iosDevice],
-  ///   selectionReason: 'Automatically selected (web preferred over mobile)',
-  /// );
-  /// ```
+
   const DeviceSelectionInfo({
     required this.selectedDevice,
     required this.availableDevices,

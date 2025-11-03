@@ -55,17 +55,6 @@ class ProjectSetupResult {
   /// * [selectedDevice] - Device used for running the app (optional)
   /// * [availableDevices] - All devices available during selection (optional)
   /// * [deviceSelectionReason] - Explanation of device selection (optional)
-  ///
-  /// Example:
-  /// ```dart
-  /// return ProjectSetupResult.success(
-  ///   projectPath: '/path/to/my_app',
-  ///   executedCommands: ['flutter pub get', 'flutter gen-l10n', 'flutter run'],
-  ///   selectedDevice: chromeDevice,
-  ///   availableDevices: [chromeDevice, androidDevice],
-  ///   deviceSelectionReason: 'Automatically selected (web preferred)',
-  /// );
-  /// ```
   const ProjectSetupResult.success({
     required String projectPath,
     required List<String> executedCommands,
@@ -90,14 +79,6 @@ class ProjectSetupResult {
   /// Parameters:
   /// * [projectPath] - Path to the project where setup was attempted
   /// * [error] - Descriptive error message explaining the failure
-  ///
-  /// Example:
-  /// ```dart
-  /// return ProjectSetupResult.failure(
-  ///   projectPath: '/path/to/my_app',
-  ///   error: 'flutter pub get failed: network connection timeout',
-  /// );
-  /// ```
   const ProjectSetupResult.failure({
     required String projectPath,
     required String error,

@@ -47,15 +47,6 @@ class ProjectCreationResult {
   /// * [projectName] - Name of the successfully created project
   /// * [targetPath] - Path where the project was created
   /// * [platforms] - Platforms that were successfully enabled
-  ///
-  /// Example:
-  /// ```dart
-  /// return ProjectCreationResult.success(
-  ///   projectName: 'my_app',
-  ///   targetPath: '/path/to/my_app',
-  ///   platforms: 'android,ios,web',
-  /// );
-  /// ```
   const ProjectCreationResult.success({
     required String projectName,
     required String targetPath,
@@ -78,16 +69,6 @@ class ProjectCreationResult {
   /// * [targetPath] - Path where creation was attempted
   /// * [platforms] - Platforms that were attempted
   /// * [error] - Descriptive error message explaining the failure
-  ///
-  /// Example:
-  /// ```dart
-  /// return ProjectCreationResult.failure(
-  ///   projectName: 'my_app',
-  ///   targetPath: '/path/to/my_app',
-  ///   platforms: 'android,ios,web',
-  ///   error: 'Directory already exists and force flag not set',
-  /// );
-  /// ```
   const ProjectCreationResult.failure({
     required String projectName,
     required String targetPath,

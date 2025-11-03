@@ -29,6 +29,7 @@ import 'package:yaml/yaml.dart';
 
 import 'src/commands/cache_command.dart';
 import 'src/commands/create_command.dart';
+import 'src/commands/deep_clean_command.dart';
 import 'src/commands/format_command.dart';
 import 'src/commands/gui_command.dart';
 import 'src/commands/screen_command.dart';
@@ -66,6 +67,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
 
     addCommand(CacheCommand());
     addCommand(CreateCommand());
+    addCommand(DeepCleanCommand());
     addCommand(FormatCommand());
     addCommand(GuiCommand());
     addCommand(ScreenCommand());
@@ -112,7 +114,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
 
       final String content = pubspecFile.readAsStringSync();
       final YamlMap yaml = loadYaml(content) as YamlMap;
-      
+
       return yaml['version']?.toString() ?? 'unknown';
     } catch (e) {
       // If any error occurs during file reading or parsing, return 'unknown'

@@ -56,6 +56,12 @@ class CustomHelp {
         example: 'splendid_cli setup --project my_app',
       ),
       const CommandInfo(
+        name: 'deep_clean',
+        aliases: ['dc'],
+        description: 'Perform deep cleaning: flutter clean, pub get, and gen-l10n',
+        example: 'splendid_cli deep_clean',
+      ),
+      const CommandInfo(
         name: 'generate-test',
         aliases: ['gen-test'],
         description: 'Generate test file templates for Dart classes and widgets',
@@ -160,6 +166,9 @@ class CustomHelp {
         _showScreenCommandHelp(logger);
       case 'setup':
         _showSetupCommandHelp(logger);
+      case 'deep_clean':
+      case 'dc':
+        _showDeepCleanCommandHelp(logger);
       case 'generate-test':
       case 'gen-test':
         _showGenerateTestCommandHelp(logger);
@@ -299,6 +308,79 @@ class CustomHelp {
     logger.info('  1. Add navigation to the new screen in your app');
     logger.info('  2. Customize the screen content as needed');
     logger.info('  3. Update any routing configuration');
+    logger.info('');
+  }
+
+  /// Shows detailed help for the deep_clean command.
+  static void _showDeepCleanCommandHelp(Logger logger) {
+    logger.info('${yellow.wrap('USAGE:')}');
+    logger.info('  splendid_cli deep_clean [project_path] [options]');
+    logger.info('  splendid_cli dc [project_path] [options]');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DESCRIPTION:')}');
+    logger.info('  Performs a comprehensive cleaning workflow that goes beyond the standard');
+    logger.info('  flutter clean by also refreshing dependencies and regenerating localization');
+    logger.info('  files. Particularly useful when dealing with build issues, dependency');
+    logger.info('  conflicts, or after major Flutter SDK updates.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARGUMENTS:')}');
+    logger.info('  ${green.wrap('project_path')}     Flutter project directory to clean');
+    logger.info('                     Default: current directory');
+    logger.info('                     Must contain pubspec.yaml and lib/ directory');
+    logger.info('');
+
+    logger.info('${yellow.wrap('OPTIONS:')}');
+    logger.info('  ${green.wrap('-v, --verbose')}     Show detailed output from Flutter commands');
+    logger.info('  ${green.wrap('-h, --help')}        Show this help message');
+    logger.info('');
+
+    logger.info('${yellow.wrap('CLEANING STEPS PERFORMED:')}');
+    logger.info('  1. ${cyan.wrap('flutter clean')}      Remove build artifacts and cached files');
+    logger.info('  2. ${cyan.wrap('flutter pub get')}    Refresh all project dependencies');
+    logger.info('  3. ${cyan.wrap('flutter gen-l10n')}   Regenerate localization files');
+    logger.info('');
+
+    logger.info('${yellow.wrap('EXAMPLES:')}');
+    logger.info('  ${cyan.wrap('splendid_cli deep_clean')}');
+    logger.info('    Deep clean current directory (if it\'s a Flutter project)');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli dc /path/to/flutter/project')}');
+    logger.info('    Deep clean specific Flutter project using alias');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli deep_clean --verbose')}');
+    logger.info('    Deep clean with detailed Flutter command output');
+    logger.info('');
+
+    logger.info('${yellow.wrap('WHEN TO USE:')}');
+    logger.info('  • Build errors that persist after normal flutter clean');
+    logger.info('  • Dependency version conflicts or corruption');
+    logger.info('  • Outdated localization files after string changes');
+    logger.info('  • General build system inconsistencies');
+    logger.info('  • After major Flutter SDK updates');
+    logger.info('  • When switching between Flutter channels');
+    logger.info('');
+
+    logger.info('${yellow.wrap('REQUIREMENTS:')}');
+    logger.info('  • Flutter SDK installed and available in PATH');
+    logger.info('  • Target directory must be a valid Flutter project');
+    logger.info('  • Internet connection for dependency downloads');
+    logger.info('  • Proper file permissions in project directory');
+    logger.info('');
+
+    logger.info('${yellow.wrap('TROUBLESHOOTING:')}');
+    logger.info('  If any step fails, the command provides specific guidance:');
+    logger.info('  • Flutter Clean: Check running processes and permissions');
+    logger.info('  • Pub Get: Verify network connection and pubspec.yaml syntax');
+    logger.info('  • Gen L10n: Check localization configuration and .arb files');
+    logger.info('');
+
+    logger.info('${yellow.wrap('NEXT STEPS:')}');
+    logger.info('  After deep cleaning:');
+    logger.info('  1. Try building or running your Flutter app');
+    logger.info('  2. If issues persist, run ${cyan.wrap('flutter doctor')} to check setup');
+    logger.info('  3. Consider updating Flutter SDK if using older version');
     logger.info('');
   }
 

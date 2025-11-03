@@ -1,3 +1,20 @@
+## 6.0.0
+
+### Deep Clean Command
+
+- **Comprehensive Cleaning**: New `deep_clean` command performs thorough Flutter project cleanup beyond standard `flutter clean`
+- **Three-Step Process**: Executes `flutter clean`, `flutter pub get`, and `flutter gen-l10n` in sequence for complete project refresh
+- **Command Alias**: Short `dc` alias for faster command execution and improved developer experience
+- **Smart Project Detection**: Automatic Flutter project validation with clear error messages for invalid directories
+- **Step-by-Step Progress**: Visual progress indicators with emojis and detailed status reporting for each cleaning phase
+- **Targeted Error Handling**: Specific troubleshooting guidance for each step (clean, pub get, localization generation)
+- **Verbose Mode**: Optional `--verbose` flag displays detailed Flutter command output for debugging purposes
+- **Flexible Path Support**: Works with current directory or accepts specific project path as argument
+- **Comprehensive Help**: Detailed usage documentation with examples, troubleshooting tips, and best practices
+- **When to Use Guidance**: Clear documentation on scenarios where deep cleaning resolves common Flutter issues
+- **Exit Code Standards**: Proper POSIX exit codes for script integration and automation workflows
+- **Complete Test Coverage**: 13 comprehensive tests covering validation, error handling, help system, and CLI integration
+
 ## 5.3.0
 
 ### Intelligent Device Selection

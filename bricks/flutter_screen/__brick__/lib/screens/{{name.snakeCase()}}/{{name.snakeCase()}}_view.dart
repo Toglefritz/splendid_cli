@@ -46,20 +46,20 @@ class {{name.pascalCase()}}View extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (controller.targetIcon != null)
+            if (state.targetIcon != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 32.0),
                 child: Text(
-                  'Select the ${_getIconName(controller.targetIcon!)}',
+                  'Select the ${_getIconName(state.targetIcon!)}',
                   style: Theme.of(context).textTheme.headlineSmall,
                   textAlign: TextAlign.center,
                 ),
               ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: controller.currentIcons.map((IconData icon) {
+              children: state.currentIcons.map((IconData icon) {
                 return GestureDetector(
-                  onTap: () => controller.onIconSelected(icon),
+                  onTap: () => state.onIconSelected(icon),
                   child: Container(
                     width: 80,
                     height: 80,

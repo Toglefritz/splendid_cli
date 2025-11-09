@@ -1,3 +1,10 @@
+## 6.0.1
+
+### Bug Fixes
+
+- **Template Improvements**: Minor refinements to generated code templates
+- **Code Quality**: Small adjustments for better linter compliance and code standards
+
 ## 6.0.0
 
 ### Deep Clean Command

@@ -1,3 +1,19 @@
+## 7.0.0
+
+### Localization File Sorting
+
+- **Alphabetical Organization**: New `sort-l10n` command sorts Flutter localization (.arb) files alphabetically by key for improved maintainability
+- **Metadata Preservation**: Intelligently maintains relationship between value entries and their metadata entries (prefixed with @)
+- **Flexible Input Processing**: Processes single .arb files or entire directories containing multiple localization files
+- **Dry Run Mode**: Preview changes without modifying files using `--dry-run` flag for safe validation
+- **Verbose Progress Reporting**: Detailed output with `--verbose` flag shows processed files, modifications, and statistics
+- **Command Aliases**: Short aliases `sort-arb` and `l10n-sort` for faster command execution and improved developer experience
+- **Smart JSON Handling**: Preserves JSON formatting and structure while reordering entries alphabetically
+- **Robust Error Handling**: Gracefully handles invalid JSON, missing files, permission errors, and empty directories
+- **Comprehensive Help System**: Detailed usage documentation with examples, ARB file structure explanation, and next steps guidance
+- **Exit Code Standards**: Proper POSIX exit codes for script integration and automation workflows
+- **Modular Architecture**: Service layer follows one-class-per-file standard with separate request, result, exception, and error type classes
+
 ## 6.0.1
 
 ### Bug Fixes

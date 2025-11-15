@@ -80,6 +80,12 @@ class CustomHelp {
         example: 'splendid_cli format-dartdoc . --line-length 120',
       ),
       const CommandInfo(
+        name: 'sort-l10n',
+        aliases: ['sort-arb', 'l10n-sort'],
+        description: 'Sort Flutter localization (.arb) files alphabetically by key',
+        example: 'splendid_cli sort-l10n lib/l10n',
+      ),
+      const CommandInfo(
         name: 'cache',
         description: 'Manage the local brick cache (list, info, clear)',
         example: 'splendid_cli cache list',
@@ -176,6 +182,10 @@ class CustomHelp {
       case 'fmt-doc':
       case 'format-docs':
         _showFormatDartdocCommandHelp(logger);
+      case 'sort-l10n':
+      case 'sort-arb':
+      case 'l10n-sort':
+        _showSortL10nCommandHelp(logger);
       case 'gui':
       case 'dashboard':
         _showGuiCommandHelp(logger);
@@ -600,6 +610,73 @@ class CustomHelp {
     logger.info('  1. Select or create a Flutter project directory');
     logger.info('  2. Use the visual interface to manage your project');
     logger.info('  3. View real-time output in the expandable output panel');
+    logger.info('');
+  }
+
+  /// Shows detailed help for the sort-l10n command.
+  static void _showSortL10nCommandHelp(Logger logger) {
+    logger.info('${yellow.wrap('USAGE:')}');
+    logger.info('  splendid_cli sort-l10n <target> [options]');
+    logger.info('  splendid_cli sort-arb <target> [options]');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DESCRIPTION:')}');
+    logger.info('  Sorts Flutter localization (.arb) files alphabetically by key.');
+    logger.info('  Maintains the relationship between value entries and their metadata');
+    logger.info('  entries (prefixed with @). Useful for keeping localization files');
+    logger.info('  organized and easy to navigate as they grow.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARGUMENTS:')}');
+    logger.info('  ${green.wrap('target')}           Path to .arb file or directory containing .arb files');
+    logger.info('                   For directories: processes all .arb files (non-recursive)');
+    logger.info('');
+
+    logger.info('${yellow.wrap('OPTIONS:')}');
+    logger.info('  ${green.wrap('--dry-run')}         Preview changes without modifying files');
+    logger.info('  ${green.wrap('-v, --verbose')}     Show detailed progress and file lists');
+    logger.info('  ${green.wrap('-h, --help')}        Show this help message');
+    logger.info('');
+
+    logger.info('${yellow.wrap('EXAMPLES:')}');
+    logger.info('  ${cyan.wrap('splendid_cli sort-l10n lib/l10n')}');
+    logger.info('    Sort all .arb files in the l10n directory');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli sort-l10n lib/l10n/app_en.arb')}');
+    logger.info('    Sort a specific .arb file');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli sort-l10n lib/l10n --dry-run --verbose')}');
+    logger.info('    Preview changes with detailed output, no modifications');
+    logger.info('');
+
+    logger.info('${yellow.wrap('SORTING BEHAVIOR:')}');
+    logger.info('  • Entries are sorted alphabetically by their base key');
+    logger.info('  • Metadata entries (@key) stay with their value entries (key)');
+    logger.info('  • JSON formatting and structure are preserved');
+    logger.info('  • Empty files and invalid JSON are handled gracefully');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARB FILE STRUCTURE:')}');
+    logger.info('  ARB files contain key-value pairs where metadata entries are');
+    logger.info('  prefixed with @ and must follow their corresponding value:');
+    logger.info('');
+    logger.info('  ${darkGray.wrap('{')}');
+    logger.info('    ${darkGray.wrap('"appTitle": "My App",')}');
+    logger.info('    ${darkGray.wrap('"@appTitle": {')}');
+    logger.info('      ${darkGray.wrap('"description": "The title of the application"')}');
+    logger.info('    ${darkGray.wrap('},')}');
+    logger.info('    ${darkGray.wrap('"buttonSave": "Save",')}');
+    logger.info('    ${darkGray.wrap('"@buttonSave": {')}');
+    logger.info('      ${darkGray.wrap('"description": "Label for save button"')}');
+    logger.info('    ${darkGray.wrap('}')}');
+    logger.info('  ${darkGray.wrap('}')}');
+    logger.info('');
+
+    logger.info('${yellow.wrap('NEXT STEPS:')}');
+    logger.info('  After sorting:');
+    logger.info('  1. Review changes in your version control system');
+    logger.info('  2. Run ${cyan.wrap('flutter gen-l10n')} to regenerate localization classes');
+    logger.info('  3. Test your app to ensure all strings display correctly');
     logger.info('');
   }
 

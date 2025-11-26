@@ -4,7 +4,15 @@
 
 ## Overview
 
-Splendid CLI is a command-line interface tool designed to scaffold Flutter projects following MVC architecture standards. It promotes strong typing, localization (l10n), and other best practices to help developers build maintainable and scalable Flutter applications quickly and efficiently.
+Splendid CLI is a comprehensive command-line toolkit for Flutter developers that streamlines development workflows and enforces best practices. While it started as a project scaffolding tool, it has evolved into a full-featured development assistant that helps with project creation, code generation, testing, and project management.
+
+**Key Features:**
+- **Project Scaffolding**: Create Flutter projects with MVC architecture, strong typing, and localization setup
+- **Code Generation**: Generate screens, widgets, and test templates following best practices
+- **GUI Dashboard**: Visual interface for project management and code generation
+- **Brick Management**: Efficient caching system for Mason bricks with offline support
+- **Test Automation**: Intelligent test template generation for widgets and classes
+- **Development Workflow**: Automated setup commands for faster project initialization
 
 ## Installation
 
@@ -20,70 +28,118 @@ Make sure to add Dart's pub cache bin directory to your PATH:
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 ```
 
-### How Brick Loading Works
+## Architecture & Design
 
-The CLI uses a hybrid approach for loading Mason bricks:
+### MVC Pattern
 
-1. **Development Mode**: When running from source, uses local `bricks/` directory
-2. **Global Installation**: Downloads bricks from GitHub and caches them locally
+Splendid CLI enforces a strict MVC (Model-View-Controller) pattern:
+
+- **Route**: StatefulWidget entry point for each screen
+- **Controller**: Extends State, handles business logic and state management
+- **View**: StatelessWidget for pure UI presentation
+
+This separation ensures maintainable, testable code with clear responsibilities.
+
+### Strong Typing
+
+All generated code uses explicit typing:
+- No `var` or `dynamic` unless absolutely necessary
+- Full type annotations for collections and function signatures
+- Nullable types (`String?`) over dynamic when null values are expected
+
+### Localization First
+
+Every project includes l10n setup:
+- ARB files for string management
+- Automatic generation with `flutter gen-l10n`
+- No hard-coded strings in UI code
+
+### Brick System
+
+The CLI uses Mason bricks for code generation with intelligent loading:
+
+1. **Development Mode**: Uses local `bricks/` directory when available
+2. **Global Installation**: Downloads from GitHub and caches locally
 3. **Offline Support**: Cached bricks work offline after first download
-4. **Automatic Fallback**: Seamlessly falls back from local → cached → remote
+4. **Automatic Fallback**: Seamlessly falls back: local → cached → remote
 
 Bricks are cached in `~/.splendid_cli/bricks/` for fast offline access.
 
-## Usage
+## Core Features
 
-After installation, you can use the `splendid_cli` command to scaffold your Flutter projects.
+### 1. Project Creation
 
-### Creating a new project
+Create new Flutter projects with opinionated architecture and best practices built-in:
 
 ```bash
 splendid_cli create my_awesome_app
 ```
 
-This command scaffolds a new Flutter project named `my_awesome_app` with MVC architecture, strong typing, localization setup, and other conventions.
+**What you get:**
+- MVC architecture pattern (Route → Controller → View)
+- Strong typing enforcement throughout the codebase
+- Localization (l10n) setup with ARB files
+- Proper project structure with organized directories
+- Platform-specific configurations
+- Best practice coding standards pre-configured
 
-### Setting up a project after creation
+**Options:**
+- `--output-directory` (`-o`): Specify where to create the project
+- `--platforms`: Choose platforms (android,ios,web,windows,macos,linux)
+- `--force`: Overwrite existing directories
+
+### 2. Project Setup Automation
 
 ```bash
 cd my_awesome_app
 splendid_cli setup
 ```
 
-This command runs the post-creation setup steps:
+Automates the tedious post-creation setup steps:
 - `flutter pub get` - Downloads and installs dependencies
 - `flutter gen-l10n` - Generates localization files
-- `flutter run` - Launches the application (optional with `--no-run`)
+- `flutter run` - Launches the application (optional)
 
-You can also run setup on any Flutter project:
+**Options:**
+- `--project` (`-p`): Specify the Flutter project directory
+- `--no-run`: Skip running the app after setup
+- `--verbose` (`-v`): Enable verbose output
 
 ```bash
+# Setup any Flutter project
 splendid_cli setup --project path/to/flutter/project --no-run
 ```
 
-### Adding screens to existing projects
+### 3. Screen Generation
 
 ```bash
 splendid_cli screen game
 ```
 
-This command adds a new screen to an existing Flutter project following MVC architecture patterns. It creates three files:
+Generate complete screens following MVC architecture patterns. Creates three files:
 
 - **Route**: `lib/screens/game/game_route.dart` - StatefulWidget entry point
 - **Controller**: `lib/screens/game/game_controller.dart` - Business logic and state management  
 - **View**: `lib/screens/game/game_view.dart` - UI presentation layer
 
-The generated screen includes placeholder content (a simple icon selection game) that demonstrates proper MVC separation and can be easily replaced with your actual screen content.
+**Features:**
+- Automatic name conversion (PascalCase → snake_case)
+- Placeholder content demonstrating MVC separation
+- Ready-to-customize templates
+- Proper imports and structure
+
+**Options:**
+- `--force`: Overwrite existing screen files
 
 ```bash
-# Create screen with PascalCase name (converts to snake_case files)
+# Create screen with PascalCase name
 splendid_cli screen UserProfile
 
-# Overwrite existing screen files
+# Overwrite existing screen
 splendid_cli screen settings --force
 ```
 
-### Generating test templates
+### 4. Test Template Generation
 
 ```bash
 splendid_cli generate-test lib/services/api_service.dart
@@ -91,26 +147,40 @@ splendid_cli generate-test lib/services/api_service.dart
 splendid_cli gen-test lib/services/api_service.dart
 ```
 
-This command generates a comprehensive test template for the specified Dart file. The CLI automatically detects whether the file contains Flutter widgets or regular Dart classes and generates the appropriate test structure:
+Intelligent test template generation that adapts to your code:
 
-- **Widget tests**: Use `testWidgets` with Flutter testing utilities
-- **Class tests**: Use standard `test()` functions with comprehensive test categories
-- **Auto-detection**: Automatically chooses the right template based on file content
+**Auto-Detection:**
+- Analyzes file content to determine if it's a widget or class
+- Generates appropriate test structure automatically
+- Creates comprehensive test categories and examples
 
-You can also specify the test type explicitly:
+**Widget Tests:**
+- Uses `testWidgets` with Flutter testing utilities
+- Includes widget tree building and interaction tests
+- Finder patterns and gesture simulation examples
+
+**Class Tests:**
+- Uses standard `test()` functions
+- Organized test groups for different functionality
+- Mock setup and teardown examples
+
+**Options:**
+- `--output` (`-o`): Custom output directory
+- `--type` (`-t`): Specify test type (auto, widget, class)
+- `--force`: Overwrite existing test files
 
 ```bash
-# Generate a widget test template
+# Auto-detect test type
+splendid_cli gen-test lib/services/auth_service.dart
+
+# Explicit widget test
 splendid_cli gen-test lib/widgets/my_widget.dart --type=widget
 
-# Generate a class test template  
-splendid_cli gen-test lib/models/user.dart --type=class
-
-# Use custom output directory
-splendid_cli gen-test lib/services/auth_service.dart --output=test/unit/services
+# Custom output location
+splendid_cli gen-test lib/models/user.dart --output=test/unit/models
 ```
 
-### Managing the brick cache
+### 5. GUI Dashboard
 
 ```bash
 # List cached bricks
@@ -126,11 +196,21 @@ splendid_cli cache clear
 splendid_cli cache clear --force
 ```
 
-The cache commands help you manage locally cached Mason bricks that are downloaded from GitHub when not available locally.
+Efficient management of locally cached Mason bricks:
 
-## GUI Dashboard
+**Features:**
+- View all cached bricks and their sizes
+- Check cache location and total size
+- Clear cache to free up disk space
+- Automatic re-download when needed
 
-For users who prefer a visual interface, Splendid CLI includes a desktop GUI dashboard:
+**How It Works:**
+1. **Development Mode**: Uses local `bricks/` directory when available
+2. **Global Installation**: Downloads from GitHub and caches locally
+3. **Offline Support**: Cached bricks work offline after first download
+4. **Automatic Fallback**: Seamlessly falls back: local → cached → remote
+
+Bricks are cached in `~/.splendid_cli/bricks/` for fast offline access.
 
 ```bash
 # Launch the GUI dashboard
@@ -140,81 +220,111 @@ splendid_cli gui
 splendid_cli gui --project-path /path/to/project
 ```
 
-The GUI provides:
+A full-featured desktop application for visual project management:
+
+**Features:**
 - Visual project creation wizard with platform selection
-- Screen generation interface with MVC architecture
-- Test file generation tools with file browser
+- Screen generation interface with live preview
+- Test file generation with file browser
 - Real-time command output and progress feedback
 - Cross-platform desktop support (Windows, macOS, Linux)
+- Integrated terminal output viewer
+
+**Options:**
+- `--project-path` (`-p`): Initial project directory
+- `--debug`: Launch with additional logging
 
 **Requirements:**
 - Flutter SDK installed and available in PATH
 - Desktop platform support enabled for Flutter
 
-See [example/gui_dashboard/README.md](example/gui_dashboard/README.md) for detailed GUI documentation.
+See [example/gui_dashboard/README.md](example/gui_dashboard/README.md) for detailed documentation.
 
-## Available Commands
+### 6. Brick Cache Management
 
-- `splendid_cli create <project_name>`: Creates a new Flutter project with Splendid CLI standards.
-- `splendid_cli screen <screen_name>`: Adds a new screen with MVC architecture to an existing Flutter project.
-- `splendid_cli setup`: Sets up a Flutter project by running pub get, gen-l10n, and optionally flutter run.
-- `splendid_cli generate-test <dart_file>` (alias: `gen-test`): Generates test file templates for Dart classes and Flutter widgets.
-- `splendid_cli gui` (alias: `dashboard`): Launch the GUI dashboard for visual project management.
-- `splendid_cli cache <subcommand>`: Manage the local brick cache (list, info, clear).
-- `splendid_cli help`: Displays help information about commands.
+## Command Reference
 
-### Create Command Options
+### Project Commands
 
-- `--output-directory` (`-o`): Specify where to create the project
-- `--platforms`: Choose which platforms to enable (android,ios,web,windows,macos,linux)
-- `--force`: Overwrite existing directories
+| Command | Description | Aliases |
+|---------|-------------|---------|
+| `create <name>` | Create new Flutter project with MVC architecture | - |
+| `setup` | Run post-creation setup (pub get, gen-l10n, run) | - |
+| `screen <name>` | Generate new screen with MVC pattern | - |
 
-### Setup Command Options
+### Development Commands
 
-- `--project` (`-p`): Specify the Flutter project directory to setup
-- `--no-run`: Skip running the app after setup
-- `--verbose` (`-v`): Enable verbose output from Flutter commands
+| Command | Description | Aliases |
+|---------|-------------|---------|
+| `generate-test <file>` | Generate test template for Dart file | `gen-test` |
+| `gui` | Launch GUI dashboard | `dashboard` |
 
-### Screen Command Options
+### Utility Commands
 
-- `--force`: Overwrite existing screen files without confirmation
+| Command | Description | Aliases |
+|---------|-------------|---------|
+| `cache list` | List all cached bricks | - |
+| `cache info` | Show cache information | - |
+| `cache clear` | Clear brick cache | - |
+| `help` | Display help information | - |
 
-### Generate-Test Command Options
+### Global Options
 
-- `--output` (`-o`): Specify custom output directory for the generated test file
-- `--type` (`-t`): Specify test type (auto, widget, class) - defaults to auto-detection
-- `--force`: Overwrite existing test files without confirmation
+Most commands support these common options:
 
-### GUI Command Options
+- `--help` (`-h`): Show command-specific help
+- `--verbose` (`-v`): Enable verbose output
+- `--force`: Overwrite existing files without confirmation
 
-- `--project-path` (`-p`): Specify initial project directory to open in GUI
-- `--debug`: Launch GUI in debug mode with additional logging
+## Quick Start Guide
 
-## Quick Start
+### Command Line Workflow
 
-1. Create a new Flutter project:
+1. **Create a new Flutter project:**
    ```bash
    splendid_cli create my_app
    ```
 
-2. Set up the project:
+2. **Set up the project:**
    ```bash
-   splendid_cli setup --project my_app
+   cd my_app
+   splendid_cli setup
    ```
 
-3. Add new screens as you develop:
+3. **Add screens as you develop:**
    ```bash
-   splendid_cli screen game
+   splendid_cli screen home
    splendid_cli screen user_profile
+   splendid_cli screen settings
    ```
 
-4. Generate test templates as you develop:
+4. **Generate tests for your code:**
    ```bash
-   splendid_cli gen-test lib/services/my_service.dart
-   splendid_cli gen-test lib/widgets/my_widget.dart --type=widget
+   splendid_cli gen-test lib/services/auth_service.dart
+   splendid_cli gen-test lib/widgets/custom_button.dart
    ```
 
-That's it! Your Flutter project is ready for development with MVC architecture, all dependencies installed, and comprehensive test templates available on demand.
+### GUI Workflow
+
+Prefer a visual interface? Launch the GUI dashboard:
+
+```bash
+splendid_cli gui
+```
+
+The GUI provides the same functionality with a user-friendly interface, file browsers, and real-time feedback.
+
+## Why Splendid CLI?
+
+**Consistency**: Enforces MVC architecture and coding standards across your entire project
+
+**Speed**: Automates repetitive tasks like project setup, screen generation, and test creation
+
+**Best Practices**: Built-in support for strong typing, localization, and proper file organization
+
+**Flexibility**: Works via command line or GUI, online or offline with cached bricks
+
+**Comprehensive**: Not just scaffolding—includes testing tools, project management, and workflow automation
 
 ## Contributing
 

@@ -31,6 +31,7 @@ import 'src/commands/cache_command.dart';
 import 'src/commands/create_command.dart';
 import 'src/commands/deep_clean_command.dart';
 import 'src/commands/format_command.dart';
+import 'src/commands/format_comments_command.dart';
 import 'src/commands/gui_command.dart';
 import 'src/commands/screen_command.dart';
 import 'src/commands/setup_command.dart';
@@ -43,6 +44,7 @@ export 'src/mcp/mcp_server.dart';
 export 'src/mcp/mcp_tool_registry.dart';
 
 // Export services for external use
+export 'src/services/comment_formatter_service.dart';
 export 'src/services/dartdoc_formatter_service.dart';
 export 'src/services/l10n_sorter_service.dart';
 export 'src/services/project_service.dart';
@@ -71,6 +73,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
     addCommand(CreateCommand());
     addCommand(DeepCleanCommand());
     addCommand(FormatCommand());
+    addCommand(FormatCommentsCommand());
     addCommand(GuiCommand());
     addCommand(ScreenCommand());
     addCommand(SetupCommand());

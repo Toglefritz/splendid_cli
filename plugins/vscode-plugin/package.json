@@ -39,6 +39,16 @@
         "category": "Splendid CLI"
       },
       {
+        "command": "splendid-cli.formatComments80",
+        "title": "Format Regular Comments (80 chars)",
+        "category": "Splendid CLI"
+      },
+      {
+        "command": "splendid-cli.formatComments120",
+        "title": "Format Regular Comments (120 chars)",
+        "category": "Splendid CLI"
+      },
+      {
         "command": "splendid-cli.createScreen",
         "title": "Create New Screen",
         "category": "Splendid CLI"
@@ -62,8 +72,18 @@
           "group": "splendid-cli@3"
         },
         {
-          "command": "splendid-cli.createScreen",
+          "command": "splendid-cli.formatComments80",
+          "when": "resourceExtname == .dart",
           "group": "splendid-cli@4"
+        },
+        {
+          "command": "splendid-cli.formatComments120",
+          "when": "resourceExtname == .dart",
+          "group": "splendid-cli@5"
+        },
+        {
+          "command": "splendid-cli.createScreen",
+          "group": "splendid-cli@6"
         }
       ],
       "editor/context": [
@@ -81,6 +101,16 @@
           "command": "splendid-cli.formatDartdoc120",
           "when": "resourceExtname == .dart",
           "group": "splendid-cli@3"
+        },
+        {
+          "command": "splendid-cli.formatComments80",
+          "when": "resourceExtname == .dart",
+          "group": "splendid-cli@4"
+        },
+        {
+          "command": "splendid-cli.formatComments120",
+          "when": "resourceExtname == .dart",
+          "group": "splendid-cli@5"
         }
       ],
       "commandPalette": [
@@ -94,6 +124,14 @@
         },
         {
           "command": "splendid-cli.formatDartdoc120",
+          "when": "resourceExtname == .dart"
+        },
+        {
+          "command": "splendid-cli.formatComments80",
+          "when": "resourceExtname == .dart"
+        },
+        {
+          "command": "splendid-cli.formatComments120",
           "when": "resourceExtname == .dart"
         },
         {

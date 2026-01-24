@@ -36,6 +36,22 @@ export function activate(context: vscode.ExtensionContext): void {
     }
   );
 
+  const formatComments80Command = vscode.commands.registerCommand(
+    'splendid-cli.formatComments80',
+    async (uri: vscode.Uri) => {
+      console.log('Format Comments 80 command triggered for:', uri.fsPath);
+      await formatCommentsFile(uri, 80);
+    }
+  );
+
+  const formatComments120Command = vscode.commands.registerCommand(
+    'splendid-cli.formatComments120',
+    async (uri: vscode.Uri) => {
+      console.log('Format Comments 120 command triggered for:', uri.fsPath);
+      await formatCommentsFile(uri, 120);
+    }
+  );
+
   const createScreenCommand = vscode.commands.registerCommand(
     'splendid-cli.createScreen',
     async () => {
@@ -44,7 +60,7 @@ export function activate(context: vscode.ExtensionContext): void {
     }
   );
 
-  context.subscriptions.push(sortL10nCommand, formatDartdoc80Command, formatDartdoc120Command, createScreenCommand);
+  context.subscriptions.push(sortL10nCommand, formatDartdoc80Command, formatDartdoc120Command, formatComments80Command, formatComments120Command, createScreenCommand);
   console.log('Splendid CLI Tools: all commands registered');
 }
 
@@ -110,6 +126,39 @@ async function formatDartdocFile(uri: vscode.Uri, lineLength: number): Promise<v
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     vscode.window.showErrorMessage(`Failed to format Dartdoc comments: ${errorMessage}`);
+  }
+}
+
+/**
+ * Formats regular comments in a Dart file to a specified line length.
+ * 
+ * @param uri - URI of the Dart file to format
+ * @param lineLength - Maximum line length (80 or 120 characters)
+ */
+async function formatCommentsFile(uri: vscode.Uri, lineLength: number): Promise<void> {
+  const config = vscode.workspace.getConfiguration('splendidCli');
+  const cliPath = config.get<string>('executablePath', 'splendid_cli');
+  const filePath = uri.fsPath;
+
+  try {
+    await vscode.window.withProgress(
+      {
+        location: vscode.ProgressLocation.Notification,
+        title: `Formatting regular comments (${lineLength} chars)...`,
+        cancellable: false,
+      },
+      async () => {
+        await execFileAsync(cliPath, ['format-comments', filePath, '-l', String(lineLength)]);
+      }
+    );
+
+    const showNotifications = config.get<boolean>('showNotifications', true);
+    if (showNotifications) {
+      vscode.window.showInformationMessage(`Regular comments formatted to ${lineLength} characters`);
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    vscode.window.showErrorMessage(`Failed to format regular comments: ${errorMessage}`);
   }
 }
 

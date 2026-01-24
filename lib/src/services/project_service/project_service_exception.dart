@@ -1,9 +1,10 @@
 /// Project Service Exception Model
 ///
-/// This file contains the exception class for Flutter project service operations
-/// within the Splendid CLI project service. It provides structured error handling
-/// with categorized error types, user-friendly messages, and optional underlying
-/// cause information for comprehensive debugging and user feedback.
+/// This file contains the exception class for Flutter project service
+/// operations within the Splendid CLI project service. It provides structured
+/// error handling with categorized error types, user-friendly messages, and
+/// optional underlying cause information for comprehensive debugging and user
+/// feedback.
 library;
 
 import 'project_service_error_type.dart';
@@ -11,8 +12,8 @@ import 'project_service_error_type.dart';
 /// Exception thrown by project service operations.
 ///
 /// This exception provides structured error handling for all project service
-/// operations, including project creation and setup. It categorizes errors
-/// by type to enable appropriate handling and user feedback strategies.
+/// operations, including project creation and setup. It categorizes errors by
+/// type to enable appropriate handling and user feedback strategies.
 ///
 /// The exception includes:
 /// * Human-readable error messages suitable for user display
@@ -43,8 +44,8 @@ class ProjectServiceException implements Exception {
   /// Human-readable error message.
   ///
   /// This message is designed to be displayed to users and should provide
-  /// clear, actionable information about what went wrong and how to resolve
-  /// the issue when possible.
+  /// clear, actionable information about what went wrong and how to resolve the
+  /// issue when possible.
   ///
   /// The message should:
   /// * Be clear and concise
@@ -79,8 +80,7 @@ class ProjectServiceException implements Exception {
   /// operations, network requests, or Flutter CLI execution), the original
   /// exception is preserved here for debugging and logging purposes.
   ///
-  /// This information is typically not displayed to users but is valuable
-  /// for:
+  /// This information is typically not displayed to users but is valuable for:
   /// * Debugging and troubleshooting
   /// * Error logging and monitoring
   /// * Understanding root causes of failures
@@ -90,8 +90,8 @@ class ProjectServiceException implements Exception {
   /// Returns a string representation of the exception.
   ///
   /// This provides a consistent format for logging and debugging purposes,
-  /// including the error type and message. The underlying cause is not
-  /// included in the string representation to keep it concise.
+  /// including the error type and message. The underlying cause is not included
+  /// in the string representation to keep it concise.
   ///
   /// Format: 'ProjectServiceException: [message]'
   @override

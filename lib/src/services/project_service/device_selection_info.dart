@@ -1,9 +1,10 @@
 /// Device Selection Information Model
 ///
-/// This file contains the device selection information model for Flutter project
-/// service operations within the Splendid CLI project service. It encapsulates
-/// the results of device selection logic, providing comprehensive information
-/// about which device was chosen and why, along with all available alternatives.
+/// This file contains the device selection information model for Flutter
+/// project service operations within the Splendid CLI project service. It
+/// encapsulates the results of device selection logic, providing comprehensive
+/// information about which device was chosen and why, along with all available
+/// alternatives.
 library;
 
 import 'flutter_device.dart';
@@ -32,8 +33,8 @@ class DeviceSelectionInfo {
   /// Creates device selection information.
   ///
   /// This constructor captures the complete context of a device selection
-  /// operation, including the chosen device, all available alternatives,
-  /// and the reasoning behind the selection.
+  /// operation, including the chosen device, all available alternatives, and
+  /// the reasoning behind the selection.
   ///
   /// Parameters:
   /// * [selectedDevice] - The device that was chosen for execution
@@ -55,15 +56,15 @@ class DeviceSelectionInfo {
   /// * Platform and target information
   /// * Emulator vs physical device status
   ///
-  /// This device was chosen based on the selection algorithm considering
-  /// user preferences, device availability, and platform priorities.
+  /// This device was chosen based on the selection algorithm considering user
+  /// preferences, device availability, and platform priorities.
   final FlutterDevice selectedDevice;
 
   /// List of all available devices when selection occurred.
   ///
   /// This provides complete context about the device selection environment,
-  /// showing all options that were considered during the selection process.
-  /// It includes devices across all platforms: desktop, web, mobile, and others.
+  /// showing all options that were considered during the selection process. It
+  /// includes devices across all platforms: desktop, web, mobile, and others.
   ///
   /// This information is useful for:
   /// * Understanding why a particular device was chosen
@@ -71,15 +72,15 @@ class DeviceSelectionInfo {
   /// * Providing users with information about available alternatives
   /// * Logging and analytics about device usage patterns
   ///
-  /// The list includes both physical devices and emulators/simulators that
-  /// were detected by the Flutter CLI at the time of selection.
+  /// The list includes both physical devices and emulators/simulators that were
+  /// detected by the Flutter CLI at the time of selection.
   final List<FlutterDevice> availableDevices;
 
   /// Human-readable explanation of why this device was selected.
   ///
-  /// This provides transparency about the device selection logic, helping
-  /// users understand automatic selection decisions. The explanation varies
-  /// based on the selection scenario:
+  /// This provides transparency about the device selection logic, helping users
+  /// understand automatic selection decisions. The explanation varies based on
+  /// the selection scenario:
   ///
   /// User-specified selection:
   /// * "User specified" - Device was explicitly chosen by the user
@@ -92,7 +93,7 @@ class DeviceSelectionInfo {
   /// * "Automatically selected" - Generic fallback explanation
   ///
   /// This information helps users understand the system's decision-making
-  /// process and provides context for why their application is running on
-  /// a particular device.
+  /// process and provides context for why their application is running on a
+  /// particular device.
   final String selectionReason;
 }

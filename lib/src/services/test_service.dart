@@ -10,14 +10,15 @@ import 'test_service/test_type.dart';
 
 /// Service for managing test file generation operations.
 ///
-/// This service encapsulates the core business logic for test generation, separating it from CLI-specific concerns like
-/// argument parsing and user interaction. This design enables reuse across different interfaces (CLI, MCP server,
-/// etc.).
+/// This service encapsulates the core business logic for test generation,
+/// separating it from CLI-specific concerns like argument parsing and user
+/// interaction. This design enables reuse across different interfaces (CLI, MCP
+/// server, etc.).
 class TestService {
   /// Creates a new instance of [TestService].
   ///
-  /// This service is stateless and can be reused across multiple operations. All methods are safe to call concurrently
-  /// from different isolates.
+  /// This service is stateless and can be reused across multiple operations.
+  /// All methods are safe to call concurrently from different isolates.
   const TestService();
 
   /// Generates a test file template for the specified Dart file.

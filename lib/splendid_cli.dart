@@ -1,8 +1,9 @@
 /// A comprehensive CLI tool for scaffolding and managing Flutter applications.
 ///
-/// Splendid CLI provides a complete toolkit for Flutter development with built-in MVC architecture patterns, code
-/// generation, and project management capabilities. It includes MCP (Model Context Protocol) server functionality for
-/// integration with AI development tools.
+/// Splendid CLI provides a complete toolkit for Flutter development with
+/// built-in MVC architecture patterns, code generation, and project management
+/// capabilities. It includes MCP (Model Context Protocol) server functionality
+/// for integration with AI development tools.
 ///
 /// Key Features:
 /// * Project scaffolding with MVC architecture
@@ -31,8 +32,8 @@ import 'src/commands/cache_command.dart';
 import 'src/commands/create_command.dart';
 import 'src/commands/deep_clean_command.dart';
 import 'src/commands/format_all_command.dart';
-import 'src/commands/format_dartdoc_command.dart';
 import 'src/commands/format_comments_command.dart';
+import 'src/commands/format_dartdoc_command.dart';
 import 'src/commands/gui_command.dart';
 import 'src/commands/screen_command.dart';
 import 'src/commands/setup_command.dart';
@@ -43,7 +44,6 @@ import 'src/utils/custom_help.dart';
 // Export MCP server components
 export 'src/mcp/mcp_server.dart';
 export 'src/mcp/mcp_tool_registry.dart';
-
 // Export services for external use
 export 'src/services/comment_formatter_service.dart';
 export 'src/services/dartdoc_formatter_service.dart';
@@ -92,11 +92,11 @@ class SplendidCommandRunner extends CommandRunner<int> {
 
   /// Reads the version from pubspec.yaml file.
   ///
-  /// This method locates the pubspec.yaml file and extracts the version field to ensure the CLI always reports the
-  /// correct version.
+  /// This method locates the pubspec.yaml file and extracts the version field
+  /// to ensure the CLI always reports the correct version.
   ///
-  /// Returns the version string from pubspec.yaml, or 'unknown' if the version cannot be determined due to file access
-  /// issues or parsing errors.
+  /// Returns the version string from pubspec.yaml, or 'unknown' if the version
+  /// cannot be determined due to file access issues or parsing errors.
   String _getVersionFromPubspec() {
     try {
       // Get the directory where the current script is located
@@ -107,8 +107,8 @@ class SplendidCommandRunner extends CommandRunner<int> {
       // Try to read the pubspec.yaml file
       final File pubspecFile = File(pubspecPath);
       if (!pubspecFile.existsSync()) {
-        // If pubspec.yaml is not found in the expected location,
-        // try looking in the current working directory
+        // If pubspec.yaml is not found in the expected location, try looking in
+        // the current working directory
         final String currentDirPubspec = path.join(Directory.current.path, 'pubspec.yaml');
         final File currentPubspecFile = File(currentDirPubspec);
         if (currentPubspecFile.existsSync()) {
@@ -168,23 +168,27 @@ class SplendidCommandRunner extends CommandRunner<int> {
         }
       }
 
-      // Execute the matched subcommand and may return an integer exit code or `null` depending on the subcommand's contract.
+      // Execute the matched subcommand and may return an integer exit code or
+      // `null` depending on the subcommand's contract.
       final Object? result = await runCommand(topLevelResults);
 
-      // Normalize the result to a concrete exit code. If a subcommand does not provide an int exit code, treat it as
-      // success (0) to keep behavior consistent across commands.
+      // Normalize the result to a concrete exit code. If a subcommand does not
+      // provide an int exit code, treat it as success (0) to keep behavior
+      // consistent across commands.
       return result is int ? result : 0;
     } on UsageException catch (e) {
-      // The user invoked the CLI incorrectly (bad flags, missing args, etc.).  Emit the error message followed by
-      // the generated usage/help text and return the standard EX_USAGE (64) code.
+      // The user invoked the CLI incorrectly (bad flags, missing args, etc.).
+      // Emit the error message followed by the generated usage/help text and
+      // return the standard EX_USAGE (64) code.
       logger
         ..err(e.message)
         ..info(e.usage);
 
       return 64; // EX_USAGE
     } catch (error, stackTrace) {
-      // Any other unexpected exception. Show a concise error plus a verbose stack trace at the "detail" level to aid
-      // debugging without overwhelming normal users.
+      // Any other unexpected exception. Show a concise error plus a verbose
+      // stack trace at the "detail" level to aid debugging without overwhelming
+      // normal users.
       logger
         ..err('Unexpected error: $error')
         ..detail('$stackTrace');

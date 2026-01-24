@@ -1,7 +1,8 @@
 /// Test suite for SetupCommand device selection functionality.
 ///
-/// This test suite verifies that the setup command correctly handles device selection when multiple devices are
-/// available, ensuring that users can either specify a device or rely on intelligent automatic selection.
+/// This test suite verifies that the setup command correctly handles device
+/// selection when multiple devices are available, ensuring that users can
+/// either specify a device or rely on intelligent automatic selection.
 ///
 /// Test Categories:
 /// * Device flag parsing and validation
@@ -69,10 +70,12 @@ flutter:
       return projectDir;
     }
 
-    /// Set up test environment with fresh command instance and temporary directory.
+    /// Set up test environment with fresh command instance and temporary
+    /// directory.
     ///
-    /// Creates a new temporary directory for each test to ensure complete isolation and prevent test interference.
-    /// The temporary directory is automatically cleaned up after each test completes.
+    /// Creates a new temporary directory for each test to ensure complete
+    /// isolation and prevent test interference. The temporary directory is
+    /// automatically cleaned up after each test completes.
     setUp(() {
       command = SetupCommand();
       tempDir = Directory.systemTemp.createTempSync('setup_device_test_');
@@ -81,7 +84,8 @@ flutter:
 
     /// Clean up test resources after each test.
     ///
-    /// Removes the temporary directory and all its contents to prevent disk space accumulation during test runs.
+    /// Removes the temporary directory and all its contents to prevent disk
+    /// space accumulation during test runs.
     tearDown(() {
       if (tempDir.existsSync()) {
         tempDir.deleteSync(recursive: true);
@@ -89,10 +93,11 @@ flutter:
     });
 
     group('command configuration', () {
-      /// Verifies that the device option is properly configured in the argument parser.
+      /// Verifies that the device option is properly configured in the argument
+      /// parser.
       ///
-      /// This test ensures that the --device flag is available with correct abbreviation, help text, and
-      /// default behavior for device selection.
+      /// This test ensures that the --device flag is available with correct
+      /// abbreviation, help text, and default behavior for device selection.
       test('should configure device option correctly', () {
         final argParser = command.argParser;
 
@@ -109,10 +114,12 @@ flutter:
         );
       });
 
-      /// Verifies that all expected options are still present after adding device support.
+      /// Verifies that all expected options are still present after adding
+      /// device support.
       ///
-      /// This test ensures that adding device selection doesn't break existing functionality and that all
-      /// previously available options remain accessible.
+      /// This test ensures that adding device selection doesn't break existing
+      /// functionality and that all previously available options remain
+      /// accessible.
       test('should maintain all existing options', () {
         final argParser = command.argParser;
 
@@ -132,8 +139,9 @@ flutter:
     group('device flag parsing', () {
       /// Tests that device ID is correctly parsed from command-line arguments.
       ///
-      /// This test verifies that when users specify a device ID using the --device flag, it is properly
-      /// extracted and passed to the project service for validation and use.
+      /// This test verifies that when users specify a device ID using the
+      /// --device flag, it is properly extracted and passed to the project
+      /// service for validation and use.
       test('should parse device ID from arguments', () async {
         final Directory projectDir = createTestFlutterProject('test_project');
 
@@ -148,10 +156,12 @@ flutter:
         expect(exitCode, anyOf(equals(0), equals(1)));
       });
 
-      /// Tests that setup works without specifying a device (automatic selection).
+      /// Tests that setup works without specifying a device (automatic
+      /// selection).
       ///
-      /// This test verifies that when no device is specified, the command still functions correctly and
-      /// relies on the automatic device selection logic in the project service.
+      /// This test verifies that when no device is specified, the command still
+      /// functions correctly and relies on the automatic device selection logic
+      /// in the project service.
       test('should work without device specification', () async {
         final Directory projectDir = createTestFlutterProject('test_project');
 
@@ -167,10 +177,12 @@ flutter:
     });
 
     group('error handling', () {
-      /// Tests that invalid device IDs are handled gracefully with helpful error messages.
+      /// Tests that invalid device IDs are handled gracefully with helpful
+      /// error messages.
       ///
-      /// This test verifies that when users specify a device ID that doesn't exist, they receive clear
-      /// feedback about the error and information about available devices.
+      /// This test verifies that when users specify a device ID that doesn't
+      /// exist, they receive clear feedback about the error and information
+      /// about available devices.
       test('should handle invalid device ID gracefully', () async {
         final Directory projectDir = createTestFlutterProject('test_project');
 
@@ -187,8 +199,9 @@ flutter:
 
       /// Tests that setup fails appropriately when not in a Flutter project.
       ///
-      /// This test verifies that the device selection logic doesn't interfere with existing project validation
-      /// and that appropriate errors are still returned for non-Flutter directories.
+      /// This test verifies that the device selection logic doesn't interfere
+      /// with existing project validation and that appropriate errors are still
+      /// returned for non-Flutter directories.
       test('should fail when not in Flutter project', () async {
         final int exitCode = await runner.run([
           'setup',
@@ -202,10 +215,12 @@ flutter:
     });
 
     group('integration scenarios', () {
-      /// Tests that device selection works with all other setup command options.
+      /// Tests that device selection works with all other setup command
+      /// options.
       ///
-      /// This test verifies that the device flag integrates properly with existing functionality like
-      /// verbose output, custom project paths, and run/no-run behavior.
+      /// This test verifies that the device flag integrates properly with
+      /// existing functionality like verbose output, custom project paths, and
+      /// run/no-run behavior.
       test('should work with all command options together', () async {
         final Directory projectDir = createTestFlutterProject('test_project');
 
@@ -223,22 +238,24 @@ flutter:
 
       /// Tests that help text includes device option information.
       ///
-      /// This test verifies that users can discover the device selection functionality through the help
-      /// system and that the documentation is clear and helpful.
+      /// This test verifies that users can discover the device selection
+      /// functionality through the help system and that the documentation is
+      /// clear and helpful.
       test('should include device option in help text', () async {
         final int exitCode = await runner.run(['setup', '--help']);
 
         expect(exitCode, equals(0));
-        // Help should succeed and include device option information
-        // Actual help text verification would require capturing stdout
+        // Help should succeed and include device option information Actual help
+        // text verification would require capturing stdout
       });
     });
 
     group('backward compatibility', () {
       /// Tests that existing setup command usage continues to work unchanged.
       ///
-      /// This test ensures that users who don't use the new device selection feature experience no
-      /// changes in behavior and that all existing workflows remain functional.
+      /// This test ensures that users who don't use the new device selection
+      /// feature experience no changes in behavior and that all existing
+      /// workflows remain functional.
       test('should maintain backward compatibility', () async {
         final Directory projectDir = createTestFlutterProject('test_project');
 
@@ -253,10 +270,12 @@ flutter:
         expect(exitCode, equals(0));
       });
 
-      /// Tests that the default behavior (automatic device selection) works seamlessly.
+      /// Tests that the default behavior (automatic device selection) works
+      /// seamlessly.
       ///
-      /// This test verifies that when multiple devices are available and no device is specified, the
-      /// system automatically selects an appropriate device without user intervention.
+      /// This test verifies that when multiple devices are available and no
+      /// device is specified, the system automatically selects an appropriate
+      /// device without user intervention.
       test('should automatically select device when multiple available', () async {
         final Directory projectDir = createTestFlutterProject('test_project');
 

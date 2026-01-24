@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 /// Dialog widget for creating new Flutter projects.
 ///
-/// This dialog provides a user-friendly interface for specifying project creation parameters including project name,
-/// output directory, target platforms, and force overwrite options. It validates user input and provides helpful
-/// feedback for creating Flutter projects with MVC architecture.
+/// This dialog provides a user-friendly interface for specifying project
+/// creation parameters including project name, output directory, target
+/// platforms, and force overwrite options. It validates user input and provides
+/// helpful feedback for creating Flutter projects with MVC architecture.
 ///
 /// The dialog includes:
 /// * Project name input with validation
@@ -26,7 +27,8 @@ class CreateProjectDialog extends StatefulWidget {
 
   /// Callback function invoked when the user confirms project creation.
   ///
-  /// Receives the project parameters and should execute the CLI create command with the specified settings.
+  /// Receives the project parameters and should execute the CLI create command
+  /// with the specified settings.
   final Future<void> Function({
     required String projectName,
     required String outputDirectory,
@@ -46,8 +48,8 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
 
   /// Map of platform names to their selection state.
   ///
-  /// Tracks which platforms are selected for the new Flutter project. All platforms are selected by default to match
-  /// CLI behavior.
+  /// Tracks which platforms are selected for the new Flutter project. All
+  /// platforms are selected by default to match CLI behavior.
   final Map<String, bool> _platforms = {
     'android': true,
     'ios': true,
@@ -252,8 +254,9 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
 
   /// Opens a directory picker for selecting the output directory.
   ///
-  /// Allows users to browse and select a directory where the new Flutter project should be created. Updates the output
-  /// directory field with the selected path.
+  /// Allows users to browse and select a directory where the new Flutter
+  /// project should be created. Updates the output directory field with the
+  /// selected path.
   Future<void> _selectOutputDirectory() async {
     try {
       final String? selectedDirectory = await FilePicker.platform.getDirectoryPath(
@@ -277,7 +280,8 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
 
   /// Gets the display name for a platform identifier.
   ///
-  /// Converts platform keys to user-friendly display names with proper capitalization and formatting.
+  /// Converts platform keys to user-friendly display names with proper
+  /// capitalization and formatting.
   ///
   /// Parameters:
   /// * [platform] - The platform key to convert
@@ -305,8 +309,8 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
 
   /// Builds a preview of the CLI command that will be executed.
   ///
-  /// Shows users exactly what command will be run with their current settings, helping them understand the operation
-  /// and verify parameters.
+  /// Shows users exactly what command will be run with their current settings,
+  /// helping them understand the operation and verify parameters.
   ///
   /// Returns:
   /// * Formatted command string for display
@@ -341,8 +345,9 @@ class _CreateProjectDialogState extends State<CreateProjectDialog> {
 
   /// Executes the project creation with the specified parameters.
   ///
-  /// Validates the form, collects all parameters, and calls the callback function to execute the CLI create command.
-  /// Handles loading states and error feedback appropriately.
+  /// Validates the form, collects all parameters, and calls the callback
+  /// function to execute the CLI create command. Handles loading states and
+  /// error feedback appropriately.
   Future<void> _createProject() async {
     if (!_formKey.currentState!.validate()) {
       return;

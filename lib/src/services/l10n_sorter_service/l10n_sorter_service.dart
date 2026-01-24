@@ -10,9 +10,10 @@ import 'l10n_sorter_result.dart';
 
 /// Service for sorting Flutter localization (.arb) files alphabetically.
 ///
-/// This service processes ARB (Application Resource Bundle) files used in Flutter
-/// localization, sorting entries alphabetically by key while maintaining the
-/// relationship between value entries and their metadata entries (prefixed with @).
+/// This service processes ARB (Application Resource Bundle) files used in
+/// Flutter localization, sorting entries alphabetically by key while
+/// maintaining the relationship between value entries and their metadata
+/// entries (prefixed with @).
 ///
 /// Key Features:
 /// * Alphabetical sorting by entry keys
@@ -22,19 +23,19 @@ import 'l10n_sorter_result.dart';
 /// * Dry-run mode for previewing changes
 /// * Comprehensive error handling and validation
 ///
-/// ARB File Structure:
-/// ARB files contain key-value pairs where metadata entries are prefixed with @
-/// and must immediately follow their corresponding value entry:
+/// ARB File Structure: ARB files contain key-value pairs where metadata entries
+/// are prefixed with @ and must immediately follow their corresponding value
+/// entry:
 /// ```json
 /// {
-///   "appTitle": "My App",
-///   "@appTitle": {
-///     "description": "The title of the application"
-///   },
-///   "buttonSave": "Save",
-///   "@buttonSave": {
-///     "description": "Label for save button"
-///   }
+/// "appTitle": "My App",
+/// "@appTitle": {
+/// "description": "The title of the application"
+/// },
+/// "buttonSave": "Save",
+/// "@buttonSave": {
+/// "description": "Label for save button"
+/// }
 /// }
 /// ```
 ///
@@ -44,8 +45,8 @@ import 'l10n_sorter_result.dart';
 /// * Original JSON formatting is preserved where possible
 /// * Empty files and invalid JSON are handled gracefully
 ///
-/// Thread Safety: This service performs file I/O operations and is not thread-safe
-/// for concurrent operations on the same files.
+/// Thread Safety: This service performs file I/O operations and is not
+/// thread-safe for concurrent operations on the same files.
 class L10nSorterService {
   /// Creates a new instance of [L10nSorterService].
   const L10nSorterService();
@@ -58,7 +59,8 @@ class L10nSorterService {
   /// Parameters:
   /// * [request] - Configuration for the sorting operation
   ///
-  /// Returns a [L10nSorterResult] containing statistics and any errors encountered.
+  /// Returns a [L10nSorterResult] containing statistics and any errors
+  /// encountered.
   ///
   /// Throws [L10nSorterException] for critical errors like missing targets or
   /// permission issues.
@@ -176,7 +178,8 @@ class L10nSorterService {
 
   /// Sorts ARB content alphabetically while preserving value-metadata pairs.
   ///
-  /// This method processes the JSON map and creates a new sorted structure where:
+  /// This method processes the JSON map and creates a new sorted structure
+  /// where:
   /// 1. Entries are sorted alphabetically by their base key
   /// 2. Metadata entries (@key) immediately follow their value entries (key)
   /// 3. JSON formatting is clean and consistent
@@ -222,7 +225,8 @@ class L10nSorterService {
 
   /// Normalizes JSON string for comparison by removing whitespace variations.
   ///
-  /// This allows comparison of JSON content regardless of formatting differences.
+  /// This allows comparison of JSON content regardless of formatting
+  /// differences.
   ///
   /// Parameters:
   /// * [jsonString] - JSON string to normalize

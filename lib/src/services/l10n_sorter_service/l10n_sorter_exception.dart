@@ -2,8 +2,8 @@ import 'l10n_sorter_error_type.dart';
 
 /// Exception thrown when L10n sorting operations fail.
 ///
-/// Provides structured error information including error type for
-/// appropriate handling and exit code determination.
+/// Provides structured error information including error type for appropriate
+/// handling and exit code determination.
 class L10nSorterException implements Exception {
   /// Creates a new L10n sorter exception.
   ///

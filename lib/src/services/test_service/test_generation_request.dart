@@ -13,15 +13,15 @@ import 'test_type.dart';
 /// for a given Dart source file. It provides configuration options for output
 /// location, test type selection, and file overwrite behavior.
 ///
-/// The request supports automatic test type detection based on file content,
-/// or explicit specification of the desired test type (widget vs class test).
+/// The request supports automatic test type detection based on file content, or
+/// explicit specification of the desired test type (widget vs class test).
 ///
 /// Usage:
 /// ```dart
 /// final request = TestGenerationRequest(
-///   targetFile: 'lib/widgets/my_widget.dart',
-///   testType: TestType.widget,
-///   force: true,
+/// targetFile: 'lib/widgets/my_widget.dart',
+/// testType: TestType.widget,
+/// force: true,
 /// );
 /// ```
 class TestGenerationRequest {
@@ -50,8 +50,8 @@ class TestGenerationRequest {
   ///
   /// When specified, the generated test file will be placed in this directory
   /// with the naming pattern `{filename}_test.dart`. When null, the test file
-  /// will be placed in the standard `test/` directory mirroring the source
-  /// file structure.
+  /// will be placed in the standard `test/` directory mirroring the source file
+  /// structure.
   final String? outputDirectory;
 
   /// Type of test to generate.

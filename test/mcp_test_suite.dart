@@ -4,8 +4,8 @@ import 'src/mcp/mcp_tool_registry_test.dart' as tool_registry_tests;
 
 /// Comprehensive test suite for MCP (Model Context Protocol) functionality.
 ///
-/// This file serves as a test runner for all MCP-related tests, providing a single entry point to validate the complete
-/// MCP server implementation.
+/// This file serves as a test runner for all MCP-related tests, providing a
+/// single entry point to validate the complete MCP server implementation.
 ///
 /// Test Coverage:
 /// * Unit tests for MCP tool registry

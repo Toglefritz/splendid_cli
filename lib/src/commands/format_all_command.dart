@@ -8,15 +8,17 @@ import '../services/dartdoc_formatter_service.dart';
 
 /// Command-line interface for comprehensive Dart file formatting.
 ///
-/// This command provides a unified interface for applying all available formatting operations to Dart files in a single
-/// execution. It orchestrates three distinct formatting steps in sequence:
+/// This command provides a unified interface for applying all available
+/// formatting operations to Dart files in a single execution. It orchestrates
+/// three distinct formatting steps in sequence:
 ///
 /// 1. Dartdoc comment formatting (/// and /** */ comments)
 /// 2. Regular comment formatting (// comments)
 /// 3. Dart code formatting (via dart format)
 ///
-/// The command operates on individual files or entire directory trees, applying each formatting step in order and
-/// reporting comprehensive results for all operations.
+/// The command operates on individual files or entire directory trees, applying
+/// each formatting step in order and reporting comprehensive results for all
+/// operations.
 ///
 /// Key Features:
 /// * Single command for complete file formatting
@@ -51,13 +53,15 @@ import '../services/dartdoc_formatter_service.dart';
 /// * `1` - Partial success: Some operations failed but processing completed
 /// * `64` - Usage error: Invalid arguments or missing target (EX_USAGE)
 ///
-/// Performance: Processing time depends on file count and size. Typical performance is 50-100 files per second for
-/// comment formatting, with dart format adding additional time based on code complexity.
+/// Performance: Processing time depends on file count and size. Typical
+/// performance is 50-100 files per second for comment formatting, with dart
+/// format adding additional time based on code complexity.
 ///
-/// Thread Safety: Safe to run on different directory trees simultaneously but should not target overlapping file sets
-/// concurrently.
+/// Thread Safety: Safe to run on different directory trees simultaneously but
+/// should not target overlapping file sets concurrently.
 class FormatAllCommand extends Command<int> {
-  /// Creates a new instance of [FormatAllCommand] with configured argument parser.
+  /// Creates a new instance of [FormatAllCommand] with configured argument
+  /// parser.
   ///
   /// Initializes the command with support for:
   /// * `--line-length` (-l): Target line length for comment wrapping
@@ -101,7 +105,8 @@ class FormatAllCommand extends Command<int> {
   @override
   String get invocation => 'splendid_cli format <target> [arguments]';
 
-  /// Executes the comprehensive formatting command with parsed command-line arguments.
+  /// Executes the comprehensive formatting command with parsed command-line
+  /// arguments.
   ///
   /// This method orchestrates the complete formatting workflow:
   /// 1. Validates command-line arguments and target specification
@@ -148,14 +153,14 @@ class FormatAllCommand extends Command<int> {
 
     /// The target path to process (file or directory).
     ///
-    /// Must be a valid file system path pointing to either a single Dart file or a directory containing Dart files to
-    /// process.
+    /// Must be a valid file system path pointing to either a single Dart file
+    /// or a directory containing Dart files to process.
     final String targetPath = argResults!.rest.first;
 
     /// Maximum line length for comment wrapping.
     ///
-    /// Parsed from the --line-length argument with validation to ensure it falls within reasonable bounds for code
-    /// readability.
+    /// Parsed from the --line-length argument with validation to ensure it
+    /// falls within reasonable bounds for code readability.
     final int lineLength;
     try {
       lineLength = int.parse(argResults!['line-length'] as String);
@@ -166,13 +171,14 @@ class FormatAllCommand extends Command<int> {
 
     /// Whether to perform a dry run without modifying files.
     ///
-    /// When true, the command analyzes files and reports what changes would be made without actually writing to the
-    /// file system.
+    /// When true, the command analyzes files and reports what changes would be
+    /// made without actually writing to the file system.
     final bool dryRun = argResults!['dry-run'] as bool;
 
     /// Whether to show verbose progress and diagnostic information.
     ///
-    /// Enables detailed logging of file processing, statistics, and diagnostic information useful for troubleshooting.
+    /// Enables detailed logging of file processing, statistics, and diagnostic
+    /// information useful for troubleshooting.
     final bool verbose = argResults!['verbose'] as bool;
 
     if (verbose) {
@@ -223,10 +229,10 @@ class FormatAllCommand extends Command<int> {
         hasErrors = true;
       }
 
-      logger.info('');
-
-      // Step 2: Format regular comments
-      logger.info('Step 2/3: Formatting regular comments...');
+      logger
+        ..info('')
+        // Step 2: Format regular comments
+        ..info('Step 2/3: Formatting regular comments...');
       final Progress commentsProgress = logger.progress('Processing regular comments');
 
       try {
@@ -254,10 +260,10 @@ class FormatAllCommand extends Command<int> {
         hasErrors = true;
       }
 
-      logger.info('');
-
-      // Step 3: Format Dart code
-      logger.info('Step 3/3: Formatting Dart code...');
+      logger
+        ..info('')
+        // Step 3: Format Dart code
+        ..info('Step 3/3: Formatting Dart code...');
       final Progress codeProgress = logger.progress('Running dart format');
 
       try {
@@ -306,7 +312,8 @@ class FormatAllCommand extends Command<int> {
 
   /// Displays comprehensive summary of all formatting operations.
   ///
-  /// Provides final statistics and actionable next steps based on the results of all formatting operations.
+  /// Provides final statistics and actionable next steps based on the results
+  /// of all formatting operations.
   ///
   /// Parameters:
   /// * [logger] - Logger instance for output formatting
@@ -331,9 +338,8 @@ class FormatAllCommand extends Command<int> {
       ..info('')
       ..info('Summary:')
       ..info('  Files processed: $totalProcessed')
-      ..info('  Files modified: $totalModified');
-
-    logger.info('');
+      ..info('  Files modified: $totalModified')
+      ..info('');
 
     if (dryRun) {
       if (totalModified > 0) {

@@ -1,7 +1,8 @@
 /// Integration test for the --org flag functionality.
 ///
-/// This test verifies that the --org flag properly sets the organization identifier in generated Flutter projects,
-/// ensuring that the organization is correctly applied to platform-specific configuration files like Android's
+/// This test verifies that the --org flag properly sets the organization
+/// identifier in generated Flutter projects, ensuring that the organization is
+/// correctly applied to platform-specific configuration files like Android's
 /// build.gradle and iOS bundle identifiers.
 ///
 /// Test Categories:
@@ -10,7 +11,8 @@
 /// * Verification of generated project configuration
 /// * Error handling for invalid organization formats
 ///
-/// This test requires Flutter CLI to be available and creates actual project files for verification.
+/// This test requires Flutter CLI to be available and creates actual project
+/// files for verification.
 library;
 
 import 'dart:io';
@@ -26,8 +28,9 @@ void main() {
 
     /// Set up test environment with temporary directory and command runner.
     ///
-    /// Creates a fresh temporary directory for each test to ensure isolation and prevent interference between tests.
-    /// The temporary directory is automatically cleaned up after each test completes.
+    /// Creates a fresh temporary directory for each test to ensure isolation
+    /// and prevent interference between tests. The temporary directory is
+    /// automatically cleaned up after each test completes.
     setUp(() {
       tempDir = Directory.systemTemp.createTempSync('org_flag_integration_');
       runner = SplendidCommandRunner();
@@ -35,7 +38,8 @@ void main() {
 
     /// Clean up test resources after each test.
     ///
-    /// Removes the temporary directory and all its contents to prevent disk space accumulation during test runs.
+    /// Removes the temporary directory and all its contents to prevent disk
+    /// space accumulation during test runs.
     tearDown(() {
       if (tempDir.existsSync()) {
         tempDir.deleteSync(recursive: true);
@@ -44,8 +48,9 @@ void main() {
 
     /// Tests that the --org flag correctly sets Android application ID.
     ///
-    /// This test creates a Flutter project with a custom organization and verifies that the Android build
-    /// configuration contains the correct application ID and namespace based on the provided organization.
+    /// This test creates a Flutter project with a custom organization and
+    /// verifies that the Android build configuration contains the correct
+    /// application ID and namespace based on the provided organization.
     test('should set Android application ID with custom organization', () async {
       const String projectName = 'android_org_test';
       const String customOrg = 'io.github.testuser';
@@ -80,8 +85,9 @@ void main() {
 
     /// Tests that the --org flag correctly sets iOS bundle identifier.
     ///
-    /// This test creates a Flutter project with a custom organization and verifies that the iOS project
-    /// configuration contains the correct bundle identifier based on the provided organization.
+    /// This test creates a Flutter project with a custom organization and
+    /// verifies that the iOS project configuration contains the correct bundle
+    /// identifier based on the provided organization.
     test('should set iOS bundle identifier with custom organization', () async {
       const String projectName = 'ios_org_test';
       const String customOrg = 'com.mycompany.mobile';
@@ -119,8 +125,9 @@ void main() {
 
     /// Tests that default organization is used when --org flag is not provided.
     ///
-    /// This test verifies that when no custom organization is specified, the default 'com.example' organization
-    /// is properly applied to the generated project configuration.
+    /// This test verifies that when no custom organization is specified, the
+    /// default 'com.example' organization is properly applied to the generated
+    /// project configuration.
     test('should use default organization when --org flag not provided', () async {
       const String projectName = 'default_org_test';
 
@@ -151,10 +158,12 @@ void main() {
       );
     }, skip: 'Requires Flutter CLI and may be slow');
 
-    /// Tests that invalid organization formats are rejected with helpful error messages.
+    /// Tests that invalid organization formats are rejected with helpful error
+    /// messages.
     ///
-    /// This test verifies that the command properly validates organization format and provides clear error messages
-    /// when invalid formats are provided, helping users understand the expected format.
+    /// This test verifies that the command properly validates organization
+    /// format and provides clear error messages when invalid formats are
+    /// provided, helping users understand the expected format.
     test('should reject invalid organization formats with helpful errors', () async {
       const String projectName = 'invalid_org_test';
       final List<String> invalidOrganizations = [
@@ -182,10 +191,12 @@ void main() {
       }
     });
 
-    /// Tests that organization validation works with different platform combinations.
+    /// Tests that organization validation works with different platform
+    /// combinations.
     ///
-    /// This test ensures that the organization flag works correctly regardless of which platforms are enabled,
-    /// verifying that the validation and application logic is platform-agnostic.
+    /// This test ensures that the organization flag works correctly regardless
+    /// of which platforms are enabled, verifying that the validation and
+    /// application logic is platform-agnostic.
     test('should work with different platform combinations', () async {
       const String projectName = 'multi_platform_test';
       const String customOrg = 'edu.university.department';

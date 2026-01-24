@@ -4,10 +4,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 
-/// Dialog widget for generating test files for Dart classes and Flutter widgets.
+/// Dialog widget for generating test files for Dart classes and Flutter
+/// widgets.
 ///
-/// This dialog provides a user-friendly interface for specifying test generation parameters including target file
-/// selection, test type, and force overwrite options. It validates user input and provides helpful feedback for
+/// This dialog provides a user-friendly interface for specifying test
+/// generation parameters including target file selection, test type, and force
+/// overwrite options. It validates user input and provides helpful feedback for
 /// creating comprehensive test files with proper documentation structure.
 ///
 /// The dialog includes:
@@ -31,12 +33,14 @@ class GenerateTestDialog extends StatefulWidget {
 
   /// Path to the current project directory.
   ///
-  /// Used as the base directory for file selection and validation. Null if no project is currently selected.
+  /// Used as the base directory for file selection and validation. Null if no
+  /// project is currently selected.
   final String? projectPath;
 
   /// Callback function invoked when the user confirms test generation.
   ///
-  /// Receives the test parameters and should execute the CLI generate-test command with the specified settings.
+  /// Receives the test parameters and should execute the CLI generate-test
+  /// command with the specified settings.
   final Future<void> Function({
     required String targetFile,
     required String testType,
@@ -54,7 +58,8 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
 
   /// The selected test type for generation.
   ///
-  /// Options: 'auto' (auto-detect), 'widget' (Flutter widget test), 'class' (Dart class test)
+  /// Options: 'auto' (auto-detect), 'widget' (Flutter widget test), 'class'
+  /// (Dart class test)
   String _testType = 'auto';
 
   /// Whether to force overwrite existing test files.
@@ -300,8 +305,8 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
 
   /// Validates the target file input.
   ///
-  /// Ensures the target file is a valid Dart file that exists in the project directory and can be used for test
-  /// generation.
+  /// Ensures the target file is a valid Dart file that exists in the project
+  /// directory and can be used for test generation.
   ///
   /// Parameters:
   /// * [value] - The target file path to validate
@@ -332,8 +337,8 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
 
   /// Opens a file picker for selecting the target Dart file.
   ///
-  /// Allows users to browse and select a Dart file from the project directory for test generation. Updates the target
-  /// file field with the selected path.
+  /// Allows users to browse and select a Dart file from the project directory
+  /// for test generation. Updates the target file field with the selected path.
   Future<void> _selectTargetFile() async {
     try {
       final FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -367,8 +372,8 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
 
   /// Gets the path where the test file will be generated.
   ///
-  /// Calculates the expected test file path based on the target file and Flutter testing conventions (mirroring lib/
-  /// structure in test/).
+  /// Calculates the expected test file path based on the target file and
+  /// Flutter testing conventions (mirroring lib/ structure in test/).
   ///
   /// Returns:
   /// * Expected path for the generated test file
@@ -393,8 +398,8 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
 
   /// Builds a preview of the CLI command that will be executed.
   ///
-  /// Shows users exactly what command will be run with their current settings, helping them understand the operation
-  /// and verify parameters.
+  /// Shows users exactly what command will be run with their current settings,
+  /// helping them understand the operation and verify parameters.
   ///
   /// Returns:
   /// * Formatted command string for display
@@ -418,8 +423,9 @@ class _GenerateTestDialogState extends State<GenerateTestDialog> {
 
   /// Executes the test generation with the specified parameters.
   ///
-  /// Validates the form, collects all parameters, and calls the callback function to execute the CLI generate-test
-  /// command. Handles loading states and error feedback appropriately.
+  /// Validates the form, collects all parameters, and calls the callback
+  /// function to execute the CLI generate-test command. Handles loading states
+  /// and error feedback appropriately.
   Future<void> _generateTest() async {
     if (!_formKey.currentState!.validate()) {
       return;

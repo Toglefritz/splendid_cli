@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 /// Dialog widget for adding new screens to Flutter projects.
 ///
-/// This dialog provides a user-friendly interface for specifying screen generation parameters including screen name and
-/// force overwrite options. It validates user input and provides helpful feedback for creating screens with MVC
-/// architecture (route, controller, view).
+/// This dialog provides a user-friendly interface for specifying screen
+/// generation parameters including screen name and force overwrite options. It
+/// validates user input and provides helpful feedback for creating screens with
+/// MVC architecture (route, controller, view).
 ///
 /// The dialog includes:
 /// * Screen name input with validation
@@ -24,7 +25,8 @@ class AddScreenDialog extends StatefulWidget {
 
   /// Callback function invoked when the user confirms screen creation.
   ///
-  /// Receives the screen parameters and should execute the CLI screen command with the specified settings.
+  /// Receives the screen parameters and should execute the CLI screen command
+  /// with the specified settings.
   final Future<void> Function({
     required String screenName,
     required bool force,
@@ -248,8 +250,8 @@ class _AddScreenDialogState extends State<AddScreenDialog> {
 
   /// Gets the list of files that will be generated for the screen.
   ///
-  /// Returns a list of file paths that will be created when the screen is generated, based on the current screen name
-  /// input.
+  /// Returns a list of file paths that will be created when the screen is
+  /// generated, based on the current screen name input.
   ///
   /// Returns:
   /// * List of file paths that will be generated
@@ -273,7 +275,8 @@ class _AddScreenDialogState extends State<AddScreenDialog> {
 
   /// Converts a PascalCase string to snake_case.
   ///
-  /// Transforms the screen name to the appropriate file naming convention used by the CLI for generating screen files.
+  /// Transforms the screen name to the appropriate file naming convention used
+  /// by the CLI for generating screen files.
   ///
   /// Parameters:
   /// * [input] - The PascalCase string to convert
@@ -288,8 +291,8 @@ class _AddScreenDialogState extends State<AddScreenDialog> {
 
   /// Builds a preview of the CLI command that will be executed.
   ///
-  /// Shows users exactly what command will be run with their current settings, helping them understand the operation
-  /// and verify parameters.
+  /// Shows users exactly what command will be run with their current settings,
+  /// helping them understand the operation and verify parameters.
   ///
   /// Returns:
   /// * Formatted command string for display
@@ -311,8 +314,9 @@ class _AddScreenDialogState extends State<AddScreenDialog> {
 
   /// Executes the screen creation with the specified parameters.
   ///
-  /// Validates the form, collects all parameters, and calls the callback function to execute the CLI screen command.
-  /// Handles loading states and error feedback appropriately.
+  /// Validates the form, collects all parameters, and calls the callback
+  /// function to execute the CLI screen command. Handles loading states and
+  /// error feedback appropriately.
   Future<void> _addScreen() async {
     if (!_formKey.currentState!.validate()) {
       return;

@@ -1,8 +1,9 @@
 /// Test suite for ProjectService organization validation functionality.
 ///
-/// This test suite focuses specifically on the organization validation logic within the ProjectService class,
-/// ensuring that reverse domain name notation is properly validated and that appropriate error messages are
-/// provided for invalid formats.
+/// This test suite focuses specifically on the organization validation logic
+/// within the ProjectService class, ensuring that reverse domain name notation
+/// is properly validated and that appropriate error messages are provided for
+/// invalid formats.
 ///
 /// Test Categories:
 /// * Organization format validation
@@ -11,8 +12,9 @@
 /// * Error message accuracy
 /// * Integration with project creation workflow
 ///
-/// The tests use isolated unit testing to verify the validation logic without requiring external dependencies
-/// like the Flutter CLI or file system operations.
+/// The tests use isolated unit testing to verify the validation logic without
+/// requiring external dependencies like the Flutter CLI or file system
+/// operations.
 library;
 
 import 'package:splendid_cli/src/services/project_service.dart';
@@ -27,7 +29,8 @@ void main() {
 
     /// Set up test environment with fresh service instance.
     ///
-    /// Creates a new ProjectService instance for each test to ensure isolation and prevent test interference.
+    /// Creates a new ProjectService instance for each test to ensure isolation
+    /// and prevent test interference.
     setUp(() {
       projectService = const ProjectService();
     });
@@ -35,8 +38,9 @@ void main() {
     group('valid organization formats', () {
       /// Tests that standard reverse domain name formats are accepted.
       ///
-      /// This test verifies that common organization patterns used in mobile app development pass validation,
-      /// including commercial, organizational, and personal domain formats.
+      /// This test verifies that common organization patterns used in mobile
+      /// app development pass validation, including commercial, organizational,
+      /// and personal domain formats.
       test(
         'should accept standard reverse domain formats',
         () async {
@@ -76,8 +80,9 @@ void main() {
 
       /// Tests that country-specific domain formats are accepted.
       ///
-      /// This test ensures that international domain formats commonly used for organizations are properly validated,
-      /// including country code top-level domains and regional variations.
+      /// This test ensures that international domain formats commonly used for
+      /// organizations are properly validated, including country code top-level
+      /// domains and regional variations.
       test('should accept country-specific domain formats', () {
         final List<String> countryDomains = [
           'co.uk.company',
@@ -94,8 +99,8 @@ void main() {
             organization: org,
           );
 
-          // Test validation by attempting to create request
-          // In a real test, we would mock the Flutter CLI calls
+          // Test validation by attempting to create request In a real test, we
+          // would mock the Flutter CLI calls
           expect(
             request.organization,
             equals(org),
@@ -106,8 +111,9 @@ void main() {
 
       /// Tests that multi-level subdomain formats are accepted.
       ///
-      /// This test verifies that complex organizational structures with multiple subdomain levels are properly
-      /// handled, which is common in large enterprises and academic institutions.
+      /// This test verifies that complex organizational structures with
+      /// multiple subdomain levels are properly handled, which is common in
+      /// large enterprises and academic institutions.
       test('should accept multi-level subdomain formats', () {
         final List<String> multiLevelDomains = [
           'com.company.division.team',
@@ -134,8 +140,9 @@ void main() {
     group('invalid organization formats', () {
       /// Tests that malformed domain formats are rejected.
       ///
-      /// This test ensures that common formatting errors in reverse domain name notation are caught and result in
-      /// appropriate validation errors with helpful messages.
+      /// This test ensures that common formatting errors in reverse domain name
+      /// notation are caught and result in appropriate validation errors with
+      /// helpful messages.
       test('should reject malformed domain formats', () async {
         final Map<String, String> invalidOrganizations = {
           'example': 'Missing domain separator',
@@ -170,8 +177,9 @@ void main() {
 
       /// Tests that invalid characters in domain segments are rejected.
       ///
-      /// This test verifies that domain name rules are enforced for each segment of the reverse domain notation,
-      /// including restrictions on special characters and formatting requirements.
+      /// This test verifies that domain name rules are enforced for each
+      /// segment of the reverse domain notation, including restrictions on
+      /// special characters and formatting requirements.
       test('should reject invalid characters in segments', () async {
         final Map<String, String> invalidCharacters = {
           'com.123example': 'Segment starting with number',
@@ -210,8 +218,9 @@ void main() {
     group('error message quality', () {
       /// Tests that validation error messages are helpful and actionable.
       ///
-      /// This test verifies that when organization validation fails, users receive clear guidance on the expected
-      /// format and examples of valid organization names.
+      /// This test verifies that when organization validation fails, users
+      /// receive clear guidance on the expected format and examples of valid
+      /// organization names.
       test('should provide helpful error messages for invalid organizations', () async {
         const String invalidOrg = 'invalid-org';
 
@@ -234,8 +243,9 @@ void main() {
 
       /// Tests that error messages include the invalid organization value.
       ///
-      /// This test ensures that error messages are specific and include the actual invalid value that was provided,
-      /// making it easier for users to identify and correct the issue.
+      /// This test ensures that error messages are specific and include the
+      /// actual invalid value that was provided, making it easier for users to
+      /// identify and correct the issue.
       test('should include invalid organization in error message', () async {
         const String invalidOrg = 'not.a.valid.org.format.123';
 
@@ -257,8 +267,9 @@ void main() {
     group('integration with project creation', () {
       /// Tests that organization validation occurs before other operations.
       ///
-      /// This test verifies that invalid organizations are caught early in the project creation process, before
-      /// attempting to create directories or call the Flutter CLI, providing fast feedback to users.
+      /// This test verifies that invalid organizations are caught early in the
+      /// project creation process, before attempting to create directories or
+      /// call the Flutter CLI, providing fast feedback to users.
       test('should validate organization before attempting project creation', () async {
         const String invalidOrg = 'invalid';
 
@@ -283,8 +294,9 @@ void main() {
 
       /// Tests that valid organizations allow project creation to proceed.
       ///
-      /// This test verifies that when a valid organization is provided, the validation passes and the project
-      /// creation process continues to the next steps (which may fail for other reasons in test environment).
+      /// This test verifies that when a valid organization is provided, the
+      /// validation passes and the project creation process continues to the
+      /// next steps (which may fail for other reasons in test environment).
       test('should allow project creation with valid organization', () async {
         const String validOrg = 'com.example.test';
 
@@ -294,8 +306,8 @@ void main() {
           force: true,
         );
 
-        // Should not fail on organization validation
-        // May fail on Flutter CLI or other steps, but not organization validation
+        // Should not fail on organization validation May fail on Flutter CLI or
+        // other steps, but not organization validation
         try {
           await projectService.createProject(request);
         } on ProjectServiceException catch (e) {

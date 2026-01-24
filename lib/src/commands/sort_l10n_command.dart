@@ -11,8 +11,8 @@ import '../services/l10n_sorter_service.dart';
 /// their metadata entries (prefixed with @).
 ///
 /// The command operates on individual .arb files or entire directories,
-/// intelligently processing only ARB files while preserving JSON structure
-/// and formatting.
+/// intelligently processing only ARB files while preserving JSON structure and
+/// formatting.
 ///
 /// Key Features:
 /// * Alphabetical sorting by entry keys
@@ -47,14 +47,15 @@ import '../services/l10n_sorter_service.dart';
 /// * `1` - General error: File system error or processing failure
 /// * `64` - Usage error: Invalid arguments or missing target (EX_USAGE)
 ///
-/// Performance: Optimized for typical localization file sizes. Processing
-/// speed depends on file size and number of entries but is generally
-/// instantaneous for standard Flutter projects.
+/// Performance: Optimized for typical localization file sizes. Processing speed
+/// depends on file size and number of entries but is generally instantaneous
+/// for standard Flutter projects.
 ///
-/// Thread Safety: Safe to run on different directory trees simultaneously
-/// but should not target overlapping file sets concurrently.
+/// Thread Safety: Safe to run on different directory trees simultaneously but
+/// should not target overlapping file sets concurrently.
 class SortL10nCommand extends Command<int> {
-  /// Creates a new instance of [SortL10nCommand] with configured argument parser.
+  /// Creates a new instance of [SortL10nCommand] with configured argument
+  /// parser.
   ///
   /// Initializes the command with support for:
   /// * `--dry-run`: Preview mode without file modification
@@ -143,8 +144,8 @@ class SortL10nCommand extends Command<int> {
 
     /// Whether to perform a dry run without modifying files.
     ///
-    /// When true, the command analyzes files and reports what changes would
-    /// be made without actually writing to the file system.
+    /// When true, the command analyzes files and reports what changes would be
+    /// made without actually writing to the file system.
     final bool dryRun = argResults!['dry-run'] as bool;
 
     /// Whether to show verbose progress and diagnostic information.
@@ -161,8 +162,8 @@ class SortL10nCommand extends Command<int> {
     try {
       /// Service instance for performing the sorting operations.
       ///
-      /// Encapsulates the business logic for ARB file processing and provides
-      /// a clean interface for the command layer.
+      /// Encapsulates the business logic for ARB file processing and provides a
+      /// clean interface for the command layer.
       const L10nSorterService service = L10nSorterService();
 
       /// Request configuration for the sorting operation.
@@ -213,8 +214,8 @@ class SortL10nCommand extends Command<int> {
   /// Provides detailed feedback about the processing results, including
   /// statistics, file lists, error reports, and actionable next steps.
   ///
-  /// The display adapts based on the operation mode (dry-run vs actual)
-  /// and verbosity level to provide appropriate detail for the user.
+  /// The display adapts based on the operation mode (dry-run vs actual) and
+  /// verbosity level to provide appropriate detail for the user.
   ///
   /// Parameters:
   /// * [logger] - Logger instance for output formatting
@@ -289,8 +290,8 @@ class SortL10nCommand extends Command<int> {
 
   /// Maps sorter error types to appropriate exit codes.
   ///
-  /// Provides consistent exit code behavior that follows POSIX conventions
-  /// and enables proper error handling in scripts and automation.
+  /// Provides consistent exit code behavior that follows POSIX conventions and
+  /// enables proper error handling in scripts and automation.
   ///
   /// Parameters:
   /// * [errorType] - The type of error that occurred

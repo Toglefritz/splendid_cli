@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 /// Grid widget that displays command buttons for CLI operations.
 ///
-/// This widget provides a visual interface for accessing all Splendid CLI functionality through clickable buttons. It
-/// organizes commands into logical groups and provides appropriate visual feedback for different states (enabled,
-/// disabled, loading).
+/// This widget provides a visual interface for accessing all Splendid CLI
+/// functionality through clickable buttons. It organizes commands into logical
+/// groups and provides appropriate visual feedback for different states
+/// (enabled, disabled, loading).
 ///
 /// The grid includes buttons for:
 /// * Project creation and management
@@ -36,41 +37,45 @@ class CommandButtonsGrid extends StatelessWidget {
 
   /// Whether a CLI operation is currently in progress.
   ///
-  /// Used to disable buttons and show loading indicators during command execution to prevent concurrent operations.
+  /// Used to disable buttons and show loading indicators during command
+  /// execution to prevent concurrent operations.
   final bool isLoading;
 
   /// Whether the current directory contains a Flutter project.
   ///
-  /// Used to enable/disable Flutter-specific commands and provide appropriate visual feedback for unavailable
-  /// operations.
+  /// Used to enable/disable Flutter-specific commands and provide appropriate
+  /// visual feedback for unavailable operations.
   final bool isFlutterProject;
 
   /// Callback function for creating a new Flutter project.
   ///
-  /// Should open a dialog for specifying project parameters and execute the CLI create command with the provided
-  /// settings.
+  /// Should open a dialog for specifying project parameters and execute the CLI
+  /// create command with the provided settings.
   final VoidCallback onCreateProject;
 
   /// Callback function for adding a new screen to the current project.
   ///
-  /// Should open a dialog for specifying screen parameters and execute the CLI screen command. Requires a Flutter
-  /// project.
+  /// Should open a dialog for specifying screen parameters and execute the CLI
+  /// screen command. Requires a Flutter project.
   final VoidCallback onAddScreen;
 
   /// Callback function for generating test files.
   ///
-  /// Should open a dialog for specifying test generation parameters and execute the CLI test generation command.
+  /// Should open a dialog for specifying test generation parameters and execute
+  /// the CLI test generation command.
   final VoidCallback onGenerateTest;
 
   /// Callback function for running project setup commands.
   ///
-  /// Executes the CLI setup command to run pub get, code generation, and other project initialization tasks.
+  /// Executes the CLI setup command to run pub get, code generation, and other
+  /// project initialization tasks.
   final VoidCallback onSetupProject;
 
   /// Callback function for formatting Dartdoc comments in the project.
   ///
-  /// Executes the CLI format-dartdoc command to reformat and rewrap Dartdoc comments to the specified line length
-  /// across all Dart files in the project.
+  /// Executes the CLI format-dartdoc command to reformat and rewrap Dartdoc
+  /// comments to the specified line length across all Dart files in the
+  /// project.
   final VoidCallback onFormatProject;
 
   @override
@@ -146,7 +151,8 @@ class CommandButtonsGrid extends StatelessWidget {
     );
   }
 
-  /// Calculates the appropriate number of columns for the grid based on screen width.
+  /// Calculates the appropriate number of columns for the grid based on screen
+  /// width.
   ///
   /// Provides responsive layout that adapts to different screen sizes:
   /// * Small screens (< 600px): 2 columns
@@ -170,8 +176,9 @@ class CommandButtonsGrid extends StatelessWidget {
 
 /// Individual command button widget for the grid.
 ///
-/// This widget represents a single CLI command with an icon, title, subtitle, and appropriate visual states for
-/// enabled/disabled/loading conditions. It provides consistent styling and behavior across all command buttons in the
+/// This widget represents a single CLI command with an icon, title, subtitle,
+/// and appropriate visual states for enabled/disabled/loading conditions. It
+/// provides consistent styling and behavior across all command buttons in the
 /// grid.
 class _CommandButton extends StatelessWidget {
   /// Creates a new command button.
@@ -213,12 +220,14 @@ class _CommandButton extends StatelessWidget {
 
   /// Whether this command requires a Flutter project to function.
   ///
-  /// Used to show appropriate disabled states and tooltips when the current directory is not a Flutter project.
+  /// Used to show appropriate disabled states and tooltips when the current
+  /// directory is not a Flutter project.
   final bool requiresFlutterProject;
 
   /// Whether the current directory contains a Flutter project.
   ///
-  /// Used in combination with [requiresFlutterProject] to determine button availability and visual feedback.
+  /// Used in combination with [requiresFlutterProject] to determine button
+  /// availability and visual feedback.
   final bool isFlutterProject;
 
   @override

@@ -10,9 +10,10 @@ import 'dashboard_controller.dart';
 
 /// View widget for the main dashboard screen.
 ///
-/// This view provides the user interface for the Splendid CLI GUI Dashboard, displaying project information, command
-/// buttons, and output panels. It follows the MVC pattern by receiving the controller as a parameter and delegating all
-/// business logic to the controller.
+/// This view provides the user interface for the Splendid CLI GUI Dashboard,
+/// displaying project information, command buttons, and output panels. It
+/// follows the MVC pattern by receiving the controller as a parameter and
+/// delegating all business logic to the controller.
 ///
 /// The dashboard layout includes:
 /// * App bar with title and project selection
@@ -125,8 +126,8 @@ class DashboardView extends StatelessWidget {
 
   /// Shows the create project dialog.
   ///
-  /// Displays a modal dialog that allows users to specify project creation parameters including name, output directory,
-  /// and target platforms.
+  /// Displays a modal dialog that allows users to specify project creation
+  /// parameters including name, output directory, and target platforms.
   ///
   /// Parameters:
   /// * [context] - The build context for showing the dialog
@@ -141,8 +142,8 @@ class DashboardView extends StatelessWidget {
 
   /// Shows the add screen dialog.
   ///
-  /// Displays a modal dialog that allows users to specify screen generation parameters including screen name and force
-  /// overwrite options.
+  /// Displays a modal dialog that allows users to specify screen generation
+  /// parameters including screen name and force overwrite options.
   ///
   /// Parameters:
   /// * [context] - The build context for showing the dialog
@@ -157,8 +158,8 @@ class DashboardView extends StatelessWidget {
 
   /// Shows the generate test dialog.
   ///
-  /// Displays a modal dialog that allows users to specify test generation parameters including target file, test type,
-  /// and force overwrite options.
+  /// Displays a modal dialog that allows users to specify test generation
+  /// parameters including target file, test type, and force overwrite options.
   ///
   /// Parameters:
   /// * [context] - The build context for showing the dialog

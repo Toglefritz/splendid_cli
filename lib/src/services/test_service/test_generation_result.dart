@@ -1,8 +1,8 @@
 /// Test Generation Result Module
 ///
-/// This module contains the result class for test generation operations
-/// within the test service. It encapsulates the outcome of test file
-/// generation, including success/failure status and relevant metadata.
+/// This module contains the result class for test generation operations within
+/// the test service. It encapsulates the outcome of test file generation,
+/// including success/failure status and relevant metadata.
 library;
 
 import 'test_type.dart';
@@ -10,27 +10,27 @@ import 'test_type.dart';
 /// Result of test generation operation.
 ///
 /// This class represents the outcome of a test file generation request,
-/// providing information about success or failure, file paths, and test
-/// type information. It includes factory constructors for common result
-/// patterns to simplify result creation.
+/// providing information about success or failure, file paths, and test type
+/// information. It includes factory constructors for common result patterns to
+/// simplify result creation.
 ///
 /// The result contains all necessary information for the caller to understand
-/// what happened during the test generation process and take appropriate
-/// action based on the outcome.
+/// what happened during the test generation process and take appropriate action
+/// based on the outcome.
 ///
 /// Usage:
 /// ```dart
 /// // Success case
 /// final result = TestGenerationResult.success(
-///   targetFile: 'lib/widgets/my_widget.dart',
-///   outputPath: 'test/widgets/my_widget_test.dart',
-///   testType: TestType.widget,
+/// targetFile: 'lib/widgets/my_widget.dart',
+/// outputPath: 'test/widgets/my_widget_test.dart',
+/// testType: TestType.widget,
 /// );
 ///
 /// // Failure case
 /// final result = TestGenerationResult.failure(
-///   targetFile: 'lib/widgets/my_widget.dart',
-///   error: 'Target file not found',
+/// targetFile: 'lib/widgets/my_widget.dart',
+/// error: 'Target file not found',
 /// );
 /// ```
 class TestGenerationResult {
@@ -92,15 +92,15 @@ class TestGenerationResult {
   /// Whether the operation was successful.
   ///
   /// True indicates that the test file was successfully generated at the
-  /// specified output path. False indicates that the operation failed and
-  /// the [error] field contains details about the failure.
+  /// specified output path. False indicates that the operation failed and the
+  /// [error] field contains details about the failure.
   final bool success;
 
   /// Path to the target file that was tested.
   ///
-  /// This is the original source file path that was provided in the
-  /// test generation request. It's included in both success and failure
-  /// results for reference and logging purposes.
+  /// This is the original source file path that was provided in the test
+  /// generation request. It's included in both success and failure results for
+  /// reference and logging purposes.
   final String targetFile;
 
   /// Path where the test file was created.
@@ -120,7 +120,7 @@ class TestGenerationResult {
   /// Error message if operation failed.
   ///
   /// Contains a human-readable description of what went wrong during test
-  /// generation. This field is null for successful operations and contains
-  /// a descriptive error message for failed operations.
+  /// generation. This field is null for successful operations and contains a
+  /// descriptive error message for failed operations.
   final String? error;
 }

@@ -2,13 +2,14 @@ import 'dart:io';
 
 /// Helper class for cleaning up test artifacts created during test runs.
 ///
-/// This class provides utilities for cleaning up directories and files that may be created during test execution,
-/// particularly when tests run CLI commands that create projects or other artifacts at the root level.
+/// This class provides utilities for cleaning up directories and files that may
+/// be created during test execution, particularly when tests run CLI commands
+/// that create projects or other artifacts at the root level.
 class ProjectCleanupHelper {
   /// List of directory names that should be cleaned up after tests.
   ///
-  /// These are common directory names that tests might create when running CLI commands or testing project creation
-  /// functionality.
+  /// These are common directory names that tests might create when running CLI
+  /// commands or testing project creation functionality.
   static const List<String> _testDirectories = [
     'test_project',
     'integration_test_app',
@@ -32,12 +33,13 @@ class ProjectCleanupHelper {
 
   /// Cleans up test artifacts from the current working directory.
   ///
-  /// This method removes any directories that may have been created during test execution. It's designed to be safe to
-  /// call even if the directories don't exist, and it handles errors gracefully to prevent test failures due to cleanup
-  /// issues.
+  /// This method removes any directories that may have been created during test
+  /// execution. It's designed to be safe to call even if the directories don't
+  /// exist, and it handles errors gracefully to prevent test failures due to
+  /// cleanup issues.
   ///
-  /// This method should be called in `tearDownAll` or similar cleanup hooks to ensure test artifacts don't accumulate
-  /// on the file system.
+  /// This method should be called in `tearDownAll` or similar cleanup hooks to
+  /// ensure test artifacts don't accumulate on the file system.
   static void cleanupTestArtifacts() {
     final String currentDir = Directory.current.path;
 
@@ -58,8 +60,9 @@ class ProjectCleanupHelper {
 
   /// Cleans up a specific test directory by name.
   ///
-  /// This method removes a specific directory from the current working directory. It's useful for cleaning up
-  /// directories with dynamic names or for targeted cleanup in specific tests.
+  /// This method removes a specific directory from the current working
+  /// directory. It's useful for cleaning up directories with dynamic names or
+  /// for targeted cleanup in specific tests.
   ///
   /// Parameters:
   /// * [directoryName] - Name of the directory to clean up
@@ -87,8 +90,9 @@ class ProjectCleanupHelper {
 
   /// Cleans up all directories matching a pattern.
   ///
-  /// This method removes all directories in the current working directory that match the specified pattern. It's useful
-  /// for cleaning up directories with generated names or prefixes.
+  /// This method removes all directories in the current working directory that
+  /// match the specified pattern. It's useful for cleaning up directories with
+  /// generated names or prefixes.
   ///
   /// Parameters:
   /// * [pattern] - RegExp pattern to match directory names
@@ -127,8 +131,9 @@ class ProjectCleanupHelper {
 
   /// Sets up automatic cleanup for test suites.
   ///
-  /// This method should be called in `setUpAll` to register cleanup handlers that will run when the test process exits.
-  /// This ensures cleanup happens even if tests are interrupted or fail unexpectedly.
+  /// This method should be called in `setUpAll` to register cleanup handlers
+  /// that will run when the test process exits. This ensures cleanup happens
+  /// even if tests are interrupted or fail unexpectedly.
   static void setupAutomaticCleanup() {
     // Register cleanup to run when the process exits
     ProcessSignal.sigint.watch().listen((_) {
@@ -144,7 +149,8 @@ class ProjectCleanupHelper {
 
   /// Checks if any test artifacts exist in the current directory.
   ///
-  /// This method can be used to verify that cleanup is working correctly or to warn about leftover test artifacts.
+  /// This method can be used to verify that cleanup is working correctly or to
+  /// warn about leftover test artifacts.
   ///
   /// Returns:
   /// * List of test directory names that currently exist

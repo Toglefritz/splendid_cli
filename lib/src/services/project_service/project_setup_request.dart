@@ -8,9 +8,10 @@ library;
 
 /// Request configuration for project setup.
 ///
-/// This class encapsulates all the parameters needed to set up an existing Flutter
-/// project after creation, including dependency installation, localization generation,
-/// and optional application execution with device selection.
+/// This class encapsulates all the parameters needed to set up an existing
+/// Flutter project after creation, including dependency installation,
+/// localization generation, and optional application execution with device
+/// selection.
 ///
 /// The setup process typically includes:
 /// * Running flutter pub get to install dependencies
@@ -20,9 +21,9 @@ library;
 class ProjectSetupRequest {
   /// Creates a project setup request.
   ///
-  /// The [projectPath] must point to a valid Flutter project directory containing
-  /// a pubspec.yaml file and lib directory. The setup process will validate this
-  /// before proceeding with any operations.
+  /// The [projectPath] must point to a valid Flutter project directory
+  /// containing a pubspec.yaml file and lib directory. The setup process will
+  /// validate this before proceeding with any operations.
   ///
   /// Parameters:
   /// * [projectPath] - Path to the Flutter project to setup (required)
@@ -43,15 +44,15 @@ class ProjectSetupRequest {
   /// * lib directory with Dart source code
   /// * Standard Flutter project structure
   ///
-  /// The path can be absolute or relative to the current working directory.
-  /// The service will validate the project structure before proceeding.
+  /// The path can be absolute or relative to the current working directory. The
+  /// service will validate the project structure before proceeding.
   final String projectPath;
 
   /// Whether to run the app after setup.
   ///
   /// When true, the setup process will execute 'flutter run' after completing
-  /// dependency installation and localization generation. This provides immediate
-  /// feedback that the project was created and configured correctly.
+  /// dependency installation and localization generation. This provides
+  /// immediate feedback that the project was created and configured correctly.
   ///
   /// When false, only the setup commands (pub get, gen-l10n) are executed,
   /// leaving the application ready to run manually.
@@ -69,11 +70,11 @@ class ProjectSetupRequest {
   /// Optional device ID to use for flutter run.
   ///
   /// If specified, the flutter run command will target this specific device.
-  /// The device ID must match one of the available devices returned by
-  /// 'flutter devices' command.
+  /// The device ID must match one of the available devices returned by 'flutter
+  /// devices' command.
   ///
-  /// If not specified, the system will automatically select the best available device
-  /// based on platform priority:
+  /// If not specified, the system will automatically select the best available
+  /// device based on platform priority:
   /// 1. Desktop devices (Windows, macOS, Linux) - preferred for development
   /// 2. Web browsers (Chrome) - universal compatibility
   /// 3. Mobile devices (Android, iOS) - platform-specific testing

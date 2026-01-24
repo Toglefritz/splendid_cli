@@ -5,11 +5,14 @@ import 'package:path/path.dart' as path;
 
 import '../services/screen_service.dart';
 
-/// Command-line interface for adding new screens to existing Flutter applications.
+/// Command-line interface for adding new screens to existing Flutter
+/// applications.
 ///
-/// This command generates a new screen following Splendid's MVC architecture patterns. It uses Mason bricks to ensure
-/// consistent screen structure with proper separation of concerns between route, controller, and view components. The
-/// generated screen includes a simple icon selection game as placeholder content.
+/// This command generates a new screen following Splendid's MVC architecture
+/// patterns. It uses Mason bricks to ensure consistent screen structure with
+/// proper separation of concerns between route, controller, and view
+/// components. The generated screen includes a simple icon selection game as
+/// placeholder content.
 ///
 /// The generated screen includes:
 /// * Route class for screen entry point (StatefulWidget)
@@ -43,7 +46,8 @@ import '../services/screen_service.dart';
 ///
 /// Performance: Typical generation time is under 1 second for screen creation.
 ///
-/// Thread Safety: This command is not thread-safe and should not be run concurrently for the same screen name.
+/// Thread Safety: This command is not thread-safe and should not be run
+/// concurrently for the same screen name.
 class ScreenCommand extends Command<int> {
   /// Service for handling screen operations.
   static const ScreenService _screenService = ScreenService();
@@ -54,25 +58,26 @@ class ScreenCommand extends Command<int> {
   /// * `--force`: Overwrite existing screen files without confirmation
   /// * `--blank`: Create a blank screen without example content
   ///
-  /// The argument parser is configured during construction to ensure all command-line options are properly defined and
-  /// validated before execution.
+  /// The argument parser is configured during construction to ensure all
+  /// command-line options are properly defined and validated before execution.
   ScreenCommand() {
-    argParser..addFlag(
-      'force',
-      help: 'Whether to force screen generation, overwriting existing files.',
-      negatable: false,
-    )
-    ..addFlag(
-      'blank',
-      help: 'Create a blank screen without example content.',
-      negatable: false,
-    );
+    argParser
+      ..addFlag(
+        'force',
+        help: 'Whether to force screen generation, overwriting existing files.',
+        negatable: false,
+      )
+      ..addFlag(
+        'blank',
+        help: 'Create a blank screen without example content.',
+        negatable: false,
+      );
   }
 
   /// Brief description of the command's purpose for help text.
   ///
-  /// This description appears in the CLI help output when users run `splendid_cli help` or `splendid_cli screen
-  /// --help`.
+  /// This description appears in the CLI help output when users run
+  /// `splendid_cli help` or `splendid_cli screen --help`.
   @override
   String get description => 'Add a new screen with MVC architecture to an existing Flutter app.';
 
@@ -84,8 +89,8 @@ class ScreenCommand extends Command<int> {
 
   /// Usage pattern displayed in help text and error messages.
   ///
-  /// Shows the expected command structure with required and optional arguments. The screen name is required, while
-  /// flags are optional.
+  /// Shows the expected command structure with required and optional arguments.
+  /// The screen name is required, while flags are optional.
   @override
   String get invocation => 'splendid_cli screen <screen_name> [arguments]';
 
@@ -214,8 +219,8 @@ class ScreenCommand extends Command<int> {
 
   /// Converts a string to snake_case format.
   ///
-  /// Transforms the input string to follow snake_case naming conventions used for file names and some variable names in
-  /// Dart projects.
+  /// Transforms the input string to follow snake_case naming conventions used
+  /// for file names and some variable names in Dart projects.
   ///
   /// Conversion rules:
   /// * Converts uppercase letters to lowercase

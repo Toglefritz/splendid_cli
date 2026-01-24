@@ -2,9 +2,11 @@ import 'dart:io';
 
 /// Service for reformatting and rewrapping regular comments in Dart files.
 ///
-/// This service handles the business logic for processing regular // comments, including line length adjustment, proper
-/// wrapping, and preservation of formatting elements like code blocks and lists. It operates on individual files or
-/// entire directory trees while maintaining the original file structure.
+/// This service handles the business logic for processing regular // comments,
+/// including line length adjustment, proper wrapping, and preservation of
+/// formatting elements like code blocks and lists. It operates on individual
+/// files or entire directory trees while maintaining the original file
+/// structure.
 ///
 /// The service supports:
 /// * Adjusting line length to any specified length (40-200 characters)
@@ -20,16 +22,17 @@ import 'dart:io';
 /// * Configurable line length limits
 /// * Dry-run mode for preview without modification
 ///
-/// Performance: Processing is optimized for large codebases with minimal memory usage and efficient file I/O
-/// operations.
+/// Performance: Processing is optimized for large codebases with minimal memory
+/// usage and efficient file I/O operations.
 class CommentFormatterService {
   /// Creates a new comment formatter service instance.
   const CommentFormatterService();
 
   /// Formats regular comments in a single file or directory tree.
   ///
-  /// This method processes the specified target (file or directory) and reformats all regular comments according to the
-  /// specified line length. It handles both single files and recursive directory processing.
+  /// This method processes the specified target (file or directory) and
+  /// reformats all regular comments according to the specified line length. It
+  /// handles both single files and recursive directory processing.
   ///
   /// Processing workflow:
   /// 1. Validates the target path exists and is accessible
@@ -91,7 +94,8 @@ class CommentFormatterService {
 
   /// Validates the formatting request parameters.
   ///
-  /// Ensures that all required parameters are valid and the target path exists and is accessible for processing.
+  /// Ensures that all required parameters are valid and the target path exists
+  /// and is accessible for processing.
   void _validateRequest(CommentFormatterRequest request) {
     if (request.lineLength < 40 || request.lineLength > 200) {
       throw const CommentFormatterException(
@@ -114,8 +118,9 @@ class CommentFormatterService {
 
   /// Finds all Dart files in the target path.
   ///
-  /// For file targets, returns a single-item list. For directory targets, recursively searches for all .dart files
-  /// while respecting common ignore patterns (build/, .dart_tool/, etc.).
+  /// For file targets, returns a single-item list. For directory targets,
+  /// recursively searches for all .dart files while respecting common ignore
+  /// patterns (build/, .dart_tool/, etc.).
   Future<List<File>> _findDartFiles(String targetPath) async {
     final FileSystemEntityType entityType = FileSystemEntity.typeSync(targetPath);
 
@@ -154,7 +159,8 @@ class CommentFormatterService {
 
   /// Determines if a file should be skipped during processing.
   ///
-  /// Skips files in common build and tool directories that typically contain generated code or temporary files.
+  /// Skips files in common build and tool directories that typically contain
+  /// generated code or temporary files.
   bool _shouldSkipFile(String filePath) {
     final List<String> skipPatterns = [
       '.dart_tool/',
@@ -168,8 +174,8 @@ class CommentFormatterService {
 
   /// Processes a single Dart file for regular comment formatting.
   ///
-  /// Reads the file content, identifies and reformats regular comments, and writes the updated content back to the file
-  /// (unless in dry-run mode).
+  /// Reads the file content, identifies and reformats regular comments, and
+  /// writes the updated content back to the file (unless in dry-run mode).
   ///
   /// Returns true if the file was modified, false otherwise.
   Future<bool> _processFile(File file, CommentFormatterRequest request) async {
@@ -187,8 +193,9 @@ class CommentFormatterService {
 
   /// Formats regular comments within file content.
   ///
-  /// This method processes the entire file content and reformats all regular comments according to the specified line
-  /// length while preserving code structure and non-comment content.
+  /// This method processes the entire file content and reformats all regular
+  /// comments according to the specified line length while preserving code
+  /// structure and non-comment content.
   String _formatCommentsInContent(String content, int lineLength) {
     final List<String> lines = content.split('\n');
     final List<String> formattedLines = [];
@@ -213,8 +220,8 @@ class CommentFormatterService {
 
   /// Checks if a line starts a regular comment (not Dartdoc).
   ///
-  /// Recognizes // comments but excludes /// Dartdoc comments, accounting for leading whitespace that should be
-  /// preserved.
+  /// Recognizes // comments but excludes /// Dartdoc comments, accounting for
+  /// leading whitespace that should be preserved.
   bool _isRegularCommentStart(String line) {
     final String trimmed = line.trimLeft();
     return trimmed.startsWith('//') && !trimmed.startsWith('///');
@@ -291,8 +298,8 @@ class CommentFormatterService {
 
   /// Wraps comment content to the specified line length.
   ///
-  /// This method handles the intelligent wrapping of comment text while preserving special formatting like code blocks,
-  /// lists, and paragraphs.
+  /// This method handles the intelligent wrapping of comment text while
+  /// preserving special formatting like code blocks, lists, and paragraphs.
   List<String> _wrapCommentContent(List<String> contentLines, int maxLength) {
     final List<String> result = [];
     final List<String> currentParagraph = [];
@@ -378,8 +385,8 @@ class CommentFormatterService {
 
   /// Wraps a paragraph of text to the specified maximum line length.
   ///
-  /// Performs intelligent word wrapping that respects word boundaries and maintains readability while fitting within
-  /// the specified length.
+  /// Performs intelligent word wrapping that respects word boundaries and
+  /// maintains readability while fitting within the specified length.
   List<String> _wrapParagraph(List<String> paragraphLines, int maxLength) {
     final String fullText = paragraphLines.join(' ').trim();
 
@@ -418,8 +425,9 @@ class CommentFormatterService {
 
 /// Represents a block of regular comments extracted from source code.
 ///
-/// This class encapsulates the structure and metadata of a comment block, including its content and positioning
-/// information needed for proper reformatting.
+/// This class encapsulates the structure and metadata of a comment block,
+/// including its content and positioning information needed for proper
+/// reformatting.
 class CommentBlock {
   /// Creates a new regular comment block.
   const CommentBlock({
@@ -430,7 +438,8 @@ class CommentBlock {
 
   /// The lines that make up this comment block.
   ///
-  /// Includes the original comment syntax and formatting, which will be processed during reformatting operations.
+  /// Includes the original comment syntax and formatting, which will be
+  /// processed during reformatting operations.
   final List<String> lines;
 
   /// The number of lines this block spans in the original file.
@@ -440,14 +449,16 @@ class CommentBlock {
 
   /// The leading whitespace that should be preserved for indentation.
   ///
-  /// Maintains the original indentation level of the comment block to preserve code structure and formatting.
+  /// Maintains the original indentation level of the comment block to preserve
+  /// code structure and formatting.
   final String leadingWhitespace;
 }
 
 /// Request configuration for comment formatting operations.
 ///
-/// This class encapsulates all parameters needed to configure the formatting process, including target specification,
-/// line length preferences, and processing options.
+/// This class encapsulates all parameters needed to configure the formatting
+/// process, including target specification, line length preferences, and
+/// processing options.
 class CommentFormatterRequest {
   /// Creates a new comment formatter request.
   const CommentFormatterRequest({
@@ -458,25 +469,28 @@ class CommentFormatterRequest {
 
   /// Path to the file or directory to process.
   ///
-  /// Can be either a single .dart file or a directory containing Dart files to process recursively.
+  /// Can be either a single .dart file or a directory containing Dart files to
+  /// process recursively.
   final String targetPath;
 
   /// Maximum line length for wrapped comment text.
   ///
-  /// Comments will be reformatted to fit within this character limit while respecting word boundaries and special
-  /// formatting.
+  /// Comments will be reformatted to fit within this character limit while
+  /// respecting word boundaries and special formatting.
   final int lineLength;
 
   /// Whether to perform a dry run without modifying files.
   ///
-  /// When true, the service will analyze and report what changes would be made without actually writing to files.
+  /// When true, the service will analyze and report what changes would be made
+  /// without actually writing to files.
   final bool dryRun;
 }
 
 /// Result of a comment formatting operation.
 ///
-/// This class contains comprehensive information about the formatting process, including statistics, file lists, and
-/// any errors encountered during processing.
+/// This class contains comprehensive information about the formatting process,
+/// including statistics, file lists, and any errors encountered during
+/// processing.
 class CommentFormatterResult {
   /// Creates a new comment formatter result.
   const CommentFormatterResult({
@@ -522,32 +536,38 @@ class CommentFormatterResult {
 
   /// Whether the overall operation was successful.
   ///
-  /// True if all files were processed without critical errors, false if the operation failed or was aborted.
+  /// True if all files were processed without critical errors, false if the
+  /// operation failed or was aborted.
   final bool success;
 
   /// List of all files that were processed.
   ///
-  /// Includes both modified and unmodified files that were analyzed during the formatting operation.
+  /// Includes both modified and unmodified files that were analyzed during the
+  /// formatting operation.
   final List<String> processedFiles;
 
   /// List of files that were actually modified.
   ///
-  /// Subset of processedFiles that contained comments requiring reformatting according to the specified criteria.
+  /// Subset of processedFiles that contained comments requiring reformatting
+  /// according to the specified criteria.
   final List<String> modifiedFiles;
 
   /// List of error messages encountered during processing.
   ///
-  /// Each error includes the file path and description of the issue that prevented successful processing.
+  /// Each error includes the file path and description of the issue that
+  /// prevented successful processing.
   final List<String> errors;
 
   /// The line length that was used for formatting.
   ///
-  /// Reflects the actual line length parameter that was applied during the formatting process.
+  /// Reflects the actual line length parameter that was applied during the
+  /// formatting process.
   final int lineLength;
 
   /// Whether this was a dry run operation.
   ///
-  /// Indicates whether files were actually modified or just analyzed for potential changes.
+  /// Indicates whether files were actually modified or just analyzed for
+  /// potential changes.
   final bool dryRun;
 
   /// Gets the total number of files processed.
@@ -568,8 +588,8 @@ class CommentFormatterResult {
 
 /// Exception thrown by comment formatter service operations.
 ///
-/// This exception provides structured error information for various failure scenarios that can occur during comment
-/// formatting operations.
+/// This exception provides structured error information for various failure
+/// scenarios that can occur during comment formatting operations.
 class CommentFormatterException implements Exception {
   /// Creates a new comment formatter exception.
   const CommentFormatterException(
@@ -580,17 +600,20 @@ class CommentFormatterException implements Exception {
 
   /// Human-readable error message describing the failure.
   ///
-  /// Provides clear information about what went wrong and potential steps for resolution when applicable.
+  /// Provides clear information about what went wrong and potential steps for
+  /// resolution when applicable.
   final String message;
 
   /// The specific type of error that occurred.
   ///
-  /// Categorizes the error for programmatic handling and appropriate user feedback.
+  /// Categorizes the error for programmatic handling and appropriate user
+  /// feedback.
   final CommentFormatterErrorType type;
 
   /// Optional underlying cause of this exception.
   ///
-  /// Preserves the original exception when this error wraps another exception for debugging and logging purposes.
+  /// Preserves the original exception when this error wraps another exception
+  /// for debugging and logging purposes.
   final Object? cause;
 
   @override
@@ -599,7 +622,8 @@ class CommentFormatterException implements Exception {
 
 /// Types of errors that can occur during comment formatting operations.
 ///
-/// This enumeration categorizes the various failure modes to enable appropriate error handling and user feedback.
+/// This enumeration categorizes the various failure modes to enable appropriate
+/// error handling and user feedback.
 enum CommentFormatterErrorType {
   /// The specified target path does not exist.
   targetNotFound,

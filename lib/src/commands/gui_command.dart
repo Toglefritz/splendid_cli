@@ -6,9 +6,10 @@ import 'package:path/path.dart' as path;
 
 /// Command-line interface for launching the Splendid CLI GUI dashboard.
 ///
-/// This command starts a Flutter desktop application that provides a graphical interface for using the Splendid CLI
-/// tools. The GUI offers point-and-click access to all CLI functionality including project creation, screen generation,
-/// test file creation, and project management.
+/// This command starts a Flutter desktop application that provides a graphical
+/// interface for using the Splendid CLI tools. The GUI offers point-and-click
+/// access to all CLI functionality including project creation, screen
+/// generation, test file creation, and project management.
 ///
 /// The GUI dashboard includes:
 /// * Project creation wizard with platform selection
@@ -37,9 +38,11 @@ import 'package:path/path.dart' as path;
 /// * Desktop platform support must be enabled for Flutter
 /// * Sufficient system resources for running Flutter desktop app
 ///
-/// Performance: GUI startup time is typically 2-5 seconds depending on system performance.
+/// Performance: GUI startup time is typically 2-5 seconds depending on system
+/// performance.
 ///
-/// Thread Safety: This command launches a separate Flutter process and is safe to run concurrently.
+/// Thread Safety: This command launches a separate Flutter process and is safe
+/// to run concurrently.
 class GuiCommand extends Command<int> {
   /// Creates a new instance of [GuiCommand] with configured argument parser.
   ///
@@ -47,8 +50,8 @@ class GuiCommand extends Command<int> {
   /// * `--project-path`: Specify initial project directory to open in GUI
   /// * `--debug`: Launch GUI in debug mode with additional logging
   ///
-  /// The argument parser is configured during construction to ensure all command-line options are properly defined and
-  /// validated before execution.
+  /// The argument parser is configured during construction to ensure all
+  /// command-line options are properly defined and validated before execution.
   GuiCommand() {
     argParser
       ..addOption(
@@ -65,7 +68,8 @@ class GuiCommand extends Command<int> {
 
   /// Brief description of the command's purpose for help text.
   ///
-  /// This description appears in the CLI help output when users run `splendid_cli help` or `splendid_cli gui --help`.
+  /// This description appears in the CLI help output when users run
+  /// `splendid_cli help` or `splendid_cli gui --help`.
   @override
   String get description => 'Launch the Splendid CLI GUI dashboard for visual project management.';
 
@@ -114,13 +118,14 @@ class GuiCommand extends Command<int> {
 
     /// Optional project path specified via --project-path flag.
     ///
-    /// When provided, the GUI will open with this directory as the active project. When null, the GUI opens with the
-    /// current working directory.
+    /// When provided, the GUI will open with this directory as the active
+    /// project. When null, the GUI opens with the current working directory.
     final String? projectPath = argResults!['project-path'] as String?;
 
     /// Whether to launch the GUI in debug mode (--debug flag).
     ///
-    /// Debug mode enables additional logging and development features in the GUI.
+    /// Debug mode enables additional logging and development features in the
+    /// GUI.
     final bool debugMode = argResults!['debug'] as bool;
 
     try {
@@ -144,8 +149,9 @@ class GuiCommand extends Command<int> {
 
       /// The directory path that will be opened in the GUI.
       ///
-      /// Defaults to the current working directory if no project path is specified. The path is validated to ensure it
-      /// exists and is accessible.
+      /// Defaults to the current working directory if no project path is
+      /// specified. The path is validated to ensure it exists and is
+      /// accessible.
       final String targetPath = projectPath ?? Directory.current.path;
 
       // Validate project path exists
@@ -181,8 +187,8 @@ class GuiCommand extends Command<int> {
 
   /// Checks if Flutter SDK is available in the system PATH.
   ///
-  /// This method attempts to run `flutter --version` to verify that Flutter is properly installed and accessible from
-  /// the command line.
+  /// This method attempts to run `flutter --version` to verify that Flutter is
+  /// properly installed and accessible from the command line.
   ///
   /// Parameters:
   /// * [logger] - Logger instance for debug output
@@ -214,8 +220,8 @@ class GuiCommand extends Command<int> {
 
   /// Checks if Flutter desktop support is available on the current platform.
   ///
-  /// This method verifies that the current platform supports Flutter desktop applications and that desktop support is
-  /// properly configured.
+  /// This method verifies that the current platform supports Flutter desktop
+  /// applications and that desktop support is properly configured.
   ///
   /// Parameters:
   /// * [logger] - Logger instance for debug output
@@ -252,7 +258,8 @@ class GuiCommand extends Command<int> {
           return true;
         } else {
           logger.detail('Flutter desktop support may not be enabled');
-          // Still return true as desktop might work even if not explicitly enabled
+          // Still return true as desktop might work even if not explicitly
+          // enabled
           return true;
         }
       }
@@ -267,8 +274,9 @@ class GuiCommand extends Command<int> {
 
   /// Launches the Flutter GUI application with specified parameters.
   ///
-  /// This method starts the Flutter desktop application that provides the graphical interface for the Splendid CLI
-  /// tools. It handles process management and monitors the application lifecycle.
+  /// This method starts the Flutter desktop application that provides the
+  /// graphical interface for the Splendid CLI tools. It handles process
+  /// management and monitors the application lifecycle.
   ///
   /// Parameters:
   /// * [projectPath] - The directory path to open in the GUI
@@ -285,8 +293,8 @@ class GuiCommand extends Command<int> {
     try {
       /// Path to the GUI application directory within the CLI package.
       ///
-      /// The GUI application is located in the example/gui_dashboard directory and contains a complete Flutter desktop
-      /// application.
+      /// The GUI application is located in the example/gui_dashboard directory
+      /// and contains a complete Flutter desktop application.
       final String guiAppPath = path.join(
         path.dirname(Platform.script.path),
         '..',
@@ -304,7 +312,8 @@ class GuiCommand extends Command<int> {
 
       /// Arguments to pass to the Flutter run command.
       ///
-      /// Includes the target device (desktop), project path, and debug mode settings.
+      /// Includes the target device (desktop), project path, and debug mode
+      /// settings.
       final List<String> flutterArgs = [
         'run',
         '-d',
@@ -352,10 +361,11 @@ class GuiCommand extends Command<int> {
     }
   }
 
-  /// Determines the appropriate Flutter desktop target for the current platform.
+  /// Determines the appropriate Flutter desktop target for the current
+  /// platform.
   ///
-  /// This method returns the Flutter device identifier that should be used when launching the desktop application on
-  /// the current operating system.
+  /// This method returns the Flutter device identifier that should be used when
+  /// launching the desktop application on the current operating system.
   ///
   /// Returns:
   /// * 'windows' for Windows platforms

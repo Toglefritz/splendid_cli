@@ -6,16 +6,18 @@ import 'package:path/path.dart' as path;
 
 /// Command-line interface for performing deep cleaning of Flutter projects.
 ///
-/// This command provides a comprehensive cleaning workflow that goes beyond the standard `flutter clean`
-/// by also refreshing dependencies and regenerating localization files. It's particularly useful when
-/// dealing with build issues, dependency conflicts, or after major Flutter SDK updates.
+/// This command provides a comprehensive cleaning workflow that goes beyond the
+/// standard `flutter clean` by also refreshing dependencies and regenerating
+/// localization files. It's particularly useful when dealing with build issues,
+/// dependency conflicts, or after major Flutter SDK updates.
 ///
 /// The deep clean process executes the following commands in sequence:
 /// 1. `flutter clean` - Removes build artifacts and cached files
 /// 2. `flutter pub get` - Refreshes all project dependencies
 /// 3. `flutter gen-l10n` - Regenerates localization files
 ///
-/// This comprehensive approach resolves most common Flutter development issues including:
+/// This comprehensive approach resolves most common Flutter development issues
+/// including:
 /// * Stale build artifacts causing compilation errors
 /// * Dependency version conflicts or corruption
 /// * Outdated localization files after string changes
@@ -45,13 +47,16 @@ import 'package:path/path.dart' as path;
 /// * `1` - General error: Flutter command execution failed
 /// * `64` - Usage error: Invalid arguments or not a Flutter project (EX_USAGE)
 ///
-/// Performance: Execution time varies based on project size and network speed for dependency downloads.
-/// Typical completion time is 30-60 seconds for most projects.
+/// Performance: Execution time varies based on project size and network speed
+/// for dependency downloads. Typical completion time is 30-60 seconds for most
+/// projects.
 ///
-/// Prerequisites: Requires Flutter SDK to be installed and available in PATH. The target directory
-/// must contain a valid Flutter project with pubspec.yaml file.
+/// Prerequisites: Requires Flutter SDK to be installed and available in PATH.
+/// The target directory must contain a valid Flutter project with pubspec.yaml
+/// file.
 class DeepCleanCommand extends Command<int> {
-  /// Creates a new instance of [DeepCleanCommand] with configured argument parser.
+  /// Creates a new instance of [DeepCleanCommand] with configured argument
+  /// parser.
   ///
   /// The command accepts an optional positional argument for the project path.
   /// If no path is provided, the current working directory is used.
@@ -112,14 +117,15 @@ class DeepCleanCommand extends Command<int> {
 
     /// The target project path to clean.
     ///
-    /// Defaults to current working directory if no path is provided as argument.
-    /// Must point to a valid Flutter project directory containing pubspec.yaml.
+    /// Defaults to current working directory if no path is provided as
+    /// argument. Must point to a valid Flutter project directory containing
+    /// pubspec.yaml.
     final String projectPath = argResults!.rest.isNotEmpty ? argResults!.rest.first : Directory.current.path;
 
     /// Whether to show verbose output from Flutter commands.
     ///
-    /// When enabled, displays detailed output from each Flutter command execution
-    /// for debugging and troubleshooting purposes.
+    /// When enabled, displays detailed output from each Flutter command
+    /// execution for debugging and troubleshooting purposes.
     final bool verbose = argResults!['verbose'] as bool;
 
     try {
@@ -145,7 +151,8 @@ class DeepCleanCommand extends Command<int> {
 
       /// List of commands that will be executed during the deep clean process.
       ///
-      /// Each command is executed sequentially, and the process stops if any command fails.
+      /// Each command is executed sequentially, and the process stops if any
+      /// command fails.
       final List<_CleanStep> cleanSteps = [
         const _CleanStep(
           name: 'Flutter Clean',
@@ -247,10 +254,11 @@ class DeepCleanCommand extends Command<int> {
     }
   }
 
-  /// Executes a Flutter command with proper error handling and output management.
+  /// Executes a Flutter command with proper error handling and output
+  /// management.
   ///
-  /// This method runs Flutter commands in the specified working directory and handles
-  /// both successful execution and error conditions appropriately.
+  /// This method runs Flutter commands in the specified working directory and
+  /// handles both successful execution and error conditions appropriately.
   ///
   /// Parameters:
   /// * [args] - List of arguments to pass to the flutter command
@@ -301,10 +309,11 @@ class DeepCleanCommand extends Command<int> {
     }
   }
 
-  /// Provides specific error handling and guidance based on the failed cleaning step.
+  /// Provides specific error handling and guidance based on the failed cleaning
+  /// step.
   ///
-  /// This method analyzes which step failed and provides targeted troubleshooting
-  /// advice to help users resolve common issues.
+  /// This method analyzes which step failed and provides targeted
+  /// troubleshooting advice to help users resolve common issues.
   ///
   /// Parameters:
   /// * [logger] - Logger instance for displaying error messages
@@ -359,8 +368,8 @@ class DeepCleanCommand extends Command<int> {
 
 /// Represents a single step in the deep cleaning process.
 ///
-/// Each step encapsulates the information needed to execute and report on
-/// a specific Flutter command during the deep clean workflow.
+/// Each step encapsulates the information needed to execute and report on a
+/// specific Flutter command during the deep clean workflow.
 class _CleanStep {
   /// Human-readable name of the cleaning step.
   final String name;

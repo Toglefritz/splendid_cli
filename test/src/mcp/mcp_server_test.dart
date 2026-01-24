@@ -6,8 +6,8 @@ import 'package:test/test.dart';
 
 /// Test suite for SplendidMcpServer functionality.
 ///
-/// This test suite covers MCP protocol handling, JSON-RPC communication, and server lifecycle management without
-/// requiring actual stdio communication.
+/// This test suite covers MCP protocol handling, JSON-RPC communication, and
+/// server lifecycle management without requiring actual stdio communication.
 ///
 /// Test Categories:
 /// * Server initialization and capability negotiation
@@ -27,15 +27,16 @@ void main() {
 
     /// Set up test environment with mock communication channel.
     ///
-    /// Creates a test server instance with mock stream channels that allow us to simulate MCP client communication
-    /// without stdio.
+    /// Creates a test server instance with mock stream channels that allow us
+    /// to simulate MCP client communication without stdio.
     setUp(() {
       outputController = StreamController<String>();
     });
 
     /// Clean up test environment after each test.
     ///
-    /// Closes stream controllers and cleans up any server resources to prevent resource leaks in the test environment.
+    /// Closes stream controllers and cleans up any server resources to prevent
+    /// resource leaks in the test environment.
     tearDown(() async {
       await outputController.close();
     });
@@ -43,8 +44,8 @@ void main() {
     group('MCP protocol methods', () {
       /// Tests the initialize method response structure.
       ///
-      /// This test verifies that the server responds to initialization requests with proper MCP protocol version and
-      /// capabilities.
+      /// This test verifies that the server responds to initialization requests
+      /// with proper MCP protocol version and capabilities.
       test('should handle initialize request', () {
         // Create a test server instance to access private methods
         final testServer = TestableMcpServer();
@@ -66,7 +67,8 @@ void main() {
 
       /// Tests the tools/list method response structure.
       ///
-      /// This test verifies that the server returns all available tools with proper schema definitions for MCP clients.
+      /// This test verifies that the server returns all available tools with
+      /// proper schema definitions for MCP clients.
       test('should handle tools/list request', () {
         final testServer = TestableMcpServer();
 
@@ -87,7 +89,8 @@ void main() {
 
       /// Tests the tools/call method parameter handling.
       ///
-      /// This test verifies that the server properly extracts tool name and arguments from MCP tool call requests.
+      /// This test verifies that the server properly extracts tool name and
+      /// arguments from MCP tool call requests.
       test('should handle tools/call request structure', () async {
         final testServer = TestableMcpServer();
 
@@ -103,7 +106,8 @@ void main() {
         // This will fail with actual execution, but tests parameter extraction
         final Map<String, dynamic> response = await testServer.testHandleToolsCall(params);
 
-        // Should return error response due to missing Flutter CLI, but structure should be correct
+        // Should return error response due to missing Flutter CLI, but
+        // structure should be correct
         expect(response.keys, contains('isError'));
         expect(response.keys, contains('content'));
 
@@ -115,8 +119,8 @@ void main() {
 
       /// Tests error handling for malformed tool call requests.
       ///
-      /// This test verifies that the server handles invalid tool call parameters gracefully with proper error
-      /// responses.
+      /// This test verifies that the server handles invalid tool call
+      /// parameters gracefully with proper error responses.
       test('should handle malformed tools/call request', () async {
         final testServer = TestableMcpServer();
 
@@ -139,8 +143,8 @@ void main() {
     group('JSON-RPC integration', () {
       /// Tests that server methods return JSON-serializable responses.
       ///
-      /// This test ensures that all MCP method responses can be properly serialized to JSON for transmission over the
-      /// wire.
+      /// This test ensures that all MCP method responses can be properly
+      /// serialized to JSON for transmission over the wire.
       test('should return JSON-serializable responses', () {
         final testServer = TestableMcpServer();
 
@@ -155,8 +159,8 @@ void main() {
 
       /// Tests MCP protocol compliance for required methods.
       ///
-      /// This test verifies that the server implements all required MCP methods with proper signatures and response
-      /// formats.
+      /// This test verifies that the server implements all required MCP methods
+      /// with proper signatures and response formats.
       test('should implement required MCP methods', () {
         final testServer = TestableMcpServer();
 
@@ -170,8 +174,8 @@ void main() {
     group('error handling', () {
       /// Tests server behavior with null or invalid parameters.
       ///
-      /// This test ensures that the server handles edge cases gracefully without crashing or returning malformed
-      /// responses.
+      /// This test ensures that the server handles edge cases gracefully
+      /// without crashing or returning malformed responses.
       test('should handle null parameters gracefully', () {
         final testServer = TestableMcpServer();
 
@@ -183,8 +187,8 @@ void main() {
 
       /// Tests error response format compliance.
       ///
-      /// This test verifies that error responses follow the MCP specification for error formatting and content
-      /// structure.
+      /// This test verifies that error responses follow the MCP specification
+      /// for error formatting and content structure.
       test('should return properly formatted error responses', () async {
         final testServer = TestableMcpServer();
 
@@ -207,8 +211,9 @@ void main() {
 
 /// Testable wrapper for SplendidMcpServer that exposes methods for testing.
 ///
-/// This class extends the MCP server to provide direct access to handler methods for unit testing without requiring
-/// full server startup and communication.
+/// This class extends the MCP server to provide direct access to handler
+/// methods for unit testing without requiring full server startup and
+/// communication.
 class TestableMcpServer extends SplendidMcpServer {
   /// Exposes the handleInitialize method for testing.
   Map<String, dynamic> testHandleInitialize(dynamic params) {

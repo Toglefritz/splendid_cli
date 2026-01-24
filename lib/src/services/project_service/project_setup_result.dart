@@ -17,8 +17,9 @@ import 'flutter_device.dart';
 /// * Device selection information when the app was run
 /// * Comprehensive metadata for user feedback and debugging
 ///
-/// The setup process typically involves multiple steps (pub get, gen-l10n, run),
-/// and this result provides visibility into which steps completed successfully.
+/// The setup process typically involves multiple steps (pub get, gen-l10n,
+/// run), and this result provides visibility into which steps completed
+/// successfully.
 class ProjectSetupResult {
   /// Creates a project setup result.
   ///
@@ -46,8 +47,9 @@ class ProjectSetupResult {
 
   /// Creates a successful result.
   ///
-  /// Use this factory constructor when project setup completes successfully.
-  /// It automatically sets success to true and ensures no error message is included.
+  /// Use this factory constructor when project setup completes successfully. It
+  /// automatically sets success to true and ensures no error message is
+  /// included.
   ///
   /// Parameters:
   /// * [projectPath] - Path to the successfully setup project
@@ -72,8 +74,8 @@ class ProjectSetupResult {
 
   /// Creates a failed result.
   ///
-  /// Use this factory constructor when project setup fails for any reason.
-  /// It automatically sets success to false, clears the executed commands list,
+  /// Use this factory constructor when project setup fails for any reason. It
+  /// automatically sets success to false, clears the executed commands list,
   /// and requires an error message for user feedback and debugging.
   ///
   /// Parameters:
@@ -91,9 +93,9 @@ class ProjectSetupResult {
 
   /// Whether the operation was successful.
   ///
-  /// True indicates the project setup completed successfully and the project
-  /// is ready for development. False indicates the operation failed and the
-  /// error field contains details about what went wrong.
+  /// True indicates the project setup completed successfully and the project is
+  /// ready for development. False indicates the operation failed and the error
+  /// field contains details about what went wrong.
   final bool success;
 
   /// Path to the project that was setup.
@@ -105,14 +107,14 @@ class ProjectSetupResult {
 
   /// List of commands that were executed.
   ///
-  /// This provides visibility into which setup steps were completed before
-  /// any failure occurred. Common commands include:
+  /// This provides visibility into which setup steps were completed before any
+  /// failure occurred. Common commands include:
   /// * 'flutter pub get' - Dependency installation
   /// * 'flutter gen-l10n' - Localization file generation
   /// * 'flutter run' - Application execution
   ///
-  /// For failed operations, this list shows which commands succeeded before
-  /// the failure, helping with debugging and recovery.
+  /// For failed operations, this list shows which commands succeeded before the
+  /// failure, helping with debugging and recovery.
   final List<String> executedCommands;
 
   /// Error message if operation failed.
@@ -139,9 +141,9 @@ class ProjectSetupResult {
 
   /// List of all available devices when selection occurred.
   ///
-  /// This is null if device detection was not performed or if the app was not run.
-  /// When present, it provides complete context about the device selection process,
-  /// showing all options that were available.
+  /// This is null if device detection was not performed or if the app was not
+  /// run. When present, it provides complete context about the device selection
+  /// process, showing all options that were available.
   ///
   /// This information helps users understand why a particular device was chosen
   /// and what other options were available.
@@ -149,9 +151,9 @@ class ProjectSetupResult {
 
   /// Human-readable explanation of why this device was selected.
   ///
-  /// This field provides context about the device selection logic, helping users
-  /// understand automatic selection decisions. It's null when no device selection
-  /// occurred or when device selection was not needed.
+  /// This field provides context about the device selection logic, helping
+  /// users understand automatic selection decisions. It's null when no device
+  /// selection occurred or when device selection was not needed.
   ///
   /// Examples:
   /// * "Automatically selected (desktop preferred for development)"

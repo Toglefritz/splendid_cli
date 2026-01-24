@@ -2,8 +2,8 @@
 ///
 /// This file contains the error type enumeration for Flutter project service
 /// operations within the Splendid CLI project service. It provides categorized
-/// error types that enable structured error handling, appropriate user feedback,
-/// and programmatic error recovery strategies.
+/// error types that enable structured error handling, appropriate user
+/// feedback, and programmatic error recovery strategies.
 library;
 
 /// Types of errors that can occur in project service operations.
@@ -28,30 +28,30 @@ library;
 enum ProjectServiceErrorType {
   /// Invalid project name provided.
   ///
-  /// This error occurs when the project name doesn't follow Dart package
-  /// naming conventions. Project names must:
+  /// This error occurs when the project name doesn't follow Dart package naming
+  /// conventions. Project names must:
   /// * Start with a lowercase letter
   /// * Contain only lowercase letters, numbers, and underscores
   /// * Not start with an underscore
   /// * Be valid Dart identifiers
   ///
-  /// Recovery: User should provide a valid project name following the conventions.
-  /// Example invalid names: 'My-App', '123app', '_private', 'my app'
-  /// Example valid names: 'my_app', 'todo_manager', 'family_tracker'
+  /// Recovery: User should provide a valid project name following the
+  /// conventions. Example invalid names: 'My-App', '123app', '_private', 'my
+  /// app' Example valid names: 'my_app', 'todo_manager', 'family_tracker'
   invalidProjectName,
 
   /// Invalid organization format provided.
   ///
-  /// This error occurs when the organization doesn't follow reverse domain
-  /// name notation. Organizations must:
+  /// This error occurs when the organization doesn't follow reverse domain name
+  /// notation. Organizations must:
   /// * Contain at least one dot separator
   /// * Have segments separated by dots
   /// * Each segment must start with a lowercase letter
   /// * Each segment can contain letters, numbers, and hyphens
   /// * Each segment must end with a letter or number
   ///
-  /// Recovery: User should provide a valid organization in reverse domain format.
-  /// Example invalid: 'mycompany', 'com.', '.example', 'com..example'
+  /// Recovery: User should provide a valid organization in reverse domain
+  /// format. Example invalid: 'mycompany', 'com.', '.example', 'com..example'
   /// Example valid: 'com.example', 'org.mycompany', 'io.github.username'
   invalidOrganization,
 
@@ -61,16 +61,16 @@ enum ProjectServiceErrorType {
   /// malformed platform names. Valid platforms include:
   /// * android, ios, web, windows, macos, linux
   ///
-  /// Recovery: User should specify valid platform names in comma-separated format.
-  /// Example invalid: 'android,invalid,web', 'mobile', 'desktop'
+  /// Recovery: User should specify valid platform names in comma-separated
+  /// format. Example invalid: 'android,invalid,web', 'mobile', 'desktop'
   /// Example valid: 'android,ios,web', 'windows,macos,linux'
   invalidPlatforms,
 
   /// Target directory already exists.
   ///
-  /// This error occurs when attempting to create a project in a directory
-  /// that already exists and the force flag is not set. This prevents
-  /// accidental overwriting of existing projects or files.
+  /// This error occurs when attempting to create a project in a directory that
+  /// already exists and the force flag is not set. This prevents accidental
+  /// overwriting of existing projects or files.
   ///
   /// Recovery: User can either:
   /// * Choose a different project name or output directory
@@ -81,8 +81,8 @@ enum ProjectServiceErrorType {
   /// Directory is not a Flutter project.
   ///
   /// This error occurs during setup operations when the target directory
-  /// doesn't contain a valid Flutter project structure. A valid Flutter
-  /// project must have:
+  /// doesn't contain a valid Flutter project structure. A valid Flutter project
+  /// must have:
   /// * pubspec.yaml file with Flutter dependencies
   /// * lib directory with Dart source code
   ///
@@ -120,14 +120,14 @@ enum ProjectServiceErrorType {
 
   /// Unknown error occurred.
   ///
-  /// This error type represents unexpected conditions that don't fit into
-  /// other categories. It serves as a fallback for:
+  /// This error type represents unexpected conditions that don't fit into other
+  /// categories. It serves as a fallback for:
   /// * Unexpected exceptions from underlying systems
   /// * New error conditions not yet categorized
   /// * System-level failures outside normal operation
   ///
-  /// Recovery: User should check system resources, restart the operation,
-  /// or report the issue if it persists. The underlying cause information
-  /// in the exception can help with debugging.
+  /// Recovery: User should check system resources, restart the operation, or
+  /// report the issue if it persists. The underlying cause information in the
+  /// exception can help with debugging.
   unknown,
 }

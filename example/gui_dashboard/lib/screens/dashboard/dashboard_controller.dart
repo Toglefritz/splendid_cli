@@ -10,8 +10,9 @@ import 'dashboard_view.dart';
 
 /// Controller for the main dashboard screen.
 ///
-/// This controller manages the state and business logic for the dashboard, including project management, CLI command
-/// execution, and user interactions. It provides a bridge between the UI and the underlying CLI functionality.
+/// This controller manages the state and business logic for the dashboard,
+/// including project management, CLI command execution, and user interactions.
+/// It provides a bridge between the UI and the underlying CLI functionality.
 ///
 /// Key responsibilities:
 /// * Managing current project path and Flutter project detection
@@ -25,35 +26,38 @@ class DashboardController extends State<DashboardRoute> {
 
   /// The currently selected project directory path.
   ///
-  /// This path is used as the working directory for CLI operations and determines which project is being managed in the
-  /// dashboard.
+  /// This path is used as the working directory for CLI operations and
+  /// determines which project is being managed in the dashboard.
   String? _currentProjectPath;
 
   /// Whether the current directory contains a Flutter project.
   ///
-  /// Determined by checking for the presence of pubspec.yaml with Flutter dependencies. Used to enable/disable
-  /// Flutter-specific features.
+  /// Determined by checking for the presence of pubspec.yaml with Flutter
+  /// dependencies. Used to enable/disable Flutter-specific features.
   bool _isFlutterProject = false;
 
   /// Whether a CLI operation is currently in progress.
   ///
-  /// Used to show loading indicators and prevent concurrent operations that could interfere with each other.
+  /// Used to show loading indicators and prevent concurrent operations that
+  /// could interfere with each other.
   bool _isLoading = false;
 
   /// Current error message from the most recent failed operation.
   ///
-  /// Null when no error is present. Displayed to users for troubleshooting and automatically cleared when successful
-  /// operations complete.
+  /// Null when no error is present. Displayed to users for troubleshooting and
+  /// automatically cleared when successful operations complete.
   String? _errorMessage;
 
   /// Output from the most recent CLI command execution.
   ///
-  /// Contains both stdout and stderr from CLI operations, formatted for display in the dashboard's output panel.
+  /// Contains both stdout and stderr from CLI operations, formatted for display
+  /// in the dashboard's output panel.
   String _commandOutput = '';
 
   /// Whether the output panel is currently visible.
   ///
-  /// Controls the visibility of the expandable output panel that shows CLI command results and error messages.
+  /// Controls the visibility of the expandable output panel that shows CLI
+  /// command results and error messages.
   bool _showOutput = false;
 
   /// Getter for the current project path.
@@ -82,8 +86,9 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Initializes the project path from environment or current directory.
   ///
-  /// Checks for a PROJECT_PATH environment variable (set by the CLI when launching the GUI) and falls back to the
-  /// current working directory. Also performs initial Flutter project detection.
+  /// Checks for a PROJECT_PATH environment variable (set by the CLI when
+  /// launching the GUI) and falls back to the current working directory. Also
+  /// performs initial Flutter project detection.
   void _initializeProjectPath() {
     final String? envProjectPath = Platform.environment['PROJECT_PATH'];
     final String initialPath = envProjectPath ?? Directory.current.path;
@@ -93,8 +98,8 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Sets the current project path and updates Flutter project detection.
   ///
-  /// This method updates the project path, checks if it contains a Flutter project, and triggers a UI rebuild to
-  /// reflect the changes.
+  /// This method updates the project path, checks if it contains a Flutter
+  /// project, and triggers a UI rebuild to reflect the changes.
   ///
   /// Parameters:
   /// * [projectPath] - The new project directory path to set
@@ -108,8 +113,9 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Checks if a directory contains a Flutter project.
   ///
-  /// Determines Flutter project status by looking for pubspec.yaml with Flutter SDK dependency. This is used to enable
-  /// Flutter-specific features in the dashboard.
+  /// Determines Flutter project status by looking for pubspec.yaml with Flutter
+  /// SDK dependency. This is used to enable Flutter-specific features in the
+  /// dashboard.
   ///
   /// Parameters:
   /// * [projectPath] - The directory path to check
@@ -131,11 +137,13 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Opens a directory picker dialog for selecting a project folder.
   ///
-  /// Allows users to browse and select a different project directory to work with in the dashboard. Updates the current
-  /// project path if a valid directory is selected.
+  /// Allows users to browse and select a different project directory to work
+  /// with in the dashboard. Updates the current project path if a valid
+  /// directory is selected.
   ///
-  /// On macOS, this method handles security-scoped access to ensure the app maintains write permissions to the selected
-  /// directory for file operations like creating screens and generating tests.
+  /// On macOS, this method handles security-scoped access to ensure the app
+  /// maintains write permissions to the selected directory for file operations
+  /// like creating screens and generating tests.
   Future<void> selectProjectFolder() async {
     try {
       final String? selectedDirectory = await FilePicker.platform.getDirectoryPath(
@@ -144,7 +152,8 @@ class DashboardController extends State<DashboardRoute> {
       );
 
       if (selectedDirectory != null) {
-        // On macOS, we need to verify we have write access to the selected directory
+        // On macOS, we need to verify we have write access to the selected
+        // directory
         if (Platform.isMacOS) {
           final bool hasWriteAccess = await _verifyWriteAccess(selectedDirectory);
           if (!hasWriteAccess) {
@@ -164,8 +173,9 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Creates a new Flutter project with the specified parameters.
   ///
-  /// Executes the CLI create command with user-provided project name, output directory, and platform selections. Shows
-  /// progress feedback and handles success/error states appropriately.
+  /// Executes the CLI create command with user-provided project name, output
+  /// directory, and platform selections. Shows progress feedback and handles
+  /// success/error states appropriately.
   ///
   /// Parameters:
   /// * [projectName] - Name for the new Flutter project
@@ -192,8 +202,9 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Adds a new screen to the current Flutter project.
   ///
-  /// Executes the CLI screen command to generate MVC architecture files for a new screen. Requires a valid Flutter
-  /// project to be selected and write permissions to the project directory.
+  /// Executes the CLI screen command to generate MVC architecture files for a
+  /// new screen. Requires a valid Flutter project to be selected and write
+  /// permissions to the project directory.
   ///
   /// Parameters:
   /// * [screenName] - Name for the new screen
@@ -230,8 +241,9 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Generates a test file for the specified Dart file.
   ///
-  /// Executes the CLI test generation command to create appropriate test templates for widgets or classes. Handles both
-  /// automatic type detection and explicit type specification.
+  /// Executes the CLI test generation command to create appropriate test
+  /// templates for widgets or classes. Handles both automatic type detection
+  /// and explicit type specification.
   ///
   /// Parameters:
   /// * [targetFile] - Path to the Dart file to generate tests for
@@ -260,8 +272,8 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Runs Flutter setup commands for the current project.
   ///
-  /// Executes the CLI setup command which typically includes pub get, code generation, and other project initialization
-  /// tasks.
+  /// Executes the CLI setup command which typically includes pub get, code
+  /// generation, and other project initialization tasks.
   Future<void> setupProject() async {
     if (_currentProjectPath == null) {
       _setError('No project selected. Please select a project folder first.');
@@ -276,8 +288,9 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Formats Dartdoc comments in the current project.
   ///
-  /// Executes the CLI format-dartdoc command to reformat and rewrap Dartdoc comments to the specified line length
-  /// across all Dart files in the project.
+  /// Executes the CLI format-dartdoc command to reformat and rewrap Dartdoc
+  /// comments to the specified line length across all Dart files in the
+  /// project.
   Future<void> formatProject() async {
     if (_currentProjectPath == null) {
       _setError('No project selected. Please select a project folder first.');
@@ -292,8 +305,8 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Toggles the visibility of the command output panel.
   ///
-  /// Shows or hides the expandable panel that displays CLI command output and error messages for user review and
-  /// debugging.
+  /// Shows or hides the expandable panel that displays CLI command output and
+  /// error messages for user review and debugging.
   void toggleOutputPanel() {
     setState(() {
       _showOutput = !_showOutput;
@@ -302,7 +315,8 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Clears the current error message and updates the UI.
   ///
-  /// Removes any displayed error message and triggers a rebuild to hide error indicators in the interface.
+  /// Removes any displayed error message and triggers a rebuild to hide error
+  /// indicators in the interface.
   void clearError() {
     setState(_clearError);
   }
@@ -314,8 +328,9 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Verifies that the app has write access to the specified directory.
   ///
-  /// This method attempts to create a temporary file in the directory to test write permissions. This is particularly
-  /// important on macOS where sandboxed apps need explicit permission to write to user-selected directories.
+  /// This method attempts to create a temporary file in the directory to test
+  /// write permissions. This is particularly important on macOS where sandboxed
+  /// apps need explicit permission to write to user-selected directories.
   ///
   /// Parameters:
   /// * [directoryPath] - The directory path to test for write access
@@ -345,7 +360,8 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Sets an error message and updates the UI.
   ///
-  /// Displays the provided error message to the user and triggers a rebuild to show error indicators in the interface.
+  /// Displays the provided error message to the user and triggers a rebuild to
+  /// show error indicators in the interface.
   ///
   /// Parameters:
   /// * [message] - The error message to display
@@ -358,8 +374,9 @@ class DashboardController extends State<DashboardRoute> {
 
   /// Executes a CLI command with loading state management.
   ///
-  /// This method provides a consistent pattern for executing CLI operations with proper loading indicators, error
-  /// handling, and output capture. It manages the loading state and updates the UI appropriately.
+  /// This method provides a consistent pattern for executing CLI operations
+  /// with proper loading indicators, error handling, and output capture. It
+  /// manages the loading state and updates the UI appropriately.
   ///
   /// Parameters:
   /// * [loadingMessage] - Message to display while command is executing

@@ -5,11 +5,13 @@ import 'package:path/path.dart' as path;
 
 /// Command-line interface for generating test file templates.
 ///
-/// This command creates boilerplate test files for Dart classes and Flutter widgets, following established testing
-/// patterns and documentation standards. It uses Mason bricks to ensure consistent test structure across the project.
+/// This command creates boilerplate test files for Dart classes and Flutter
+/// widgets, following established testing patterns and documentation standards.
+/// It uses Mason bricks to ensure consistent test structure across the project.
 ///
-/// The command analyzes the target Dart file to determine whether it contains a Flutter widget or regular Dart class,
-/// then generates the appropriate test template:
+/// The command analyzes the target Dart file to determine whether it contains a
+/// Flutter widget or regular Dart class, then generates the appropriate test
+/// template:
 /// * Widget tests use `testWidgets` for Flutter-specific testing
 /// * Class tests use standard `test` functions for unit testing
 /// * Both include comprehensive documentation structure
@@ -43,11 +45,11 @@ import 'package:path/path.dart' as path;
 /// * `1` - General error: File system error or template generation failure
 /// * `64` - Usage error: Invalid arguments or missing target file (EX_USAGE)
 ///
-/// Performance: Test generation is typically very fast (< 1 second) as it only processes template files without
-/// external dependencies.
+/// Performance: Test generation is typically very fast (< 1 second) as it only
+/// processes template files without external dependencies.
 ///
-/// Thread Safety: This command is safe to run concurrently on different files but should not target the same output
-/// file simultaneously.
+/// Thread Safety: This command is safe to run concurrently on different files
+/// but should not target the same output file simultaneously.
 class TestCommand extends Command<int> {
   /// Creates a new instance of [TestCommand] with configured argument parser.
   ///
@@ -133,26 +135,29 @@ class TestCommand extends Command<int> {
 
     /// The target Dart file to generate tests for.
     ///
-    /// Must be a valid Dart file (.dart extension) that exists in the file system. The file will be analyzed to
-    /// determine the appropriate test template type.
+    /// Must be a valid Dart file (.dart extension) that exists in the file
+    /// system. The file will be analyzed to determine the appropriate test
+    /// template type.
     final String targetFile = argResults!.rest.first;
 
     /// Optional custom output directory specified via --output flag.
     ///
-    /// When provided, the test file will be created in this directory. When null, the test file location is determined
-    /// by mirroring the source file structure in the test/ directory.
+    /// When provided, the test file will be created in this directory. When
+    /// null, the test file location is determined by mirroring the source file
+    /// structure in the test/ directory.
     final String? outputDirectory = argResults!['output'] as String?;
 
     /// Whether to force overwrite existing test files (--force flag).
     ///
-    /// When true, existing test files will be overwritten without confirmation. When false, the command will fail if
-    /// the target test file already exists.
+    /// When true, existing test files will be overwritten without confirmation.
+    /// When false, the command will fail if the target test file already
+    /// exists.
     final bool force = argResults!['force'] as bool;
 
     /// The type of test to generate (auto, widget, class).
     ///
-    /// When 'auto', the command analyzes the target file to determine the appropriate test type. Manual specification
-    /// overrides auto-detection.
+    /// When 'auto', the command analyzes the target file to determine the
+    /// appropriate test type. Manual specification overrides auto-detection.
     final String testType = argResults!['type'] as String;
 
     // Validate target file exists and is a Dart file
@@ -170,18 +175,20 @@ class TestCommand extends Command<int> {
     try {
       /// The determined test type based on analysis or explicit specification.
       ///
-      /// Will be either 'widget' for Flutter widget tests or 'class' for standard Dart class tests.
+      /// Will be either 'widget' for Flutter widget tests or 'class' for
+      /// standard Dart class tests.
       final String resolvedTestType = testType == 'auto' ? await _analyzeFileType(sourceFile, logger) : testType;
 
       /// Information about the target file extracted for template generation.
       ///
-      /// Contains the class name, file name, and other metadata needed to generate appropriate test templates.
+      /// Contains the class name, file name, and other metadata needed to
+      /// generate appropriate test templates.
       final FileAnalysis analysis = await _analyzeFile(sourceFile, logger);
 
       /// Absolute path where the test file will be created.
       ///
-      /// Determined by either the explicit output directory or by mirroring the source file structure in the test/
-      /// directory.
+      /// Determined by either the explicit output directory or by mirroring the
+      /// source file structure in the test/ directory.
       final String testFilePath = _determineTestFilePath(
         targetFile,
         outputDirectory,
@@ -204,14 +211,17 @@ class TestCommand extends Command<int> {
         logger.detail('Created directory: ${testDirectory.path}');
       }
 
-      /// Mason generator instance loaded from the appropriate test brick template.
+      /// Mason generator instance loaded from the appropriate test brick
+      /// template.
       ///
-      /// The generator contains template files for either widget tests or class tests based on the resolved test type.
+      /// The generator contains template files for either widget tests or class
+      /// tests based on the resolved test type.
       final MasonGenerator generator = await _loadTestBrick(resolvedTestType, logger);
 
       /// Template variables passed to the Mason brick during generation.
       ///
-      /// Includes all necessary information for generating a complete test file:
+      /// Includes all necessary information for generating a complete test
+      /// file:
       /// * Class name and file information
       /// * Import paths and dependencies
       /// * Test type and structure preferences
@@ -250,7 +260,8 @@ class TestCommand extends Command<int> {
     }
   }
 
-  /// Analyzes a Dart file to determine whether it contains widgets or regular classes.
+  /// Analyzes a Dart file to determine whether it contains widgets or regular
+  /// classes.
   ///
   /// This method examines the file content to detect Flutter widget patterns:
   /// * Classes extending StatelessWidget or StatefulWidget
@@ -301,7 +312,8 @@ class TestCommand extends Command<int> {
   /// * Package structure for relative imports
   /// * Dependencies and imports needed in tests
   ///
-  /// The extracted information is used to populate template variables for generating appropriate test files.
+  /// The extracted information is used to populate template variables for
+  /// generating appropriate test files.
   ///
   /// Parameters:
   /// * [file] - The Dart file to analyze
@@ -331,8 +343,9 @@ class TestCommand extends Command<int> {
 
   /// Determines the appropriate output path for the generated test file.
   ///
-  /// This method follows Flutter testing conventions by mirroring the source file structure in the test/ directory,
-  /// unless a custom output directory is specified.
+  /// This method follows Flutter testing conventions by mirroring the source
+  /// file structure in the test/ directory, unless a custom output directory is
+  /// specified.
   ///
   /// Path resolution logic:
   /// * Custom output directory: Use as-is with test file name
@@ -371,8 +384,9 @@ class TestCommand extends Command<int> {
 
   /// Loads the appropriate Mason brick template for test generation.
   ///
-  /// This method locates and loads the Mason brick corresponding to the specified test type (widget or class) from the
-  /// CLI package's brick directory.
+  /// This method locates and loads the Mason brick corresponding to the
+  /// specified test type (widget or class) from the CLI package's brick
+  /// directory.
   ///
   /// Brick resolution:
   /// * 'widget' type loads the flutter_widget_test brick
@@ -394,13 +408,14 @@ class TestCommand extends Command<int> {
     try {
       /// Name of the Mason brick to load based on test type.
       ///
-      /// Maps test types to their corresponding brick names in the bricks/ directory structure.
+      /// Maps test types to their corresponding brick names in the bricks/
+      /// directory structure.
       final String brickName = testType == 'widget' ? 'flutter_widget_test' : 'dart_class_test';
 
       /// Absolute path to the test brick directory.
       ///
-      /// Constructed by navigating from the CLI executable location to the bricks directory and selecting the
-      /// appropriate test brick.
+      /// Constructed by navigating from the CLI executable location to the
+      /// bricks directory and selecting the appropriate test brick.
       final String brickPath = path.join(
         path.dirname(Platform.script.path),
         '..',
@@ -412,8 +427,9 @@ class TestCommand extends Command<int> {
 
       /// Mason brick instance loaded from the file system.
       ///
-      /// The brick contains metadata (brick.yaml) and template files (__brick__ directory) that define the structure
-      /// and content of generated test files.
+      /// The brick contains metadata (brick.yaml) and template files (__brick__
+      /// directory) that define the structure and content of generated test
+      /// files.
       final Brick brick = Brick.path(brickPath);
 
       return MasonGenerator.fromBrick(brick);
@@ -425,8 +441,9 @@ class TestCommand extends Command<int> {
 
   /// Builds template variables for Mason brick generation.
   ///
-  /// This method constructs the variable map that will be passed to the Mason brick template, containing all necessary
-  /// information for generating a complete and properly structured test file.
+  /// This method constructs the variable map that will be passed to the Mason
+  /// brick template, containing all necessary information for generating a
+  /// complete and properly structured test file.
   ///
   /// Template variables include:
   /// * Class and file naming information
@@ -448,13 +465,14 @@ class TestCommand extends Command<int> {
   ) {
     /// Relative import path from test file to source file.
     ///
-    /// Calculated to ensure the test file can properly import the class being tested, following Dart import
-    /// conventions.
+    /// Calculated to ensure the test file can properly import the class being
+    /// tested, following Dart import conventions.
     final String importPath = _calculateImportPath(sourceFile);
 
     /// CamelCase version of the file name for variable naming.
     ///
-    /// Converts snake_case file names to camelCase for proper Dart variable naming conventions.
+    /// Converts snake_case file names to camelCase for proper Dart variable
+    /// naming conventions.
     final String camelCaseFileName = _toCamelCase(analysis.fileName);
 
     return {
@@ -471,8 +489,8 @@ class TestCommand extends Command<int> {
 
   /// Calculates the relative import path from test file to source file.
   ///
-  /// This method determines the correct import statement that should be used in the generated test file to import the
-  /// class being tested.
+  /// This method determines the correct import statement that should be used in
+  /// the generated test file to import the class being tested.
   ///
   /// Import path calculation:
   /// * For files in lib/: Use package import format
@@ -493,15 +511,15 @@ class TestCommand extends Command<int> {
       return 'package:${_getPackageName()}/$importPath';
     }
 
-    // For files outside lib/, use relative import
-    // Calculate relative path from test file to source file
+    // For files outside lib/, use relative import Calculate relative path from
+    // test file to source file
     return '../$importPath';
   }
 
   /// Retrieves the package name from pubspec.yaml for import statements.
   ///
-  /// This method reads the pubspec.yaml file to extract the package name that should be used in import statements
-  /// within generated test files.
+  /// This method reads the pubspec.yaml file to extract the package name that
+  /// should be used in import statements within generated test files.
   ///
   /// Returns:
   /// * The package name from pubspec.yaml
@@ -523,8 +541,8 @@ class TestCommand extends Command<int> {
 
   /// Converts a snake_case string to PascalCase.
   ///
-  /// This utility method is used to generate appropriate class names when the primary class name cannot be extracted
-  /// from the source file.
+  /// This utility method is used to generate appropriate class names when the
+  /// primary class name cannot be extracted from the source file.
   ///
   /// Conversion rules:
   /// * Split on underscores and capitalize each part
@@ -545,7 +563,8 @@ class TestCommand extends Command<int> {
 
   /// Converts a snake_case string to camelCase.
   ///
-  /// This utility method is used to generate appropriate variable names following Dart naming conventions.
+  /// This utility method is used to generate appropriate variable names
+  /// following Dart naming conventions.
   ///
   /// Conversion rules:
   /// * Split on underscores
@@ -574,16 +593,16 @@ class TestCommand extends Command<int> {
 
 /// Analysis results for a Dart source file.
 ///
-/// This class contains metadata extracted from analyzing a Dart file, used for generating appropriate test templates
-/// and import statements.
+/// This class contains metadata extracted from analyzing a Dart file, used for
+/// generating appropriate test templates and import statements.
 ///
-/// The analysis includes information about the primary class, file structure, and dependencies that affect how tests
-/// should be generated.
+/// The analysis includes information about the primary class, file structure,
+/// and dependencies that affect how tests should be generated.
 class FileAnalysis {
   /// Creates a new file analysis result.
   ///
-  /// All parameters are required as they provide essential information for test generation and template variable
-  /// construction.
+  /// All parameters are required as they provide essential information for test
+  /// generation and template variable construction.
   const FileAnalysis({
     required this.className,
     required this.fileName,
@@ -593,23 +612,25 @@ class FileAnalysis {
 
   /// The name of the primary class in the analyzed file.
   ///
-  /// Used for generating test class names and documentation. Extracted from the first public class declaration found in
-  /// the file.
+  /// Used for generating test class names and documentation. Extracted from the
+  /// first public class declaration found in the file.
   final String className;
 
   /// The base file name without extension.
   ///
-  /// Used for generating test file names and import statements. Derived from the file path by removing directory and
-  /// extension.
+  /// Used for generating test file names and import statements. Derived from
+  /// the file path by removing directory and extension.
   final String fileName;
 
   /// The full path to the analyzed file.
   ///
-  /// Used for calculating relative import paths and determining the appropriate test file location.
+  /// Used for calculating relative import paths and determining the appropriate
+  /// test file location.
   final String filePath;
 
   /// Whether the file contains Flutter framework imports.
   ///
-  /// Used to determine if Flutter-specific testing utilities should be included in the generated test template.
+  /// Used to determine if Flutter-specific testing utilities should be included
+  /// in the generated test template.
   final bool hasFlutterImports;
 }

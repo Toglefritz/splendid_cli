@@ -14,14 +14,15 @@ import '../services/project_service/project_setup_result.dart';
 
 /// Command-line interface for setting up a Flutter project after creation.
 ///
-/// This command automates the post-creation setup process by running the standard Flutter commands needed to prepare a
-/// project for development:
+/// This command automates the post-creation setup process by running the
+/// standard Flutter commands needed to prepare a project for development:
 /// * `flutter pub get` - Downloads and installs dependencies
 /// * `flutter gen-l10n` - Generates localization files
 /// * `flutter run` - Launches the application (optional)
 ///
-/// The command must be run from within a Flutter project directory or a parent directory containing Flutter projects.
-/// It automatically detects Flutter projects and provides options for batch setup of multiple projects.
+/// The command must be run from within a Flutter project directory or a parent
+/// directory containing Flutter projects. It automatically detects Flutter
+/// projects and provides options for batch setup of multiple projects.
 ///
 /// Usage Examples:
 /// ```bash
@@ -43,11 +44,12 @@ import '../services/project_service/project_setup_result.dart';
 /// * `1` - General error: One or more setup commands failed
 /// * `64` - Usage error: Not in a Flutter project or invalid arguments
 ///
-/// Performance: Typical setup time is 10-30 seconds depending on dependency count and network speed for downloading
-/// packages.
+/// Performance: Typical setup time is 10-30 seconds depending on dependency
+/// count and network speed for downloading packages.
 ///
-/// Thread Safety: This command is safe to run concurrently on different projects but should not be run multiple times
-/// on the same project simultaneously.
+/// Thread Safety: This command is safe to run concurrently on different
+/// projects but should not be run multiple times on the same project
+/// simultaneously.
 class SetupCommand extends Command<int> {
   /// Service for handling project operations.
   static const ProjectService _projectService = ProjectService();
@@ -104,8 +106,9 @@ class SetupCommand extends Command<int> {
   /// 3. Runs `flutter gen-l10n` to generate localization files
   /// 4. Optionally runs `flutter run` to launch the application
   ///
-  /// Each step is executed sequentially and the command fails fast if any step encounters an error. Progress is
-  /// reported to the user throughout the process.
+  /// Each step is executed sequentially and the command fails fast if any step
+  /// encounters an error. Progress is reported to the user throughout the
+  /// process.
   ///
   /// Returns:
   /// * `0` on successful completion of all setup steps
@@ -217,27 +220,30 @@ class SetupCommand extends Command<int> {
 
   /// Shows device selection information to the user.
   ///
-  /// Provides feedback about which device was selected and why, especially useful
-  /// when multiple devices are available and automatic selection occurs.
+  /// Provides feedback about which device was selected and why, especially
+  /// useful when multiple devices are available and automatic selection occurs.
   void _showDeviceSelectionInfo(Logger logger, DeviceSelectionInfo deviceInfo) {
     final FlutterDevice selectedDevice = deviceInfo.selectedDevice;
     final List<FlutterDevice> availableDevices = deviceInfo.availableDevices;
     final String reason = deviceInfo.selectionReason;
 
-    // Only show device selection info if there were multiple devices or if user specified one
+    // Only show device selection info if there were multiple devices or if user
+    // specified one
     if (availableDevices.length > 1 || reason == 'User specified') {
-      logger..info('')
-      ..info('📱 Device Selection:')
-      ..info('   Selected: ${selectedDevice.name} (${selectedDevice.id})')
-      ..info('   Reason: $reason');
+      logger
+        ..info('')
+        ..info('📱 Device Selection:')
+        ..info('   Selected: ${selectedDevice.name} (${selectedDevice.id})')
+        ..info('   Reason: $reason');
 
       // Show other available devices if there were multiple options
       if (availableDevices.length > 1) {
         final List<FlutterDevice> otherDevices = availableDevices.where((d) => d.id != selectedDevice.id).toList();
 
         if (otherDevices.isNotEmpty) {
-          logger..info('   Other available: ${otherDevices.map((d) => '${d.name} (${d.id})').join(', ')}')
-          ..info('   💡 Use --device=<id> to specify a different device');
+          logger
+            ..info('   Other available: ${otherDevices.map((d) => '${d.name} (${d.id})').join(', ')}')
+            ..info('   💡 Use --device=<id> to specify a different device');
         }
       }
     }

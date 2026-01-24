@@ -41,7 +41,8 @@ class ProjectCreationResult {
   /// Creates a successful result.
   ///
   /// Use this factory constructor when project creation completes successfully.
-  /// It automatically sets success to true and ensures no error message is included.
+  /// It automatically sets success to true and ensures no error message is
+  /// included.
   ///
   /// Parameters:
   /// * [projectName] - Name of the successfully created project
@@ -61,8 +62,8 @@ class ProjectCreationResult {
   /// Creates a failed result.
   ///
   /// Use this factory constructor when project creation fails for any reason.
-  /// It automatically sets success to false and requires an error message
-  /// for user feedback and debugging purposes.
+  /// It automatically sets success to false and requires an error message for
+  /// user feedback and debugging purposes.
   ///
   /// Parameters:
   /// * [projectName] - Name of the project that failed to create
@@ -91,15 +92,15 @@ class ProjectCreationResult {
   /// Name of the project.
   ///
   /// This is the project name that was requested in the creation request,
-  /// regardless of whether the operation succeeded or failed. It's useful
-  /// for user feedback and logging purposes.
+  /// regardless of whether the operation succeeded or failed. It's useful for
+  /// user feedback and logging purposes.
   final String projectName;
 
   /// Path where the project was created.
   ///
-  /// For successful operations, this is the actual path where the project
-  /// files were created. For failed operations, this is the path where
-  /// creation was attempted.
+  /// For successful operations, this is the actual path where the project files
+  /// were created. For failed operations, this is the path where creation was
+  /// attempted.
   ///
   /// The path includes the project name as the final directory component.
   final String targetPath;
@@ -107,8 +108,8 @@ class ProjectCreationResult {
   /// Platforms that were enabled.
   ///
   /// For successful operations, this represents the platforms that were
-  /// actually configured in the Flutter project. For failed operations,
-  /// this represents the platforms that were requested.
+  /// actually configured in the Flutter project. For failed operations, this
+  /// represents the platforms that were requested.
   ///
   /// Format: comma-separated list (e.g., 'android,ios,web,windows,macos,linux')
   final String platforms;

@@ -1,8 +1,8 @@
 /// L10n Sorter Service Library
 ///
-/// This library provides functionality for sorting Flutter localization (.arb) files
-/// alphabetically while preserving the relationship between value entries and their
-/// metadata entries.
+/// This library provides functionality for sorting Flutter localization (.arb)
+/// files alphabetically while preserving the relationship between value entries
+/// and their metadata entries.
 ///
 /// Main exports:
 /// * [L10nSorterService] - Core service for sorting operations

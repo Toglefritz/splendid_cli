@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '{{name.snakeCase()}}_controller.dart';
 
-/// View widget for the {{name.lowerCase()}} screen that handles UI presentation.
+/// View widget for the {{name.lowerCase()}} screen that handles UI
+/// presentation.
 ///
-/// This StatelessWidget receives the controller as a parameter and uses it to access state and trigger actions. The
-/// view contains no business logic and is purely declarative, displaying the icon selection game interface.
+/// This StatelessWidget receives the controller as a parameter and uses it to
+/// access state and trigger actions. The view contains no business logic and is
+/// purely declarative, displaying the icon selection game interface.
 class {{name.pascalCase()}}View extends StatelessWidget {
   /// Creates the {{name.lowerCase()}} view with the required controller.
   const {{name.pascalCase()}}View(this.state, {super.key});
@@ -16,7 +18,8 @@ class {{name.pascalCase()}}View extends StatelessWidget {
 
    /// Returns a human-readable name for the given icon.
    ///
-   /// Maps Material icon constants to user-friendly names for display in the instruction text.
+   /// Maps Material icon constants to user-friendly names for display in the
+   /// instruction text.
    ///
    /// Parameters:
    /// * [icon] - The IconData to get a name for

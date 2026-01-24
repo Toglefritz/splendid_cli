@@ -1,7 +1,8 @@
 /// Root application widget for the {{name}} Flutter application.
 ///
-/// This file contains the main application widget that configures the Flutter app with Material Design theming and sets
-/// up the initial route to the home screen following MVC architecture patterns.
+/// This file contains the main application widget that configures the Flutter
+/// app with Material Design theming and sets up the initial route to the home
+/// screen following MVC architecture patterns.
 library;
 
 import 'l10n/app_localizations.dart';
@@ -13,14 +14,15 @@ part 'theme/app_theme.dart';
 
 /// Root application widget that configures the Flutter app.
 ///
-/// This widget serves as the top-level container for the entire application and is responsible for:
+/// This widget serves as the top-level container for the entire application and
+/// is responsible for:
 /// * Setting up the Material Design theme and color scheme
 /// * Configuring the app title and debug settings
 /// * Defining the initial route (home screen)
 /// * Enabling Material 3 design system
 ///
-/// The widget follows the StatelessWidget pattern as it contains no mutable state and serves purely as a configuration
-/// container.
+/// The widget follows the StatelessWidget pattern as it contains no mutable
+/// state and serves purely as a configuration container.
 class {{name.pascalCase()}} extends StatelessWidget {
   /// Creates the root application widget.
   const {{name.pascalCase()}}({super.key});
@@ -34,8 +36,9 @@ class {{name.pascalCase()}} extends StatelessWidget {
   /// * Debug banner disabled for cleaner presentation
   /// * Localization support for multiple languages
   ///
-  /// The [MaterialApp] provides the foundation for Material Design components and navigation throughout the
-  /// application. Theme switching is handled automatically based on system preferences.
+  /// The [MaterialApp] provides the foundation for Material Design components
+  /// and navigation throughout the application. Theme switching is handled
+  /// automatically based on system preferences.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

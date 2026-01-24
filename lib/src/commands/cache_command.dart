@@ -5,11 +5,13 @@ import '../services/brick_loader.dart';
 
 /// Command-line interface for managing the brick cache.
 ///
-/// This command provides utilities for managing locally cached bricks that have been downloaded from remote sources. It
-/// allows users to view, clear, and manage their brick cache for troubleshooting and maintenance.
+/// This command provides utilities for managing locally cached bricks that have
+/// been downloaded from remote sources. It allows users to view, clear, and
+/// manage their brick cache for troubleshooting and maintenance.
 ///
-/// The cache is stored in the user's home directory at `~/.splendid_cli/bricks/` and contains downloaded Mason bricks
-/// that are used when local development bricks are not available.
+/// The cache is stored in the user's home directory at
+/// `~/.splendid_cli/bricks/` and contains downloaded Mason bricks that are used
+/// when local development bricks are not available.
 ///
 /// Usage Examples:
 /// ```bash
@@ -70,15 +72,17 @@ class _CacheListCommand extends Command<int> {
       final List<String> cachedBricks = await brickLoader.getCachedBricks();
 
       if (cachedBricks.isEmpty) {
-        logger..info('No bricks are currently cached.')
-        ..info('Bricks will be downloaded and cached automatically when needed.');
+        logger
+          ..info('No bricks are currently cached.')
+          ..info('Bricks will be downloaded and cached automatically when needed.');
       } else {
         logger.info('Cached bricks:');
         for (final String brickName in cachedBricks) {
           logger.info('  • $brickName');
         }
-        logger..info('')
-        ..info('Cache location: ~/.splendid_cli/bricks/');
+        logger
+          ..info('')
+          ..info('Cache location: ~/.splendid_cli/bricks/');
       }
 
       return 0;
@@ -139,13 +143,14 @@ class _CacheClearCommand extends Command<int> {
       }
 
       await brickLoader.clearCache();
-      logger..success('✓ Cache cleared successfully.')
-      ..info('Bricks will be re-downloaded when needed.');
+      logger
+        ..success('✓ Cache cleared successfully.')
+        ..info('Bricks will be re-downloaded when needed.');
 
       return 0;
     } catch (e) {
       logger.err('Failed to clear cache: $e');
-      
+
       return 1;
     }
   }
@@ -167,31 +172,34 @@ class _CacheInfoCommand extends Command<int> {
     try {
       final List<String> cachedBricks = await brickLoader.getCachedBricks();
 
-      logger..info('Brick Cache Information')
-      ..info('======================')
-      ..info('')
-      ..info('Cache location: ~/.splendid_cli/bricks/')
-      ..info('Cached bricks: ${cachedBricks.length}');
+      logger
+        ..info('Brick Cache Information')
+        ..info('======================')
+        ..info('')
+        ..info('Cache location: ~/.splendid_cli/bricks/')
+        ..info('Cached bricks: ${cachedBricks.length}');
 
       if (cachedBricks.isNotEmpty) {
-        logger..info('')
-        ..info('Available bricks:');
+        logger
+          ..info('')
+          ..info('Available bricks:');
         for (final String brickName in cachedBricks) {
           logger.info('  • $brickName');
         }
       }
 
-      logger..info('')
-      ..info('How it works:')
-      ..info('  1. CLI first checks for local development bricks')
-      ..info('  2. Falls back to cached bricks if available')
-      ..info('  3. Downloads from GitHub if not cached')
-      ..info('  4. Caches downloaded bricks for offline use');
+      logger
+        ..info('')
+        ..info('How it works:')
+        ..info('  1. CLI first checks for local development bricks')
+        ..info('  2. Falls back to cached bricks if available')
+        ..info('  3. Downloads from GitHub if not cached')
+        ..info('  4. Caches downloaded bricks for offline use');
 
       return 0;
     } catch (e) {
       logger.err('Failed to get cache info: $e');
-      
+
       return 1;
     }
   }

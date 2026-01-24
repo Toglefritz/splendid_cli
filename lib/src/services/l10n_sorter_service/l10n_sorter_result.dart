@@ -1,7 +1,7 @@
 /// Result of an L10n sorting operation.
 ///
-/// Contains comprehensive information about processed files, modifications,
-/// and any errors encountered during the operation.
+/// Contains comprehensive information about processed files, modifications, and
+/// any errors encountered during the operation.
 class L10nSorterResult {
   /// Creates a new sorting result.
   ///

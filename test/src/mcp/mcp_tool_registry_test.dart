@@ -6,8 +6,9 @@ import 'package:test/test.dart';
 
 /// Test suite for McpToolRegistry functionality.
 ///
-/// This test suite covers tool registration, schema validation, and tool execution routing without requiring external
-/// dependencies like Flutter CLI or file system operations.
+/// This test suite covers tool registration, schema validation, and tool
+/// execution routing without requiring external dependencies like Flutter CLI
+/// or file system operations.
 ///
 /// Test Categories:
 /// * Tool registration and discovery
@@ -25,8 +26,8 @@ void main() {
 
     /// Set up test dependencies and registry instance.
     ///
-    /// Creates fresh service instances for each test to ensure isolation. Services are real instances but will be
-    /// tested with mock data.
+    /// Creates fresh service instances for each test to ensure isolation.
+    /// Services are real instances but will be tested with mock data.
     setUp(() {
       projectService = const ProjectService();
       screenService = const ScreenService();
@@ -42,8 +43,8 @@ void main() {
     group('tool registration', () {
       /// Verifies that all expected tools are registered and discoverable.
       ///
-      /// This test ensures that the tool registry exposes all CLI functionality as MCP tools with proper naming and
-      /// structure.
+      /// This test ensures that the tool registry exposes all CLI functionality
+      /// as MCP tools with proper naming and structure.
       test('should register all expected tools', () {
         final List<Map<String, dynamic>> tools = toolRegistry.getAllTools();
 
@@ -63,8 +64,8 @@ void main() {
 
       /// Verifies that each tool has the required MCP tool structure.
       ///
-      /// This test ensures that all tools conform to the MCP specification with proper name, description, and input
-      /// schema.
+      /// This test ensures that all tools conform to the MCP specification with
+      /// proper name, description, and input schema.
       test('should have valid tool structure', () {
         final List<Map<String, dynamic>> tools = toolRegistry.getAllTools();
 
@@ -86,8 +87,8 @@ void main() {
     group('create_flutter_project tool', () {
       /// Verifies the create_flutter_project tool schema and structure.
       ///
-      /// This test ensures that the project creation tool has the correct parameters, validation rules, and default
-      /// values.
+      /// This test ensures that the project creation tool has the correct
+      /// parameters, validation rules, and default values.
       test('should have correct schema', () {
         final List<Map<String, dynamic>> tools = toolRegistry.getAllTools();
         final Map<String, dynamic> createTool = tools.firstWhere(
@@ -118,8 +119,9 @@ void main() {
 
       /// Tests tool execution routing for project creation.
       ///
-      /// This test verifies that the tool registry correctly routes create_flutter_project calls to the project service
-      /// and returns proper MCP error responses when the service fails.
+      /// This test verifies that the tool registry correctly routes
+      /// create_flutter_project calls to the project service and returns proper
+      /// MCP error responses when the service fails.
       test('should route to project service', () async {
         final Map<String, dynamic> result = await toolRegistry.executeTool('create_flutter_project', {
           'name': 'test_project',
@@ -140,8 +142,8 @@ void main() {
     group('add_flutter_screen tool', () {
       /// Verifies the add_flutter_screen tool schema and structure.
       ///
-      /// This test ensures that the screen creation tool has the correct parameters for screen name, project path, and
-      /// force flag.
+      /// This test ensures that the screen creation tool has the correct
+      /// parameters for screen name, project path, and force flag.
       test('should have correct schema', () {
         final List<Map<String, dynamic>> tools = toolRegistry.getAllTools();
         final Map<String, dynamic> screenTool = tools.firstWhere(
@@ -174,8 +176,8 @@ void main() {
     group('setup_flutter_project tool', () {
       /// Verifies the setup_flutter_project tool schema and structure.
       ///
-      /// This test ensures that the project setup tool has the correct parameters for project path, run app flag, and
-      /// verbose flag.
+      /// This test ensures that the project setup tool has the correct
+      /// parameters for project path, run app flag, and verbose flag.
       test('should have correct schema', () {
         final List<Map<String, dynamic>> tools = toolRegistry.getAllTools();
         final Map<String, dynamic> setupTool = tools.firstWhere(
@@ -206,8 +208,9 @@ void main() {
     group('generate_test_template tool', () {
       /// Verifies the generate_test_template tool schema and structure.
       ///
-      /// This test ensures that the test generation tool has the correct parameters for target file, output directory,
-      /// test type, and force flag.
+      /// This test ensures that the test generation tool has the correct
+      /// parameters for target file, output directory, test type, and force
+      /// flag.
       test('should have correct schema', () {
         final List<Map<String, dynamic>> tools = toolRegistry.getAllTools();
         final Map<String, dynamic> testTool = tools.firstWhere(
@@ -241,8 +244,8 @@ void main() {
     group('error handling', () {
       /// Tests error handling for unknown tool names.
       ///
-      /// This test ensures that the tool registry properly handles requests for non-existent tools with clear error
-      /// messages.
+      /// This test ensures that the tool registry properly handles requests for
+      /// non-existent tools with clear error messages.
       test('should throw error for unknown tool', () async {
         expect(
           () => toolRegistry.executeTool('unknown_tool', {}),
@@ -252,8 +255,8 @@ void main() {
 
       /// Tests parameter validation and error handling.
       ///
-      /// This test verifies that tools properly validate their parameters and provide meaningful error messages for
-      /// invalid input.
+      /// This test verifies that tools properly validate their parameters and
+      /// provide meaningful error messages for invalid input.
       test('should handle invalid parameters gracefully', () async {
         // Test with missing required parameter
         final Map<String, dynamic> result = await toolRegistry.executeTool('create_flutter_project', {});
@@ -272,8 +275,8 @@ void main() {
     group('tool execution routing', () {
       /// Verifies that tool execution is routed to the correct service.
       ///
-      /// This test ensures that each tool name maps to the appropriate service method call and returns proper MCP error
-      /// responses.
+      /// This test ensures that each tool name maps to the appropriate service
+      /// method call and returns proper MCP error responses.
       test('should route tools to correct services', () async {
         final List<String> toolNames = [
           'create_flutter_project',

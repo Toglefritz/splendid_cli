@@ -7,9 +7,10 @@ import '../helpers/project_cleanup_helper.dart';
 
 /// Integration test suite for the complete Splendid CLI workflow.
 ///
-/// This test suite covers end-to-end scenarios that test the complete CLI functionality from command-line invocation
-/// through project creation. These tests verify that all components work together correctly and that the CLI behaves as
-/// expected in real-world usage scenarios.
+/// This test suite covers end-to-end scenarios that test the complete CLI
+/// functionality from command-line invocation through project creation. These
+/// tests verify that all components work together correctly and that the CLI
+/// behaves as expected in real-world usage scenarios.
 ///
 /// Test Categories:
 /// * Complete project creation workflow
@@ -19,8 +20,9 @@ import '../helpers/project_cleanup_helper.dart';
 /// * Error recovery scenarios
 /// * Cross-platform compatibility
 ///
-/// Note: These tests require Flutter CLI to be available in the system PATH for complete validation. Tests are skipped
-/// in environments where Flutter is not available to prevent false failures in CI/CD systems.
+/// Note: These tests require Flutter CLI to be available in the system PATH for
+/// complete validation. Tests are skipped in environments where Flutter is not
+/// available to prevent false failures in CI/CD systems.
 void main() {
   group('CLI Integration Tests', () {
     late Directory tempDir;
@@ -28,13 +30,13 @@ void main() {
 
     /// Set up integration test environment.
     ///
-    /// Creates a temporary directory for test projects and determines the path to the CLI executable for process
-    /// invocation testing.
+    /// Creates a temporary directory for test projects and determines the path
+    /// to the CLI executable for process invocation testing.
     setUpAll(() {
       tempDir = Directory.systemTemp.createTempSync('cli_integration_test_');
 
-      // Determine CLI executable path - look for it relative to current working directory
-      // since tests run from project root
+      // Determine CLI executable path - look for it relative to current working
+      // directory since tests run from project root
       cliExecutable = path.join('bin', 'splendid_cli.dart');
 
       // Set up automatic cleanup for any test artifacts created at root level
@@ -43,22 +45,24 @@ void main() {
 
     /// Clean up integration test resources.
     ///
-    /// Removes the temporary directory and all created test projects to prevent disk space accumulation during test
-    /// runs.
+    /// Removes the temporary directory and all created test projects to prevent
+    /// disk space accumulation during test runs.
     tearDownAll(() {
       if (tempDir.existsSync()) {
         tempDir.deleteSync(recursive: true);
       }
 
-      // Clean up any test artifacts that may have been created at the root level
+      // Clean up any test artifacts that may have been created at the root
+      // level
       ProjectCleanupHelper.cleanupTestArtifacts();
     });
 
     group('successful project creation', () {
       /// Tests complete project creation with minimal arguments.
       ///
-      /// This test verifies the entire workflow from CLI invocation through project generation, ensuring that a valid
-      /// Flutter project with MVC architecture is created successfully.
+      /// This test verifies the entire workflow from CLI invocation through
+      /// project generation, ensuring that a valid Flutter project with MVC
+      /// architecture is created successfully.
       test(
         'should create Flutter project with MVC architecture',
         () async {
@@ -119,8 +123,8 @@ void main() {
 
       /// Tests project creation with custom platform selection.
       ///
-      /// This test verifies that the --platforms flag correctly configures the Flutter project with only the specified
-      /// platforms enabled.
+      /// This test verifies that the --platforms flag correctly configures the
+      /// Flutter project with only the specified platforms enabled.
       test(
         'should create project with custom platform selection',
         () async {
@@ -163,8 +167,8 @@ void main() {
 
       /// Tests project creation with force flag overwriting existing directory.
       ///
-      /// This test verifies that the --force flag correctly handles existing directories by overwriting them with the
-      /// new project structure.
+      /// This test verifies that the --force flag correctly handles existing
+      /// directories by overwriting them with the new project structure.
       test(
         'should overwrite existing directory with force flag',
         () async {
@@ -194,8 +198,8 @@ void main() {
           expect(Directory(projectPath).existsSync(), isTrue);
           expect(File(path.join(projectPath, 'pubspec.yaml')).existsSync(), isTrue);
 
-          // Original file should no longer exist (or be replaced)
-          // Note: Depending on implementation, file might be overwritten or removed
+          // Original file should no longer exist (or be replaced) Note:
+          // Depending on implementation, file might be overwritten or removed
         },
         skip: 'Requires Flutter CLI and Mason brick to be available',
       );
@@ -204,8 +208,9 @@ void main() {
     group('error handling scenarios', () {
       /// Tests CLI behavior when no arguments are provided.
       ///
-      /// This test verifies that the CLI provides helpful usage information when invoked without any arguments, guiding
-      /// users toward correct usage.
+      /// This test verifies that the CLI provides helpful usage information
+      /// when invoked without any arguments, guiding users toward correct
+      /// usage.
       test('should show help when no arguments provided', () async {
         final ProcessResult result = await Process.run('dart', [cliExecutable]);
 
@@ -217,8 +222,9 @@ void main() {
 
       /// Tests CLI behavior when project name is missing.
       ///
-      /// This test ensures that the CLI provides clear error messages when required arguments are not provided, helping
-      /// users understand what they need to fix.
+      /// This test ensures that the CLI provides clear error messages when
+      /// required arguments are not provided, helping users understand what
+      /// they need to fix.
       test('should return usage error when project name is missing', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -232,8 +238,9 @@ void main() {
 
       /// Tests CLI behavior with invalid project names.
       ///
-      /// This test verifies that the CLI validates project names according to Dart package naming conventions and
-      /// provides helpful error messages when invalid names are provided.
+      /// This test verifies that the CLI validates project names according to
+      /// Dart package naming conventions and provides helpful error messages
+      /// when invalid names are provided.
       test('should return usage error for invalid project names', () async {
         final List<String> invalidNames = ['MyApp', 'my-app', '_private', '123app'];
 
@@ -258,8 +265,8 @@ void main() {
 
       /// Tests CLI behavior when target directory exists without force flag.
       ///
-      /// This test ensures that the CLI protects existing directories from accidental overwriting and provides clear
-      /// guidance on how to proceed.
+      /// This test ensures that the CLI protects existing directories from
+      /// accidental overwriting and provides clear guidance on how to proceed.
       test('should fail when target directory exists without force', () async {
         const String projectName = 'existing_directory_app';
         final String projectPath = path.join(tempDir.path, projectName);
@@ -284,8 +291,9 @@ void main() {
 
       /// Tests CLI behavior with invalid command-line flags.
       ///
-      /// This test verifies that the CLI properly validates command-line options and provides helpful error messages
-      /// for typos or invalid flags.
+      /// This test verifies that the CLI properly validates command-line
+      /// options and provides helpful error messages for typos or invalid
+      /// flags.
       test('should return usage error for invalid flags', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -298,15 +306,15 @@ void main() {
 
       /// Tests CLI behavior when Flutter CLI is not available.
       ///
-      /// This test verifies that the CLI provides clear error messages when the Flutter SDK is not installed or not in
-      /// the system PATH.
+      /// This test verifies that the CLI provides clear error messages when the
+      /// Flutter SDK is not installed or not in the system PATH.
       test('should handle missing Flutter CLI gracefully', () async {
-        // This test is environment-dependent and may not be reliable
-        // It's included for completeness but may need to be skipped
-        // in environments where Flutter is actually available
+        // This test is environment-dependent and may not be reliable It's
+        // included for completeness but may need to be skipped in environments
+        // where Flutter is actually available
 
-        // Temporarily modify PATH to exclude Flutter (if possible)
-        // This is complex to implement reliably across platforms
+        // Temporarily modify PATH to exclude Flutter (if possible) This is
+        // complex to implement reliably across platforms
         expect(true, isTrue, reason: 'Test placeholder - implementation depends on environment');
       }, skip: 'Difficult to test reliably across different environments');
     });
@@ -314,8 +322,8 @@ void main() {
     group('help and usage', () {
       /// Tests that help flag displays comprehensive usage information.
       ///
-      /// This test verifies that users can get detailed help information about the CLI and its available commands and
-      /// options.
+      /// This test verifies that users can get detailed help information about
+      /// the CLI and its available commands and options.
       test('should display help with --help flag', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -331,8 +339,8 @@ void main() {
 
       /// Tests that create command help displays detailed command information.
       ///
-      /// This test ensures that users can get specific help for the create command, including all available options and
-      /// usage examples.
+      /// This test ensures that users can get specific help for the create
+      /// command, including all available options and usage examples.
       test('should display create command help', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -348,8 +356,8 @@ void main() {
 
       /// Tests that setup command help displays detailed command information.
       ///
-      /// This test ensures that users can get specific help for the setup command, including all available options and
-      /// usage examples.
+      /// This test ensures that users can get specific help for the setup
+      /// command, including all available options and usage examples.
       test('should display setup command help', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -365,16 +373,17 @@ void main() {
 
       /// Tests that version information is accessible.
       ///
-      /// This test verifies that users can determine which version of the CLI they are using, which is important for
-      /// troubleshooting and compatibility.
+      /// This test verifies that users can determine which version of the CLI
+      /// they are using, which is important for troubleshooting and
+      /// compatibility.
       test('should display version information', () async {
         final ProcessResult result = await Process.run(
           'dart',
           [cliExecutable, '--version'],
         );
 
-        // Version flag behavior depends on args package configuration
-        // May return 0 (success) or 64 (usage) depending on implementation
+        // Version flag behavior depends on args package configuration May
+        // return 0 (success) or 64 (usage) depending on implementation
         expect(result.exitCode, anyOf(equals(0), equals(64)));
       });
     });
@@ -382,8 +391,9 @@ void main() {
     group('file content validation', () {
       /// Tests that generated files contain expected MVC structure.
       ///
-      /// This test verifies that the generated project files follow the established MVC patterns and coding standards
-      /// defined in the project documentation.
+      /// This test verifies that the generated project files follow the
+      /// established MVC patterns and coding standards defined in the project
+      /// documentation.
       test('should generate files with correct MVC structure', () async {
         const String projectName = 'mvc_structure_test';
         final String projectPath = path.join(tempDir.path, projectName);

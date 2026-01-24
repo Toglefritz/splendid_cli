@@ -5,11 +5,12 @@ import 'screens/dashboard/dashboard_route.dart';
 
 /// Root application widget for the Splendid CLI GUI Dashboard.
 ///
-/// This widget configures the MaterialApp with appropriate theming, localization, and routing for the desktop GUI
-/// interface.
+/// This widget configures the MaterialApp with appropriate theming,
+/// localization, and routing for the desktop GUI interface.
 ///
-/// The application uses Material Design 3 with a custom color scheme that reflects the Splendid CLI branding and
-/// provides a professional development tool appearance.
+/// The application uses Material Design 3 with a custom color scheme that
+/// reflects the Splendid CLI branding and provides a professional development
+/// tool appearance.
 class SplendidCliGuiApp extends StatelessWidget {
   /// Creates the root application widget.
   const SplendidCliGuiApp({super.key});

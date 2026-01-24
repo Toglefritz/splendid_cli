@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 
 /// Expandable panel widget that displays CLI command output and results.
 ///
-/// This widget provides a collapsible interface for viewing command execution output, error messages, and progress
-/// information. It includes features for copying output to clipboard and provides appropriate visual feedback for
+/// This widget provides a collapsible interface for viewing command execution
+/// output, error messages, and progress information. It includes features for
+/// copying output to clipboard and provides appropriate visual feedback for
 /// different states (loading, success, error).
 ///
 /// The panel displays:
@@ -31,22 +32,26 @@ class OutputPanel extends StatelessWidget {
 
   /// Whether the output panel is currently expanded and visible.
   ///
-  /// Controls the visibility of the panel content while keeping the header bar always visible for toggling.
+  /// Controls the visibility of the panel content while keeping the header bar
+  /// always visible for toggling.
   final bool isVisible;
 
   /// Whether a CLI operation is currently in progress.
   ///
-  /// Used to show loading indicators and prevent certain actions during command execution.
+  /// Used to show loading indicators and prevent certain actions during command
+  /// execution.
   final bool isLoading;
 
   /// The command output text to display in the panel.
   ///
-  /// Contains combined stdout and stderr from CLI command execution, formatted for display with monospace font.
+  /// Contains combined stdout and stderr from CLI command execution, formatted
+  /// for display with monospace font.
   final String output;
 
   /// Callback function for toggling panel visibility.
   ///
-  /// Invoked when the user clicks the expand/collapse button to show or hide the panel content.
+  /// Invoked when the user clicks the expand/collapse button to show or hide
+  /// the panel content.
   final VoidCallback onToggle;
 
   @override
@@ -146,8 +151,8 @@ class OutputPanel extends StatelessWidget {
 
   /// Builds the empty state display when no output is available.
   ///
-  /// Shows a placeholder message and icon when there is no command output to display, providing visual feedback that
-  /// the panel is functional but empty.
+  /// Shows a placeholder message and icon when there is no command output to
+  /// display, providing visual feedback that the panel is functional but empty.
   ///
   /// Parameters:
   /// * [context] - Build context for accessing theme and styling
@@ -192,8 +197,9 @@ class OutputPanel extends StatelessWidget {
 
   /// Builds the output content display with scrollable text.
   ///
-  /// Creates a scrollable text area with monospace font for displaying command output. Includes appropriate styling for
-  /// readability and automatic scrolling to show the latest output.
+  /// Creates a scrollable text area with monospace font for displaying command
+  /// output. Includes appropriate styling for readability and automatic
+  /// scrolling to show the latest output.
   ///
   /// Parameters:
   /// * [context] - Build context for accessing theme and styling
@@ -228,8 +234,9 @@ class OutputPanel extends StatelessWidget {
 
   /// Copies the command output to the system clipboard.
   ///
-  /// Provides a convenient way for users to copy command output for sharing, debugging, or documentation purposes.
-  /// Shows a snackbar confirmation when the copy operation completes successfully.
+  /// Provides a convenient way for users to copy command output for sharing,
+  /// debugging, or documentation purposes. Shows a snackbar confirmation when
+  /// the copy operation completes successfully.
   ///
   /// Parameters:
   /// * [context] - Build context for showing snackbar feedback

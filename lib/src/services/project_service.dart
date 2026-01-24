@@ -16,17 +16,18 @@ import 'project_service/project_setup_result.dart';
 
 /// Service for managing Flutter project creation and setup operations.
 ///
-/// This service encapsulates the core business logic for project operations, separating it from CLI-specific concerns
-/// like argument parsing and user interaction. This design enables reuse across different interfaces (CLI, MCP server,
-/// etc.).
+/// This service encapsulates the core business logic for project operations,
+/// separating it from CLI-specific concerns like argument parsing and user
+/// interaction. This design enables reuse across different interfaces (CLI, MCP
+/// server, etc.).
 class ProjectService {
   /// Brick loader for handling template loading and caching.
   final BrickLoader _brickLoader;
 
   /// Creates a new instance of [ProjectService].
   ///
-  /// This service is stateless and can be reused across multiple operations. All methods are safe to call concurrently
-  /// from different isolates.
+  /// This service is stateless and can be reused across multiple operations.
+  /// All methods are safe to call concurrently from different isolates.
   const ProjectService({BrickLoader? brickLoader}) : _brickLoader = brickLoader ?? const BrickLoader();
 
   /// Creates a new instance with default dependencies.
@@ -282,7 +283,8 @@ class ProjectService {
 
   /// Runs a Flutter command with the specified arguments.
   ///
-  /// Returns device selection information if this was a flutter run command with device selection.
+  /// Returns device selection information if this was a flutter run command
+  /// with device selection.
   Future<DeviceSelectionInfo?> _runFlutterCommand(
     List<String> args, {
     required String workingDirectory,
@@ -408,10 +410,11 @@ class ProjectService {
     }
   }
 
-  /// Determines which device would be selected for flutter run without actually running.
+  /// Determines which device would be selected for flutter run without actually
+  /// running.
   ///
-  /// This method performs device detection and selection logic to provide user feedback
-  /// before actually executing the flutter run command.
+  /// This method performs device detection and selection logic to provide user
+  /// feedback before actually executing the flutter run command.
   Future<DeviceSelectionInfo> getDeviceSelection(
     String workingDirectory, {
     String? deviceId,
@@ -513,8 +516,8 @@ class ProjectService {
     return devices.first;
   }
 
-  /// Checks if a device is a desktop device.
-  /// Checks if a device is a desktop device.
+  /// Checks if a device is a desktop device. Checks if a device is a desktop
+  /// device.
   bool _isDesktopDevice(FlutterDevice device) => device.isDesktop;
 
   /// Checks if a device is a web device.

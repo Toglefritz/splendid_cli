@@ -5,13 +5,14 @@ import 'package:test/test.dart';
 
 /// Assertion helpers for CLI-specific testing.
 ///
-/// This class provides custom assertion methods that are commonly used when testing CLI applications, making test code
-/// more readable and reducing duplication.
+/// This class provides custom assertion methods that are commonly used when
+/// testing CLI applications, making test code more readable and reducing
+/// duplication.
 class CliAssertions {
   /// Asserts that a process result indicates success.
   ///
-  /// This helper checks that the exit code is 0 and provides helpful error messages if the process failed, including
-  /// stdout and stderr.
+  /// This helper checks that the exit code is 0 and provides helpful error
+  /// messages if the process failed, including stdout and stderr.
   ///
   /// Parameters:
   /// * [result] - ProcessResult from executing a CLI command
@@ -30,8 +31,8 @@ class CliAssertions {
 
   /// Asserts that a process result indicates a usage error.
   ///
-  /// This helper checks that the exit code is 64 (EX_USAGE) which is the standard POSIX exit code for command usage
-  /// errors.
+  /// This helper checks that the exit code is 64 (EX_USAGE) which is the
+  /// standard POSIX exit code for command usage errors.
   ///
   /// Parameters:
   /// * [result] - ProcessResult from executing a CLI command
@@ -50,7 +51,8 @@ class CliAssertions {
 
   /// Asserts that a process result indicates a general error.
   ///
-  /// This helper checks that the exit code is 1, which is used for general errors that are not usage-related.
+  /// This helper checks that the exit code is 1, which is used for general
+  /// errors that are not usage-related.
   ///
   /// Parameters:
   /// * [result] - ProcessResult from executing a CLI command
@@ -69,8 +71,9 @@ class CliAssertions {
 
   /// Asserts that a directory contains expected Flutter project structure.
   ///
-  /// This helper verifies that a directory contains the basic files and folders expected in a Flutter project, making
-  /// it easier to validate project creation in tests.
+  /// This helper verifies that a directory contains the basic files and folders
+  /// expected in a Flutter project, making it easier to validate project
+  /// creation in tests.
   ///
   /// Parameters:
   /// * [projectPath] - Path to the project directory to validate
@@ -86,8 +89,9 @@ class CliAssertions {
 
   /// Asserts that a directory contains expected MVC architecture structure.
   ///
-  /// This helper verifies that a project directory contains the specific files and folders expected in the MVC
-  /// architecture pattern used by the Splendid CLI.
+  /// This helper verifies that a project directory contains the specific files
+  /// and folders expected in the MVC architecture pattern used by the Splendid
+  /// CLI.
   ///
   /// Parameters:
   /// * [projectPath] - Path to the project directory to validate

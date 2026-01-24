@@ -22,18 +22,18 @@ library;
 /// Usage:
 /// ```dart
 /// final request = ScreenCreationRequest(
-///   screenName: 'UserProfile',
-///   projectPath: '/path/to/flutter/project',
-///   force: false,
-///   blank: false,
+/// screenName: 'UserProfile',
+/// projectPath: '/path/to/flutter/project',
+/// force: false,
+/// blank: false,
 /// );
 /// ```
 class ScreenCreationRequest {
   /// Creates a screen creation request.
   ///
   /// All parameters define the behavior and configuration for the screen
-  /// generation process. The screen name must be a valid Dart identifier
-  /// and the project path must point to a valid Flutter project directory.
+  /// generation process. The screen name must be a valid Dart identifier and
+  /// the project path must point to a valid Flutter project directory.
   ///
   /// Parameters:
   /// * [screenName] - Name of the screen to create (must be valid Dart identifier)
@@ -50,24 +50,24 @@ class ScreenCreationRequest {
   /// Name of the screen to create.
   ///
   /// This name is used to generate the screen files and class names following
-  /// Flutter naming conventions. The name must be a valid Dart identifier
-  /// and will be converted to appropriate cases for different file types:
+  /// Flutter naming conventions. The name must be a valid Dart identifier and
+  /// will be converted to appropriate cases for different file types:
   /// * PascalCase for class names (e.g., UserProfile)
   /// * snake_case for file names (e.g., user_profile)
   ///
-  /// The screen name should be descriptive and follow Flutter naming conventions
-  /// for screen components.
+  /// The screen name should be descriptive and follow Flutter naming
+  /// conventions for screen components.
   final String screenName;
 
   /// Path to the Flutter project.
   ///
-  /// This should be the absolute path to the root directory of a Flutter project
-  /// containing a pubspec.yaml file and lib/ directory. The service will validate
-  /// that this path contains a valid Flutter project before proceeding with
-  /// screen creation.
+  /// This should be the absolute path to the root directory of a Flutter
+  /// project containing a pubspec.yaml file and lib/ directory. The service
+  /// will validate that this path contains a valid Flutter project before
+  /// proceeding with screen creation.
   ///
-  /// Screen files will be created in the lib/screens/{screen_name}/ subdirectory
-  /// of this project path.
+  /// Screen files will be created in the lib/screens/{screen_name}/
+  /// subdirectory of this project path.
   final String projectPath;
 
   /// Whether to overwrite existing screen files.
@@ -83,8 +83,8 @@ class ScreenCreationRequest {
   /// Whether to create a blank screen without example content.
   ///
   /// When set to true, the service will generate minimal screen files without
-  /// example UI components or business logic. This is useful when you want
-  /// to implement the screen functionality from scratch.
+  /// example UI components or business logic. This is useful when you want to
+  /// implement the screen functionality from scratch.
   ///
   /// When false (default), the service generates screens with example content
   /// and basic UI structure to help developers get started quickly.

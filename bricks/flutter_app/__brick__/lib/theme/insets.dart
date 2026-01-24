@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Provides [EdgeInsets] values to be used for [Padding] and other, similar widgets.
+/// Provides [EdgeInsets] values to be used for [Padding] and other, similar
+/// widgets.
 // ignore_for_file: public_member_api_docs
 class Insets {
   static const double xxSmall = 4;

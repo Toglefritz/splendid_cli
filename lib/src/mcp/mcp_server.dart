@@ -12,8 +12,9 @@ import 'mcp_tool_registry.dart';
 
 /// MCP (Model Context Protocol) server for Splendid CLI.
 ///
-/// This server exposes the CLI's functionality as MCP tools that can be used by AI systems. It implements the MCP
-/// specification over stdio transport, allowing AI models to programmatically create Flutter projects, add screens,
+/// This server exposes the CLI's functionality as MCP tools that can be used by
+/// AI systems. It implements the MCP specification over stdio transport,
+/// allowing AI models to programmatically create Flutter projects, add screens,
 /// generate tests, and setup projects.
 ///
 /// The server follows the MCP protocol specification:
@@ -47,7 +48,8 @@ class SplendidMcpServer {
 
   /// Creates a new MCP server instance.
   ///
-  /// Initializes the tool registry with available services and prepares the JSON-RPC server for communication.
+  /// Initializes the tool registry with available services and prepares the
+  /// JSON-RPC server for communication.
   SplendidMcpServer() {
     _toolRegistry = McpToolRegistry(
       projectService: _projectService,
@@ -64,7 +66,8 @@ class SplendidMcpServer {
   /// 3. Starts the JSON-RPC server
   /// 4. Runs indefinitely until terminated
   ///
-  /// The server communicates over stdin/stdout using JSON-RPC 2.0, which is the standard transport for MCP servers.
+  /// The server communicates over stdin/stdout using JSON-RPC 2.0, which is the
+  /// standard transport for MCP servers.
   ///
   /// Throws:
   /// * [StateError] if the server is already running
@@ -90,8 +93,9 @@ class SplendidMcpServer {
 
   /// Creates a stdio-based stream channel for MCP communication.
   ///
-  /// This channel allows the MCP server to communicate with AI clients through standard input/output streams. The AI
-  /// client typically spawns this process and communicates via pipes.
+  /// This channel allows the MCP server to communicate with AI clients through
+  /// standard input/output streams. The AI client typically spawns this process
+  /// and communicates via pipes.
   ///
   /// Returns:
   /// * `StreamChannel<String>` configured for stdio communication
@@ -129,8 +133,9 @@ class SplendidMcpServer {
 
   /// Handles the MCP initialize request.
   ///
-  /// This is the first method called by MCP clients to establish communication and negotiate capabilities. The server
-  /// responds with its capabilities and protocol version.
+  /// This is the first method called by MCP clients to establish communication
+  /// and negotiate capabilities. The server responds with its capabilities and
+  /// protocol version.
   ///
   /// Parameters:
   /// * [params] - Initialization parameters from the client
@@ -156,8 +161,8 @@ class SplendidMcpServer {
 
   /// Handles the initialized notification.
   ///
-  /// This notification is sent by the client after successful initialization. We don't need to do anything special
-  /// here, but it's part of the MCP spec.
+  /// This notification is sent by the client after successful initialization.
+  /// We don't need to do anything special here, but it's part of the MCP spec.
   ///
   /// Parameters:
   /// * [params] - Notification parameters (usually empty)
@@ -169,8 +174,8 @@ class SplendidMcpServer {
 
   /// Handles the tools/list request.
   ///
-  /// Returns a list of all available tools that AI clients can use. Each tool includes its name, description, and input
-  /// schema for parameter validation.
+  /// Returns a list of all available tools that AI clients can use. Each tool
+  /// includes its name, description, and input schema for parameter validation.
   ///
   /// Parameters:
   /// * [params] - Request parameters (usually empty for tools/list)
@@ -186,8 +191,8 @@ class SplendidMcpServer {
 
   /// Handles the tools/call request.
   ///
-  /// Executes a specific tool with the provided arguments and returns the result. This is where the actual CLI
-  /// functionality is invoked.
+  /// Executes a specific tool with the provided arguments and returns the
+  /// result. This is where the actual CLI functionality is invoked.
   ///
   /// Parameters:
   /// * [params] - Tool execution parameters including name and arguments

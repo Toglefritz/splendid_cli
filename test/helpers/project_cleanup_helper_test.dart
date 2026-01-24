@@ -6,8 +6,8 @@ import 'project_cleanup_helper.dart';
 
 /// Test suite for ProjectCleanupHelper functionality.
 ///
-/// This test suite verifies that the cleanup helper correctly identifies and removes test artifacts without affecting
-/// other directories.
+/// This test suite verifies that the cleanup helper correctly identifies and
+/// removes test artifacts without affecting other directories.
 void main() {
   group('ProjectCleanupHelper', () {
     late Directory tempTestDir;

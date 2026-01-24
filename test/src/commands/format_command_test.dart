@@ -8,8 +8,8 @@ import '../../helpers/temp_directory_helper.dart';
 
 /// Test suite for FormatCommand functionality.
 ///
-/// This test suite covers the format-dartdoc command including validation, error handling, and successful Dartdoc
-/// comment reformatting operations.
+/// This test suite covers the format-dartdoc command including validation,
+/// error handling, and successful Dartdoc comment reformatting operations.
 void main() {
   group('FormatCommand', () {
     late TempDirectoryHelper tempDirHelper;
@@ -48,7 +48,8 @@ void main() {
       test('should process single Dart file successfully', () async {
         final File testFile = File(path.join(tempDirHelper.directoryPath, 'test.dart'));
         await testFile.writeAsString('''
-/// This is a very long comment that exceeds the typical 80 character line limit and should be wrapped.
+/// This is a very long comment that exceeds the typical 80 character line limit
+/// and should be wrapped.
 class TestClass {}
 ''');
 
@@ -83,7 +84,8 @@ class TestClass {}
     test('should format single-line comments correctly', () async {
       final File testFile = File(path.join(tempDirHelper.directoryPath, 'test.dart'));
       await testFile.writeAsString('''
-/// This is a very long single-line comment that exceeds the typical 80 character line limit and should be wrapped.
+/// This is a very long single-line comment that exceeds the typical 80
+/// character line limit and should be wrapped.
 class TestClass {}
 ''');
 

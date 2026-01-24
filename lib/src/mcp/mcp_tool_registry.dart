@@ -10,8 +10,9 @@ import '../services/test_service/test_type.dart';
 
 /// Registry for MCP tools that maps CLI functionality to MCP tool definitions.
 ///
-/// This class serves as the bridge between the MCP protocol and our CLI services. It defines the available tools, their
-/// schemas, and handles execution by translating MCP requests into service calls.
+/// This class serves as the bridge between the MCP protocol and our CLI
+/// services. It defines the available tools, their schemas, and handles
+/// execution by translating MCP requests into service calls.
 ///
 /// Each tool corresponds to a major CLI command:
 /// * `create_flutter_project` - Creates new Flutter projects
@@ -44,7 +45,8 @@ class McpToolRegistry {
   /// * `description` - Human-readable description of what the tool does
   /// * `inputSchema` - JSON Schema defining the expected parameters
   ///
-  /// The schemas are used by AI clients for parameter validation and to understand what arguments each tool expects.
+  /// The schemas are used by AI clients for parameter validation and to
+  /// understand what arguments each tool expects.
   List<Map<String, dynamic>> getAllTools() {
     return [
       _createFlutterProjectTool(),
@@ -56,8 +58,8 @@ class McpToolRegistry {
 
   /// Executes a tool with the given arguments.
   ///
-  /// This method routes tool execution to the appropriate service based on the tool name and converts the service
-  /// response to MCP format.
+  /// This method routes tool execution to the appropriate service based on the
+  /// tool name and converts the service response to MCP format.
   ///
   /// Parameters:
   /// * [toolName] - Name of the tool to execute
@@ -88,7 +90,8 @@ class McpToolRegistry {
 
   /// Defines the create_flutter_project tool.
   ///
-  /// This tool creates new Flutter projects with MVC architecture, corresponding to the `splendid_cli create` command.
+  /// This tool creates new Flutter projects with MVC architecture,
+  /// corresponding to the `splendid_cli create` command.
   Map<String, dynamic> _createFlutterProjectTool() {
     return {
       'name': 'create_flutter_project',
@@ -123,8 +126,8 @@ class McpToolRegistry {
 
   /// Defines the add_flutter_screen tool.
   ///
-  /// This tool adds new screens with MVC architecture to existing projects, corresponding to the `splendid_cli screen`
-  /// command.
+  /// This tool adds new screens with MVC architecture to existing projects,
+  /// corresponding to the `splendid_cli screen` command.
   Map<String, dynamic> _addFlutterScreenTool() {
     return {
       'name': 'add_flutter_screen',
@@ -155,8 +158,8 @@ class McpToolRegistry {
 
   /// Defines the setup_flutter_project tool.
   ///
-  /// This tool sets up Flutter projects by running necessary commands, corresponding to the `splendid_cli setup`
-  /// command.
+  /// This tool sets up Flutter projects by running necessary commands,
+  /// corresponding to the `splendid_cli setup` command.
   Map<String, dynamic> _setupFlutterProjectTool() {
     return {
       'name': 'setup_flutter_project',
@@ -187,8 +190,8 @@ class McpToolRegistry {
 
   /// Defines the generate_test_template tool.
   ///
-  /// This tool generates test file templates for Dart classes and widgets, corresponding to the `splendid_cli
-  /// generate-test` command.
+  /// This tool generates test file templates for Dart classes and widgets,
+  /// corresponding to the `splendid_cli generate-test` command.
   Map<String, dynamic> _generateTestTemplateTool() {
     return {
       'name': 'generate_test_template',
@@ -223,8 +226,8 @@ class McpToolRegistry {
 
   /// Executes the create_flutter_project tool.
   ///
-  /// Converts MCP arguments to a ProjectCreationRequest and calls the project service, then formats the response for
-  /// MCP.
+  /// Converts MCP arguments to a ProjectCreationRequest and calls the project
+  /// service, then formats the response for MCP.
   Future<Map<String, dynamic>> _executeCreateProject(Map<String, dynamic> arguments) async {
     try {
       // Validate required parameters
@@ -293,7 +296,8 @@ class McpToolRegistry {
 
   /// Executes the add_flutter_screen tool.
   ///
-  /// Converts MCP arguments to a ScreenCreationRequest and calls the screen service, then formats the response for MCP.
+  /// Converts MCP arguments to a ScreenCreationRequest and calls the screen
+  /// service, then formats the response for MCP.
   Future<Map<String, dynamic>> _executeAddScreen(Map<String, dynamic> arguments) async {
     try {
       final request = ScreenCreationRequest(
@@ -347,7 +351,8 @@ class McpToolRegistry {
 
   /// Executes the setup_flutter_project tool.
   ///
-  /// Converts MCP arguments to a ProjectSetupRequest and calls the project service, then formats the response for MCP.
+  /// Converts MCP arguments to a ProjectSetupRequest and calls the project
+  /// service, then formats the response for MCP.
   Future<Map<String, dynamic>> _executeSetupProject(Map<String, dynamic> arguments) async {
     try {
       final request = ProjectSetupRequest(
@@ -398,7 +403,8 @@ class McpToolRegistry {
 
   /// Executes the generate_test_template tool.
   ///
-  /// Converts MCP arguments to a TestGenerationRequest and calls the test service, then formats the response for MCP.
+  /// Converts MCP arguments to a TestGenerationRequest and calls the test
+  /// service, then formats the response for MCP.
   Future<Map<String, dynamic>> _executeGenerateTest(Map<String, dynamic> arguments) async {
     try {
       // Convert string testType to enum

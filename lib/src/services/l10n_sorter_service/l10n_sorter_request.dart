@@ -21,7 +21,7 @@ class L10nSorterRequest {
 
   /// Whether to perform a dry run without modifying files.
   ///
-  /// When true, files are analyzed and results reported but no changes
-  /// are written to disk.
+  /// When true, files are analyzed and results reported but no changes are
+  /// written to disk.
   final bool dryRun;
 }

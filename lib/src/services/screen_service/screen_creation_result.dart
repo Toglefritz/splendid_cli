@@ -1,8 +1,8 @@
 /// Screen Creation Result Module
 ///
-/// This module contains the result class for screen creation operations
-/// within the Flutter screen generation service. It provides structured
-/// information about the outcome of screen creation attempts.
+/// This module contains the result class for screen creation operations within
+/// the Flutter screen generation service. It provides structured information
+/// about the outcome of screen creation attempts.
 ///
 /// Key Components:
 /// * [ScreenCreationResult] - Result data for screen creation operations
@@ -22,23 +22,24 @@ library;
 /// ```dart
 /// // Success case
 /// final result = ScreenCreationResult.success(
-///   screenName: 'UserProfile',
-///   screenPath: '/project/lib/screens/user_profile',
-///   createdFiles: ['user_profile_route.dart', 'user_profile_controller.dart'],
+/// screenName: 'UserProfile',
+/// screenPath: '/project/lib/screens/user_profile',
+/// createdFiles: ['user_profile_route.dart', 'user_profile_controller.dart'],
 /// );
 ///
 /// // Failure case
 /// final result = ScreenCreationResult.failure(
-///   screenName: 'UserProfile',
-///   error: 'Screen already exists',
+/// screenName: 'UserProfile',
+/// error: 'Screen already exists',
 /// );
 /// ```
 class ScreenCreationResult {
   /// Creates a screen creation result.
   ///
-  /// This constructor allows creating results with custom success/failure states
-  /// and detailed information about the operation outcome. Use the factory
-  /// constructors [ScreenCreationResult.success] and [ScreenCreationResult.failure] for common result patterns.
+  /// This constructor allows creating results with custom success/failure
+  /// states and detailed information about the operation outcome. Use the
+  /// factory constructors [ScreenCreationResult.success] and
+  /// [ScreenCreationResult.failure] for common result patterns.
   ///
   /// Parameters:
   /// * [success] - Whether the operation completed successfully
@@ -57,8 +58,8 @@ class ScreenCreationResult {
   /// Creates a successful result.
   ///
   /// This factory constructor creates a result indicating successful screen
-  /// creation with all the relevant metadata about the created files and
-  /// their locations.
+  /// creation with all the relevant metadata about the created files and their
+  /// locations.
   ///
   /// Parameters:
   /// * [screenName] - Name of the successfully created screen
@@ -100,16 +101,16 @@ class ScreenCreationResult {
 
   /// Whether the operation was successful.
   ///
-  /// This flag indicates if the screen creation completed without errors.
-  /// When true, the [createdFiles] and [screenPath] contain valid information.
-  /// When false, the [error] field contains the failure reason.
+  /// This flag indicates if the screen creation completed without errors. When
+  /// true, the [createdFiles] and [screenPath] contain valid information. When
+  /// false, the [error] field contains the failure reason.
   final bool success;
 
   /// Name of the screen that was created.
   ///
-  /// This is the screen name from the original request, preserved in the
-  /// result for reference and logging purposes. Available for both successful
-  /// and failed operations.
+  /// This is the screen name from the original request, preserved in the result
+  /// for reference and logging purposes. Available for both successful and
+  /// failed operations.
   final String screenName;
 
   /// Path where the screen files were created.
@@ -123,8 +124,8 @@ class ScreenCreationResult {
 
   /// List of files that were created.
   ///
-  /// For successful operations, this contains the absolute paths of all
-  /// files that were generated during screen creation, typically including:
+  /// For successful operations, this contains the absolute paths of all files
+  /// that were generated during screen creation, typically including:
   /// * {screen_name}_route.dart - Screen route definition
   /// * {screen_name}_controller.dart - Business logic controller
   /// * {screen_name}_view.dart - UI presentation layer

@@ -4,27 +4,29 @@ import 'package:process/process.dart';
 
 /// Service for executing Splendid CLI commands from the GUI.
 ///
-/// This service provides a programmatic interface to the Splendid CLI tools, allowing the GUI to execute commands and
-/// capture their output. It handles process management, error handling, and output formatting for display in the
+/// This service provides a programmatic interface to the Splendid CLI tools,
+/// allowing the GUI to execute commands and capture their output. It handles
+/// process management, error handling, and output formatting for display in the
 /// dashboard interface.
 ///
-/// All CLI operations are executed as separate processes to ensure the GUI remains responsive and to properly capture
-/// command output and errors. The service manages working directories, command arguments, and result processing for
-/// each supported CLI operation.
+/// All CLI operations are executed as separate processes to ensure the GUI
+/// remains responsive and to properly capture command output and errors. The
+/// service manages working directories, command arguments, and result
+/// processing for each supported CLI operation.
 class CliService {
   /// Creates a new CLI service instance.
   const CliService({ProcessManager? processManager}) : _processManager = processManager ?? const LocalProcessManager();
 
   /// Process manager for executing CLI commands.
   ///
-  /// Allows for dependency injection of process managers for testing and provides a consistent interface for process
-  /// execution.
+  /// Allows for dependency injection of process managers for testing and
+  /// provides a consistent interface for process execution.
   final ProcessManager _processManager;
 
   /// Creates a new Flutter project using the CLI create command.
   ///
-  /// Executes `splendid_cli create` with the specified parameters to generate a new Flutter project with MVC
-  /// architecture and platform support.
+  /// Executes `splendid_cli create` with the specified parameters to generate a
+  /// new Flutter project with MVC architecture and platform support.
   ///
   /// Parameters:
   /// * [projectName] - Name for the new Flutter project
@@ -67,8 +69,8 @@ class CliService {
 
   /// Adds a new screen to an existing Flutter project.
   ///
-  /// Executes `splendid_cli screen` to generate MVC architecture files for a new screen in the specified project
-  /// directory.
+  /// Executes `splendid_cli screen` to generate MVC architecture files for a
+  /// new screen in the specified project directory.
   ///
   /// Parameters:
   /// * [screenName] - Name for the new screen
@@ -93,8 +95,8 @@ class CliService {
 
   /// Generates a test file for the specified Dart file.
   ///
-  /// Executes `splendid_cli generate-test` to create appropriate test templates for widgets or classes with
-  /// comprehensive documentation.
+  /// Executes `splendid_cli generate-test` to create appropriate test templates
+  /// for widgets or classes with comprehensive documentation.
   ///
   /// Parameters:
   /// * [targetFile] - Path to the Dart file to generate tests for
@@ -126,7 +128,8 @@ class CliService {
 
   /// Runs project setup commands for the specified Flutter project.
   ///
-  /// Executes `splendid_cli setup` to run pub get, code generation, and other project initialization tasks.
+  /// Executes `splendid_cli setup` to run pub get, code generation, and other
+  /// project initialization tasks.
   ///
   /// Parameters:
   /// * [projectPath] - Path to the Flutter project directory
@@ -141,8 +144,9 @@ class CliService {
 
   /// Formats Dartdoc comments in the specified Flutter project.
   ///
-  /// Executes `splendid_cli format-dartdoc` to reformat and rewrap Dartdoc comments to the specified line length across
-  /// all Dart files in the project.
+  /// Executes `splendid_cli format-dartdoc` to reformat and rewrap Dartdoc
+  /// comments to the specified line length across all Dart files in the
+  /// project.
   ///
   /// Parameters:
   /// * [projectPath] - Path to the Flutter project directory
@@ -157,8 +161,9 @@ class CliService {
 
   /// Executes a Splendid CLI command with the specified arguments.
   ///
-  /// This method handles the low-level process execution, output capture, and error handling for all CLI operations. It
-  /// provides a consistent interface for running CLI commands from the GUI.
+  /// This method handles the low-level process execution, output capture, and
+  /// error handling for all CLI operations. It provides a consistent interface
+  /// for running CLI commands from the GUI.
   ///
   /// Parameters:
   /// * [arguments] - Command line arguments to pass to the CLI
@@ -244,8 +249,9 @@ class CliService {
 
   /// Combines stdout and stderr into a single formatted output string.
   ///
-  /// This method merges the standard output and error streams from CLI command execution, providing a complete view of
-  /// the command results for display in the GUI.
+  /// This method merges the standard output and error streams from CLI command
+  /// execution, providing a complete view of the command results for display in
+  /// the GUI.
   ///
   /// Parameters:
   /// * [stdout] - Standard output from the command
@@ -274,8 +280,9 @@ class CliService {
 
   /// Extracts a user-friendly error message from command output.
   ///
-  /// Analyzes the command output to identify and extract the most relevant error message for display to users,
-  /// filtering out technical details and stack traces when possible.
+  /// Analyzes the command output to identify and extract the most relevant
+  /// error message for display to users, filtering out technical details and
+  /// stack traces when possible.
   ///
   /// Parameters:
   /// * [output] - The complete command output to analyze
@@ -316,8 +323,9 @@ class CliService {
 
 /// Result of a CLI command execution.
 ///
-/// This class encapsulates the results of executing a Splendid CLI command, including success status, output content,
-/// error messages, and exit codes. It provides a structured way to handle command results in the GUI.
+/// This class encapsulates the results of executing a Splendid CLI command,
+/// including success status, output content, error messages, and exit codes. It
+/// provides a structured way to handle command results in the GUI.
 class CliResult {
   /// Creates a new CLI result.
   ///
@@ -335,22 +343,25 @@ class CliResult {
 
   /// Whether the CLI command executed successfully.
   ///
-  /// Based on the process exit code, with 0 indicating success and any other value indicating failure.
+  /// Based on the process exit code, with 0 indicating success and any other
+  /// value indicating failure.
   final bool success;
 
   /// Combined output from the CLI command.
   ///
-  /// Includes both standard output and error streams, formatted for display in the GUI's output panel.
+  /// Includes both standard output and error streams, formatted for display in
+  /// the GUI's output panel.
   final String output;
 
   /// Error message extracted from the command output.
   ///
-  /// Null if the command succeeded. Contains a user-friendly error message when the command fails.
+  /// Null if the command succeeded. Contains a user-friendly error message when
+  /// the command fails.
   final String? error;
 
   /// Process exit code from the CLI command execution.
   ///
-  /// Follows standard POSIX conventions with 0 indicating success and non-zero values indicating various types of
-  /// failures.
+  /// Follows standard POSIX conventions with 0 indicating success and non-zero
+  /// values indicating various types of failures.
   final int exitCode;
 }

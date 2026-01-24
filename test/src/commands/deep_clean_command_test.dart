@@ -7,8 +7,8 @@ import '../../helpers/temp_directory_helper.dart';
 
 /// Test suite for DeepCleanCommand functionality.
 ///
-/// This test suite covers the deep_clean command including validation, error handling,
-/// and proper execution flow for Flutter project cleaning operations.
+/// This test suite covers the deep_clean command including validation, error
+/// handling, and proper execution flow for Flutter project cleaning operations.
 ///
 /// Test Categories:
 /// * Command validation and argument parsing
@@ -30,8 +30,8 @@ void main() {
     /// Set up test dependencies and temporary directory.
     ///
     /// Creates a fresh temporary directory for each test to ensure isolation
-    /// and prevent test interference. The directory is automatically cleaned
-    /// up after each test completes.
+    /// and prevent test interference. The directory is automatically cleaned up
+    /// after each test completes.
     setUp(() {
       tempDirHelper = TempDirectoryHelper();
     });
@@ -45,11 +45,12 @@ void main() {
     });
 
     group('command validation', () {
-      /// Verifies that the command fails gracefully when run in a non-Flutter directory.
+      /// Verifies that the command fails gracefully when run in a non-Flutter
+      /// directory.
       ///
-      /// This test ensures that the command properly validates the target directory
-      /// and provides clear error messages when the directory doesn't contain a
-      /// valid Flutter project structure.
+      /// This test ensures that the command properly validates the target
+      /// directory and provides clear error messages when the directory doesn't
+      /// contain a valid Flutter project structure.
       test('should fail when directory is not a Flutter project', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -79,10 +80,11 @@ void main() {
         expect(output, contains('is not a Flutter project'));
       });
 
-      /// Verifies that the command uses current directory when no path is provided.
+      /// Verifies that the command uses current directory when no path is
+      /// provided.
       ///
-      /// This test ensures that the command defaults to the current working directory
-      /// when no explicit project path is specified as an argument.
+      /// This test ensures that the command defaults to the current working
+      /// directory when no explicit project path is specified as an argument.
       test('should use current directory when no path provided', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -113,8 +115,8 @@ void main() {
     group('Flutter project detection', () {
       /// Verifies that the command fails when pubspec.yaml is missing.
       ///
-      /// This test ensures that the Flutter project validation correctly identifies
-      /// directories that lack the required pubspec.yaml file.
+      /// This test ensures that the Flutter project validation correctly
+      /// identifies directories that lack the required pubspec.yaml file.
       test('should fail when pubspec.yaml is missing', () async {
         // Create lib directory but no pubspec.yaml
         final Directory libDir = Directory(path.join(tempDirHelper.directoryPath, 'lib'));
@@ -132,8 +134,9 @@ void main() {
 
       /// Verifies that the command fails when lib directory is missing.
       ///
-      /// This test ensures that the Flutter project validation correctly identifies
-      /// directories that lack the required lib/ directory structure.
+      /// This test ensures that the Flutter project validation correctly
+      /// identifies directories that lack the required lib/ directory
+      /// structure.
       test('should fail when lib directory is missing', () async {
         // Create pubspec.yaml but no lib directory
         final File pubspecFile = File(path.join(tempDirHelper.directoryPath, 'pubspec.yaml'));
@@ -155,10 +158,12 @@ dependencies:
         expect(output, contains('is not a Flutter project'));
       });
 
-      /// Verifies that the command fails when Flutter dependencies are missing from pubspec.yaml.
+      /// Verifies that the command fails when Flutter dependencies are missing
+      /// from pubspec.yaml.
       ///
-      /// This test ensures that the Flutter project validation correctly identifies
-      /// Dart projects that don't include Flutter-specific dependencies.
+      /// This test ensures that the Flutter project validation correctly
+      /// identifies Dart projects that don't include Flutter-specific
+      /// dependencies.
       test('should fail when Flutter dependencies are missing from pubspec.yaml', () async {
         // Create pubspec.yaml without Flutter dependencies
         final File pubspecFile = File(path.join(tempDirHelper.directoryPath, 'pubspec.yaml'));
@@ -182,12 +187,13 @@ dependencies:
         expect(output, contains('is not a Flutter project'));
       });
 
-      /// Verifies that the command recognizes a valid Flutter project structure.
+      /// Verifies that the command recognizes a valid Flutter project
+      /// structure.
       ///
       /// This test creates a minimal but valid Flutter project structure and
-      /// confirms that the command passes the initial validation phase.
-      /// Note: The command will still fail due to Flutter SDK requirements,
-      /// but it should pass the project structure validation.
+      /// confirms that the command passes the initial validation phase. Note:
+      /// The command will still fail due to Flutter SDK requirements, but it
+      /// should pass the project structure validation.
       test('should recognize valid Flutter project structure', () async {
         // Create a valid Flutter project structure
         final File pubspecFile = File(path.join(tempDirHelper.directoryPath, 'pubspec.yaml'));
@@ -210,8 +216,8 @@ dev_dependencies:
           ['run', 'bin/splendid_cli.dart', 'deep_clean', tempDirHelper.directoryPath],
         );
 
-        // Should pass project validation but may fail on Flutter command execution
-        // The error should not be about project structure validation
+        // Should pass project validation but may fail on Flutter command
+        // execution The error should not be about project structure validation
         final String output = '${result.stderr}${result.stdout}';
         expect(output, isNot(contains('is not a Flutter project')));
       });
@@ -220,8 +226,8 @@ dev_dependencies:
     group('help and usage', () {
       /// Verifies that the command shows help when --help flag is used.
       ///
-      /// This test ensures that the command provides comprehensive help information
-      /// when users request it via the --help flag.
+      /// This test ensures that the command provides comprehensive help
+      /// information when users request it via the --help flag.
       test('should show help with --help flag', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -238,8 +244,8 @@ dev_dependencies:
 
       /// Verifies that detailed help is available via the help command.
       ///
-      /// This test confirms that users can access comprehensive help information
-      /// using the 'help deep_clean' command pattern.
+      /// This test confirms that users can access comprehensive help
+      /// information using the 'help deep_clean' command pattern.
       test('should show detailed help via help command', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -255,10 +261,11 @@ dev_dependencies:
         expect(result.stdout, contains('TROUBLESHOOTING:'));
       });
 
-      /// Verifies that detailed help is available for the alias via the help command.
+      /// Verifies that detailed help is available for the alias via the help
+      /// command.
       ///
-      /// This test confirms that the help system properly handles the command alias
-      /// and provides the same comprehensive help information.
+      /// This test confirms that the help system properly handles the command
+      /// alias and provides the same comprehensive help information.
       test('should show detailed help for alias via help command', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -276,7 +283,8 @@ dev_dependencies:
       /// Verifies that the command appears in the general CLI help.
       ///
       /// This test ensures that the deep_clean command is properly registered
-      /// and appears in the main help listing with correct description and alias.
+      /// and appears in the main help listing with correct description and
+      /// alias.
       test('should appear in general CLI help', () async {
         final ProcessResult result = await Process.run(
           'dart',
@@ -289,12 +297,14 @@ dev_dependencies:
         expect(result.stdout, contains('flutter clean, pub get, and gen-l10n'));
       });
 
-      /// Verifies that the command is properly registered in the command runner.
+      /// Verifies that the command is properly registered in the command
+      /// runner.
       ///
       /// This test confirms that the command can be found and executed through
       /// the main command runner system without throwing exceptions.
       test('should be properly registered in command runner', () async {
-        // Test that the command exists and can be invoked (even if it fails validation)
+        // Test that the command exists and can be invoked (even if it fails
+        // validation)
         final ProcessResult result = await Process.run(
           'dart',
           ['run', 'bin/splendid_cli.dart', 'deep_clean', '--help'],

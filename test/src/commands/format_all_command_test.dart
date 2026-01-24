@@ -7,8 +7,9 @@ import '../../helpers/temp_directory_helper.dart';
 
 /// Test suite for FormatAllCommand functionality.
 ///
-/// This test suite covers the unified format command that orchestrates Dartdoc formatting, regular comment formatting,
-/// and Dart code formatting in a single operation.
+/// This test suite covers the unified format command that orchestrates Dartdoc
+/// formatting, regular comment formatting, and Dart code formatting in a single
+/// operation.
 void main() {
   group('FormatAllCommand', () {
     late TempDirectoryHelper tempDirHelper;
@@ -47,8 +48,10 @@ void main() {
       test('should process all formatting operations successfully', () async {
         final File testFile = File(path.join(tempDirHelper.directoryPath, 'test.dart'));
         await testFile.writeAsString('''
-/// This is a very long Dartdoc comment that exceeds the typical 80 character line limit and should be wrapped.
-// This is a very long regular comment that exceeds the typical 80 character line limit and should be wrapped.
+/// This is a very long Dartdoc comment that exceeds the typical 80 character
+/// line limit and should be wrapped.
+// This is a very long regular comment that exceeds the typical 80 character
+// line limit and should be wrapped.
 class TestClass {
   void method(){print('hello');}
 }
@@ -79,8 +82,9 @@ class TestClass {
 
       test('should work in dry-run mode', () async {
         final File testFile = File(path.join(tempDirHelper.directoryPath, 'test.dart'));
-        final String originalContent = '''
-/// This is a very long Dartdoc comment that exceeds the typical 80 character line limit and should be wrapped.
+        const String originalContent = '''
+/// This is a very long Dartdoc comment that exceeds the typical 80 character
+/// line limit and should be wrapped.
 class TestClass {}
 ''';
         await testFile.writeAsString(originalContent);
@@ -193,14 +197,18 @@ class TestClass {
       test('should format all comment types and code together', () async {
         final File testFile = File(path.join(tempDirHelper.directoryPath, 'test.dart'));
         await testFile.writeAsString('''
-/// This is a very long Dartdoc comment that exceeds the typical 80 character line limit and should be wrapped to multiple lines.
+/// This is a very long Dartdoc comment that exceeds the typical 80 character
+/// line limit and should be wrapped to multiple lines.
 
-// This is a very long regular comment that exceeds the typical 80 character line limit and should also be wrapped.
+// This is a very long regular comment that exceeds the typical 80 character
+// line limit and should also be wrapped.
 
 class TestClass {
-  /// Another long Dartdoc comment here that talks about implementation details and exceeds the line limit.
+  /// Another long Dartdoc comment here that talks about implementation details
+  /// and exceeds the line limit.
   void someMethod() {
-    // Implementation comment that is quite long and exceeds reasonable line limits.
+    // Implementation comment that is quite long and exceeds reasonable line
+    // limits.
     final String message='hello world';
     print(message);
   }

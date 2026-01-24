@@ -7,12 +7,14 @@ import '../services/project_service/project_creation_result.dart';
 import '../services/project_service/project_service_error_type.dart';
 import '../services/project_service/project_service_exception.dart';
 
-/// Command-line interface for creating new Flutter applications with MVC architecture.
+/// Command-line interface for creating new Flutter applications with MVC
+/// architecture.
 ///
-/// This command generates a complete Flutter project structure following Splendid's MVC coding standards. It uses Mason
-/// bricks to ensure consistent project layout, proper separation of concerns, and adherence to established patterns.
-/// The command first creates a Flutter project with specified platform support, then applies the MVC template
-/// structure.
+/// This command generates a complete Flutter project structure following
+/// Splendid's MVC coding standards. It uses Mason bricks to ensure consistent
+/// project layout, proper separation of concerns, and adherence to established
+/// patterns. The command first creates a Flutter project with specified
+/// platform support, then applies the MVC template structure.
 ///
 /// The generated applications include:
 /// * Route classes for screen entry points (StatefulWidget)
@@ -43,9 +45,11 @@ import '../services/project_service/project_service_exception.dart';
 /// * `1` - General error: Unexpected failure during generation
 /// * `64` - Usage error: Invalid arguments or project name (EX_USAGE)
 ///
-/// Performance: Typical generation time is 2-5 seconds depending on system I/O performance.
+/// Performance: Typical generation time is 2-5 seconds depending on system I/O
+/// performance.
 ///
-/// Thread Safety: This command is not thread-safe and should not be run concurrently for the same target directory.
+/// Thread Safety: This command is not thread-safe and should not be run
+/// concurrently for the same target directory.
 class CreateCommand extends Command<int> {
   /// Service for handling project operations.
   static const ProjectService _projectService = ProjectService.defaultInstance();
@@ -58,8 +62,8 @@ class CreateCommand extends Command<int> {
   /// * `--platforms`: Comma-separated list of platforms to enable
   /// * `--force`: Overwrite existing directories without confirmation
   ///
-  /// The argument parser is configured during construction to ensure all command-line options are properly defined and
-  /// validated before execution.
+  /// The argument parser is configured during construction to ensure all
+  /// command-line options are properly defined and validated before execution.
   CreateCommand() {
     argParser
       ..addOption(
@@ -92,8 +96,8 @@ class CreateCommand extends Command<int> {
 
   /// Brief description of the command's purpose for help text.
   ///
-  /// This description appears in the CLI help output when users run `splendid_cli help` or `splendid_cli create
-  /// --help`.
+  /// This description appears in the CLI help output when users run
+  /// `splendid_cli help` or `splendid_cli create --help`.
   @override
   String get description => 'Create a new Flutter app with MVC architecture and platform support.';
 
@@ -105,8 +109,8 @@ class CreateCommand extends Command<int> {
 
   /// Usage pattern displayed in help text and error messages.
   ///
-  /// Shows the expected command structure with required and optional arguments. The project name is required, while
-  /// flags and options are optional.
+  /// Shows the expected command structure with required and optional arguments.
+  /// The project name is required, while flags and options are optional.
   @override
   String get invocation => 'splendid_cli create <project_name> [arguments]';
 
@@ -138,8 +142,8 @@ class CreateCommand extends Command<int> {
   Future<int> run() async {
     /// Logger instance for user-facing output and error reporting.
     ///
-    /// Provides structured logging with different levels (info, success, warn, err) and consistent formatting across
-    /// all CLI operations.
+    /// Provides structured logging with different levels (info, success, warn,
+    /// err) and consistent formatting across all CLI operations.
     final Logger logger = Logger();
 
     // Validate that a project name was provided as a positional argument

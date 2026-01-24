@@ -3,8 +3,9 @@ import 'package:path/path.dart' as path;
 
 /// Widget that displays information about the currently selected project.
 ///
-/// This card shows the project path, Flutter project status, and provides a quick way to select a different project
-/// folder. It serves as the primary project context indicator in the dashboard.
+/// This card shows the project path, Flutter project status, and provides a
+/// quick way to select a different project folder. It serves as the primary
+/// project context indicator in the dashboard.
 ///
 /// The card displays:
 /// * Current project directory path
@@ -27,19 +28,21 @@ class ProjectInfoCard extends StatelessWidget {
 
   /// The currently selected project directory path.
   ///
-  /// Null if no project has been selected yet. Used to display the current working directory and determine project
-  /// status.
+  /// Null if no project has been selected yet. Used to display the current
+  /// working directory and determine project status.
   final String? projectPath;
 
   /// Whether the current directory contains a Flutter project.
   ///
-  /// Determined by checking for pubspec.yaml with Flutter dependencies. Used to show appropriate status indicators and
-  /// enable Flutter-specific features.
+  /// Determined by checking for pubspec.yaml with Flutter dependencies. Used to
+  /// show appropriate status indicators and enable Flutter-specific features.
   final bool isFlutterProject;
 
-  /// Callback function invoked when the user wants to select a different project folder.
+  /// Callback function invoked when the user wants to select a different
+  /// project folder.
   ///
-  /// Should open a directory picker dialog and update the project path when a valid directory is selected.
+  /// Should open a directory picker dialog and update the project path when a
+  /// valid directory is selected.
   final VoidCallback onSelectFolder;
 
   @override

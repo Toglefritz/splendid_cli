@@ -9,10 +9,12 @@ Splendid CLI is a comprehensive command-line toolkit for Flutter developers that
 **Key Features:**
 - **Project Scaffolding**: Create Flutter projects with MVC architecture, strong typing, and localization setup
 - **Code Generation**: Generate screens, widgets, and test templates following best practices
+- **Code Formatting**: Format Dartdoc comments, regular comments, and Dart code to consistent line lengths
+- **Localization Tools**: Sort and organize ARB localization files alphabetically
 - **GUI Dashboard**: Visual interface for project management and code generation
 - **Brick Management**: Efficient caching system for Mason bricks with offline support
 - **Test Automation**: Intelligent test template generation for widgets and classes
-- **Development Workflow**: Automated setup commands for faster project initialization
+- **Development Workflow**: Automated setup and deep cleaning commands for faster project maintenance
 
 ## Installation
 
@@ -180,7 +182,196 @@ splendid_cli gen-test lib/widgets/my_widget.dart --type=widget
 splendid_cli gen-test lib/models/user.dart --output=test/unit/models
 ```
 
-### 5. GUI Dashboard
+### 5. Code Formatting
+
+Splendid CLI provides comprehensive code formatting tools to maintain consistent comment and code style across your project.
+
+#### Format All (Unified Formatting)
+
+```bash
+splendid_cli format .
+```
+
+The unified format command applies all formatters in sequence:
+1. Dartdoc comments (/// and /** */)
+2. Regular comments (//)
+3. Dart code (via dart format)
+
+**Options:**
+- `--line-length` (`-l`): Maximum line length for comments (default: 120, range: 40-200)
+- `--dry-run`: Preview changes without modifying files
+- `--verbose` (`-v`): Show detailed progress
+
+```bash
+# Format entire project with 80-character comments
+splendid_cli format . 80
+
+# Preview changes without applying
+splendid_cli format lib/ --dry-run
+
+# Format with custom line length using flag
+splendid_cli format . --line-length 100
+```
+
+#### Format Dartdoc Comments
+
+```bash
+splendid_cli format-dartdoc lib/
+```
+
+Reformats Dartdoc comments (/// and /** */) to specified line length while preserving:
+- Code blocks (```dart ... ```)
+- Markdown formatting
+- List items and headers
+- Documentation tags (@param, @returns, etc.)
+
+**Syntax:**
+```bash
+# Positional argument (convenient)
+splendid_cli format-dartdoc <target> <line-length>
+
+# Flag syntax (explicit)
+splendid_cli format-dartdoc <target> --line-length <length>
+```
+
+**Examples:**
+```bash
+# Format to 80 characters
+splendid_cli format-dartdoc lib/services/api_service.dart 80
+
+# Format entire directory
+splendid_cli format-dartdoc . --line-length 120
+
+# Preview changes
+splendid_cli format-dartdoc lib/ --dry-run --verbose
+```
+
+#### Format Regular Comments
+
+```bash
+splendid_cli format-comments lib/
+```
+
+Reformats regular // comments to specified line length. Leaves Dartdoc comments (/// and /** */) unchanged.
+
+**Syntax:**
+```bash
+# Positional argument (convenient)
+splendid_cli format-comments <target> <line-length>
+
+# Flag syntax (explicit)
+splendid_cli format-comments <target> --line-length <length>
+```
+
+**Examples:**
+```bash
+# Format to 80 characters
+splendid_cli format-comments lib/services/api_service.dart 80
+
+# Format entire directory
+splendid_cli format-comments . --line-length 120
+
+# Preview changes
+splendid_cli format-comments lib/ --dry-run
+```
+
+### 6. Localization Management
+
+#### Sort ARB Files
+
+```bash
+splendid_cli sort-l10n lib/l10n
+```
+
+Sorts Flutter localization (.arb) files alphabetically by key while maintaining the relationship between value entries and their metadata (@key entries).
+
+**Features:**
+- Alphabetical sorting by key
+- Preserves value-metadata pairs
+- Maintains JSON formatting
+- Handles multiple files in directory
+
+**Options:**
+- `--dry-run`: Preview changes without modifying files
+- `--verbose` (`-v`): Show detailed file lists
+
+**Examples:**
+```bash
+# Sort all ARB files in directory
+splendid_cli sort-l10n lib/l10n
+
+# Sort specific file
+splendid_cli sort-l10n lib/l10n/app_en.arb
+
+# Preview changes
+splendid_cli sort-l10n lib/l10n --dry-run --verbose
+```
+
+### 7. Project Maintenance
+
+#### Deep Clean
+
+```bash
+splendid_cli deep_clean
+```
+
+Performs comprehensive cleaning beyond standard `flutter clean`:
+1. `flutter clean` - Remove build artifacts
+2. `flutter pub get` - Refresh dependencies
+3. `flutter gen-l10n` - Regenerate localization files
+
+**When to use:**
+- Build errors after normal flutter clean
+- Dependency conflicts or corruption
+- After major Flutter SDK updates
+- Switching between Flutter channels
+
+**Options:**
+- `--verbose` (`-v`): Show detailed Flutter command output
+
+**Examples:**
+```bash
+# Deep clean current directory
+splendid_cli deep_clean
+
+# Deep clean specific project
+splendid_cli dc /path/to/flutter/project
+
+# With verbose output
+splendid_cli deep_clean --verbose
+```
+
+### 8. GUI Dashboard
+
+```bash
+# Launch the GUI dashboard
+splendid_cli gui
+
+# Launch for specific project
+splendid_cli gui --project-path /path/to/project
+```
+
+A full-featured desktop application for visual project management:
+
+**Features:**
+- Visual project creation wizard with platform selection
+- Screen generation interface with live preview
+- Test file generation with file browser
+- Real-time command output and progress feedback
+- Cross-platform desktop support (Windows, macOS, Linux)
+- Integrated terminal output viewer
+
+**Options:**
+- `--project-path` (`-p`): Initial project directory
+- `--debug`: Launch with additional logging
+
+**Requirements:**
+- Flutter SDK installed and available in PATH
+- Desktop platform support enabled for Flutter
+
+See [example/gui_dashboard/README.md](example/gui_dashboard/README.md) for detailed documentation.
+
+### 9. Brick Cache Management
 
 ```bash
 # List cached bricks
@@ -212,36 +403,6 @@ Efficient management of locally cached Mason bricks:
 
 Bricks are cached in `~/.splendid_cli/bricks/` for fast offline access.
 
-```bash
-# Launch the GUI dashboard
-splendid_cli gui
-
-# Launch for specific project
-splendid_cli gui --project-path /path/to/project
-```
-
-A full-featured desktop application for visual project management:
-
-**Features:**
-- Visual project creation wizard with platform selection
-- Screen generation interface with live preview
-- Test file generation with file browser
-- Real-time command output and progress feedback
-- Cross-platform desktop support (Windows, macOS, Linux)
-- Integrated terminal output viewer
-
-**Options:**
-- `--project-path` (`-p`): Initial project directory
-- `--debug`: Launch with additional logging
-
-**Requirements:**
-- Flutter SDK installed and available in PATH
-- Desktop platform support enabled for Flutter
-
-See [example/gui_dashboard/README.md](example/gui_dashboard/README.md) for detailed documentation.
-
-### 6. Brick Cache Management
-
 ## Command Reference
 
 ### Project Commands
@@ -251,22 +412,37 @@ See [example/gui_dashboard/README.md](example/gui_dashboard/README.md) for detai
 | `create <name>` | Create new Flutter project with MVC architecture | - |
 | `setup` | Run post-creation setup (pub get, gen-l10n, run) | - |
 | `screen <name>` | Generate new screen with MVC pattern | - |
+| `deep_clean` | Deep clean project (clean, pub get, gen-l10n) | `dc` |
 
-### Development Commands
+### Code Generation & Testing
 
 | Command | Description | Aliases |
 |---------|-------------|---------|
 | `generate-test <file>` | Generate test template for Dart file | `gen-test` |
-| `gui` | Launch GUI dashboard | `dashboard` |
+
+### Formatting Commands
+
+| Command | Description | Aliases |
+|---------|-------------|---------|
+| `format <target> [length]` | Format Dartdoc, regular comments, and code | `fmt` |
+| `format-dartdoc <target> [length]` | Format Dartdoc comments to line length | `fmt-doc`, `format-docs` |
+| `format-comments <target> [length]` | Format regular comments to line length | `fmt-comments`, `format-comment` |
+
+### Localization Commands
+
+| Command | Description | Aliases |
+|---------|-------------|---------|
+| `sort-l10n <target>` | Sort ARB localization files alphabetically | `sort-arb`, `l10n-sort` |
 
 ### Utility Commands
 
 | Command | Description | Aliases |
 |---------|-------------|---------|
+| `gui` | Launch GUI dashboard | `dashboard` |
 | `cache list` | List all cached bricks | - |
 | `cache info` | Show cache information | - |
 | `cache clear` | Clear brick cache | - |
-| `help` | Display help information | - |
+| `help [command]` | Display help information | - |
 
 ### Global Options
 
@@ -304,6 +480,26 @@ Most commands support these common options:
    splendid_cli gen-test lib/widgets/custom_button.dart
    ```
 
+5. **Format your code for consistency:**
+   ```bash
+   # Format everything (Dartdoc, comments, and code)
+   splendid_cli format . 80
+   
+   # Or format specific aspects
+   splendid_cli format-dartdoc lib/ 120
+   splendid_cli format-comments lib/ 120
+   ```
+
+6. **Organize localization files:**
+   ```bash
+   splendid_cli sort-l10n lib/l10n
+   ```
+
+7. **Deep clean when needed:**
+   ```bash
+   splendid_cli deep_clean
+   ```
+
 ### GUI Workflow
 
 Prefer a visual interface? Launch the GUI dashboard:
@@ -328,17 +524,19 @@ Splendid CLI can be integrated directly into your IDE for seamless access to its
 
 ## Why Splendid CLI?
 
-**Consistency**: Enforces MVC architecture and coding standards across your entire project
+**Consistency**: Enforces MVC architecture and coding standards across your entire project with automated formatting tools
 
-**Speed**: Automates repetitive tasks like project setup, screen generation, and test creation
+**Speed**: Automates repetitive tasks like project setup, screen generation, test creation, and code formatting
 
-**Best Practices**: Built-in support for strong typing, localization, and proper file organization
+**Best Practices**: Built-in support for strong typing, localization, proper file organization, and consistent comment formatting
 
 **Flexibility**: Works via command line or GUI, online or offline with cached bricks
 
 **IDE Integration**: Available as plugins for popular IDEs with context menu actions
 
-**Comprehensive**: Not just scaffolding—includes testing tools, project management, and workflow automation
+**Comprehensive**: Not just scaffolding—includes testing tools, code formatting, localization management, project maintenance, and workflow automation
+
+**Developer-Friendly**: Supports both flag syntax and convenient positional arguments for faster command execution
 
 ## Contributing
 

@@ -100,5 +100,14 @@
             <!-- Add to project view popup menu (right-click on file in tree) -->
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
+
+        <!-- Create Flutter screen action for directories -->
+        <action id="SplendidCli.CreateScreen"
+                class="com.splendidcli.intellij.actions.CreateScreenAction"
+                text="New Flutter Screen..."
+                description="Create a new Flutter screen with MVC architecture using Splendid CLI">
+            <!-- Add to Splendid CLI submenu in Tools menu -->
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.FormatDartdoc120"/>
+        </action>
     </actions>
 </idea-plugin>

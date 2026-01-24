@@ -52,6 +52,22 @@ export function activate(context: vscode.ExtensionContext): void {
     }
   );
 
+  const format80Command = vscode.commands.registerCommand(
+    'splendid-cli.format80',
+    async (uri: vscode.Uri) => {
+      console.log('Format 80 command triggered for:', uri.fsPath);
+      await formatFile(uri, 80);
+    }
+  );
+
+  const format120Command = vscode.commands.registerCommand(
+    'splendid-cli.format120',
+    async (uri: vscode.Uri) => {
+      console.log('Format 120 command triggered for:', uri.fsPath);
+      await formatFile(uri, 120);
+    }
+  );
+
   const createScreenCommand = vscode.commands.registerCommand(
     'splendid-cli.createScreen',
     async () => {
@@ -60,7 +76,7 @@ export function activate(context: vscode.ExtensionContext): void {
     }
   );
 
-  context.subscriptions.push(sortL10nCommand, formatDartdoc80Command, formatDartdoc120Command, formatComments80Command, formatComments120Command, createScreenCommand);
+  context.subscriptions.push(sortL10nCommand, formatDartdoc80Command, formatDartdoc120Command, formatComments80Command, formatComments120Command, format80Command, format120Command, createScreenCommand);
   console.log('Splendid CLI Tools: all commands registered');
 }
 
@@ -159,6 +175,39 @@ async function formatCommentsFile(uri: vscode.Uri, lineLength: number): Promise<
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     vscode.window.showErrorMessage(`Failed to format regular comments: ${errorMessage}`);
+  }
+}
+
+/**
+ * Fully formats a Dart file (Dartdoc comments, regular comments, and code).
+ * 
+ * @param uri - URI of the Dart file to format
+ * @param lineLength - Maximum line length for comments (80 or 120 characters)
+ */
+async function formatFile(uri: vscode.Uri, lineLength: number): Promise<void> {
+  const config = vscode.workspace.getConfiguration('splendidCli');
+  const cliPath = config.get<string>('executablePath', 'splendid_cli');
+  const filePath = uri.fsPath;
+
+  try {
+    await vscode.window.withProgress(
+      {
+        location: vscode.ProgressLocation.Notification,
+        title: `Formatting file (${lineLength} chars)...`,
+        cancellable: false,
+      },
+      async () => {
+        await execFileAsync(cliPath, ['format', filePath, '-l', String(lineLength)]);
+      }
+    );
+
+    const showNotifications = config.get<boolean>('showNotifications', true);
+    if (showNotifications) {
+      vscode.window.showInformationMessage(`File formatted with ${lineLength} character comments`);
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    vscode.window.showErrorMessage(`Failed to format file: ${errorMessage}`);
   }
 }
 

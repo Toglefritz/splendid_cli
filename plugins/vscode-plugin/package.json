@@ -49,6 +49,16 @@
         "category": "Splendid CLI"
       },
       {
+        "command": "splendid-cli.format80",
+        "title": "Format File (80 chars)",
+        "category": "Splendid CLI"
+      },
+      {
+        "command": "splendid-cli.format120",
+        "title": "Format File (120 chars)",
+        "category": "Splendid CLI"
+      },
+      {
         "command": "splendid-cli.createScreen",
         "title": "Create New Screen",
         "category": "Splendid CLI"
@@ -82,8 +92,18 @@
           "group": "splendid-cli@5"
         },
         {
-          "command": "splendid-cli.createScreen",
+          "command": "splendid-cli.format80",
+          "when": "resourceExtname == .dart",
           "group": "splendid-cli@6"
+        },
+        {
+          "command": "splendid-cli.format120",
+          "when": "resourceExtname == .dart",
+          "group": "splendid-cli@7"
+        },
+        {
+          "command": "splendid-cli.createScreen",
+          "group": "splendid-cli@8"
         }
       ],
       "editor/context": [
@@ -111,6 +131,16 @@
           "command": "splendid-cli.formatComments120",
           "when": "resourceExtname == .dart",
           "group": "splendid-cli@5"
+        },
+        {
+          "command": "splendid-cli.format80",
+          "when": "resourceExtname == .dart",
+          "group": "splendid-cli@6"
+        },
+        {
+          "command": "splendid-cli.format120",
+          "when": "resourceExtname == .dart",
+          "group": "splendid-cli@7"
         }
       ],
       "commandPalette": [
@@ -132,6 +162,14 @@
         },
         {
           "command": "splendid-cli.formatComments120",
+          "when": "resourceExtname == .dart"
+        },
+        {
+          "command": "splendid-cli.format80",
+          "when": "resourceExtname == .dart"
+        },
+        {
+          "command": "splendid-cli.format120",
           "when": "resourceExtname == .dart"
         },
         {

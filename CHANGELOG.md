@@ -1,3 +1,16 @@
+## 9.0.0
+
+### Expanded IDE Formatting Commands
+
+- **Regular Comment Formatting**: IntelliJ and VS Code plugins now support formatting regular Dart comments (// and /* */) to 80 or 120 character line lengths
+- **Comprehensive File Formatting**: New "Format File" commands apply all formatting standards (Dartdoc, regular comments, and dart format) in a single action
+- **Dual Line Length Options**: All formatting commands available in both 80 and 120 character variants for flexible code style preferences
+- **Context Menu Integration**: All formatting commands accessible via right-click in editor and file explorer for streamlined workflows
+- **Command Palette Access**: Full command palette integration in VS Code for keyboard-driven formatting operations
+- **IntelliJ Tools Menu**: Organized submenu structure in IntelliJ's Tools menu for easy command discovery
+- **File Type Awareness**: Commands automatically enabled/disabled based on file type (.dart or .arb) for better UX
+- **Consistent Experience**: Identical formatting capabilities across both IntelliJ and VS Code platforms
+
 ## 8.0.0
 
 ### Enhanced Formatting and IDE Integration

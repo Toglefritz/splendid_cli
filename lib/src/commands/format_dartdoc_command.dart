@@ -55,14 +55,14 @@ import '../services/dartdoc_formatter_service.dart';
 ///
 /// Thread Safety: Safe to run on different directory trees simultaneously but should not target overlapping file sets
 /// concurrently.
-class FormatCommand extends Command<int> {
-  /// Creates a new instance of [FormatCommand] with configured argument parser.
+class FormatDartdocCommand extends Command<int> {
+  /// Creates a new instance of [FormatDartdocCommand] with configured argument parser.
   ///
   /// Initializes the command with support for:
   /// * `--line-length` (-l): Target line length for comment wrapping
   /// * `--dry-run`: Preview mode without file modification
   /// * `--verbose` (-v): Detailed progress and diagnostic output
-  FormatCommand() {
+  FormatDartdocCommand() {
     argParser
       ..addOption(
         'line-length',

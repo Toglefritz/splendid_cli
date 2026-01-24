@@ -33,7 +33,10 @@ import '../services/comment_formatter_service.dart';
 /// # Format all regular comments in current directory to 120 characters
 /// splendid_cli format-comments .
 ///
-/// # Format a specific file with custom line length
+/// # Format a specific file to 80 characters (positional argument)
+/// splendid_cli format-comments lib/services/api_service.dart 80
+///
+/// # Format with custom line length using flag
 /// splendid_cli format-comments lib/services/api_service.dart --line-length 100
 ///
 /// # Preview changes without modifying files
@@ -96,7 +99,7 @@ class FormatCommentsCommand extends Command<int> {
 
   /// Usage pattern displayed in help text and error messages.
   @override
-  String get invocation => 'splendid_cli format-comments <target> [arguments]';
+  String get invocation => 'splendid_cli format-comments <target> [line-length] [arguments]';
 
   /// Executes the comment formatting command with parsed command-line arguments.
   ///
@@ -132,10 +135,11 @@ class FormatCommentsCommand extends Command<int> {
         ..err('Target path is required.')
         ..info('')
         ..info('Usage: $invocation')
+        ..info('       splendid_cli format-comments <target> <line-length>')
         ..info('')
         ..info('Examples:')
         ..info('  splendid_cli format-comments .')
-        ..info('  splendid_cli format-comments lib/services/api_service.dart')
+        ..info('  splendid_cli format-comments lib/services/api_service.dart 80')
         ..info('  splendid_cli format-comments . --line-length 100 --dry-run')
         ..info('')
         ..info(usage);
@@ -151,12 +155,17 @@ class FormatCommentsCommand extends Command<int> {
     /// Maximum line length for comment wrapping.
     ///
     /// Parsed from the --line-length argument with validation to ensure it falls within reasonable bounds for code
-    /// readability.
+    /// readability. Also supports passing line length as a second positional argument for convenience.
     final int lineLength;
     try {
-      lineLength = int.parse(argResults!['line-length'] as String);
+      // Check if line length was provided as a second positional argument
+      if (argResults!.rest.length > 1) {
+        lineLength = int.parse(argResults!.rest[1]);
+      } else {
+        lineLength = int.parse(argResults!['line-length'] as String);
+      }
     } catch (e) {
-      logger.err('Invalid line length: ${argResults!['line-length']}. Must be a number.');
+      logger.err('Invalid line length. Must be a number between 40 and 200.');
       return 64;
     }
 

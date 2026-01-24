@@ -74,10 +74,22 @@ class CustomHelp {
         example: 'splendid_cli gui --project-path ~/my_project',
       ),
       const CommandInfo(
+        name: 'format',
+        aliases: ['fmt'],
+        description: 'Format Dartdoc comments, regular comments, and Dart code in one command',
+        example: 'splendid_cli format . --line-length 120',
+      ),
+      const CommandInfo(
         name: 'format-dartdoc',
         aliases: ['fmt-doc', 'format-docs'],
         description: 'Reformat and rewrap Dartdoc comments to specified line length',
         example: 'splendid_cli format-dartdoc . --line-length 120',
+      ),
+      const CommandInfo(
+        name: 'format-comments',
+        aliases: ['fmt-comments'],
+        description: 'Reformat and rewrap regular comments (//) to specified line length',
+        example: 'splendid_cli format-comments . --line-length 120',
       ),
       const CommandInfo(
         name: 'sort-l10n',
@@ -178,10 +190,16 @@ class CustomHelp {
       case 'generate-test':
       case 'gen-test':
         _showGenerateTestCommandHelp(logger);
+      case 'format':
+      case 'fmt':
+        _showFormatCommandHelp(logger);
       case 'format-dartdoc':
       case 'fmt-doc':
       case 'format-docs':
         _showFormatDartdocCommandHelp(logger);
+      case 'format-comments':
+      case 'fmt-comments':
+        _showFormatCommentsCommandHelp(logger);
       case 'sort-l10n':
       case 'sort-arb':
       case 'l10n-sort':
@@ -549,6 +567,155 @@ class CustomHelp {
     logger.info('  1. Review changes in your version control system');
     logger.info('  2. Run tests to ensure no functionality was affected');
     logger.info('  3. Consider running ${cyan.wrap('dart format')} for code formatting');
+    logger.info('');
+  }
+
+  /// Shows detailed help for the format-comments command.
+  static void _showFormatCommentsCommandHelp(Logger logger) {
+    logger.info('${yellow.wrap('USAGE:')}');
+    logger.info('  splendid_cli format-comments <target> [options]');
+    logger.info('  splendid_cli fmt-comments <target> [options]');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DESCRIPTION:')}');
+    logger.info('  Reformats and rewraps regular // comments to a specified line length.');
+    logger.info('  Works similarly to format-dartdoc but targets only regular comments,');
+    logger.info('  leaving Dartdoc comments (/// and /** */) unchanged. Useful for');
+    logger.info('  standardizing implementation comment formatting across projects.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARGUMENTS:')}');
+    logger.info('  ${green.wrap('target')}           Path to Dart file or directory to process');
+    logger.info('                   For directories: processes all .dart files recursively');
+    logger.info('                   Skips build/ and .dart_tool/ directories automatically');
+    logger.info('');
+
+    logger.info('${yellow.wrap('OPTIONS:')}');
+    logger.info('  ${green.wrap('-l, --line-length')} Maximum line length for wrapped text (default: 120)');
+    logger.info('                      Valid range: 40-200 characters');
+    logger.info('  ${green.wrap('--dry-run')}         Preview changes without modifying files');
+    logger.info('  ${green.wrap('-v, --verbose')}     Show detailed progress and file lists');
+    logger.info('  ${green.wrap('-h, --help')}        Show this help message');
+    logger.info('');
+
+    logger.info('${yellow.wrap('EXAMPLES:')}');
+    logger.info('  ${cyan.wrap('splendid_cli format-comments .')}');
+    logger.info('    Format all regular comments in current directory to 120 characters');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli format-comments lib/services/api_service.dart --line-length 80')}');
+    logger.info('    Format specific file with 80-character line limit');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli format-comments lib/ --dry-run --verbose')}');
+    logger.info('    Preview changes with detailed output, no modifications');
+    logger.info('');
+
+    logger.info('${yellow.wrap('FORMATTING BEHAVIOR:')}');
+    logger.info('  • Wraps only // style regular comments');
+    logger.info('  • Leaves /// Dartdoc comments unchanged');
+    logger.info('  • Leaves /** */ block comments unchanged');
+    logger.info('  • Preserves code blocks (```dart ... ```)');
+    logger.info('  • Maintains list formatting and indentation');
+    logger.info('  • Respects word boundaries for clean wrapping');
+    logger.info('  • Skips generated files and build directories');
+    logger.info('');
+
+    logger.info('${yellow.wrap('WHAT GETS PRESERVED:')}');
+    logger.info('  • Code examples within ```dart blocks');
+    logger.info('  • Markdown headers (# ## ###)');
+    logger.info('  • List items (* - + numbered)');
+    logger.info('  • Original indentation levels');
+    logger.info('  • All Dartdoc comments (/// and /** */)');
+    logger.info('');
+
+    logger.info('${yellow.wrap('NEXT STEPS:')}');
+    logger.info('  After formatting:');
+    logger.info('  1. Review changes in your version control system');
+    logger.info('  2. Run tests to ensure no functionality was affected');
+    logger.info('  3. Consider running ${cyan.wrap('dart format')} for code formatting');
+    logger.info('');
+  }
+
+  /// Shows detailed help for the unified format command.
+  static void _showFormatCommandHelp(Logger logger) {
+    logger.info('${yellow.wrap('USAGE:')}');
+    logger.info('  splendid_cli format <target> [options]');
+    logger.info('  splendid_cli fmt <target> [options]');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DESCRIPTION:')}');
+    logger.info('  Comprehensive formatting command that applies all available formatters');
+    logger.info('  in a single operation. Executes three formatting steps in sequence:');
+    logger.info('  1. Dartdoc comment formatting (/// and /** */)');
+    logger.info('  2. Regular comment formatting (//)');
+    logger.info('  3. Dart code formatting (via dart format)');
+    logger.info('');
+    logger.info('  This is the recommended command for complete file formatting as it');
+    logger.info('  ensures consistent formatting across all aspects of your Dart code.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARGUMENTS:')}');
+    logger.info('  ${green.wrap('target')}           Path to Dart file or directory to process');
+    logger.info('                   For directories: processes all .dart files recursively');
+    logger.info('                   Skips build/ and .dart_tool/ directories automatically');
+    logger.info('');
+
+    logger.info('${yellow.wrap('OPTIONS:')}');
+    logger.info('  ${green.wrap('-l, --line-length')} Maximum line length for comment wrapping (default: 120)');
+    logger.info('                      Valid range: 40-200 characters');
+    logger.info('                      Note: Does not affect dart format line length');
+    logger.info('  ${green.wrap('--dry-run')}         Preview changes without modifying files');
+    logger.info('  ${green.wrap('-v, --verbose')}     Show detailed progress and file lists');
+    logger.info('  ${green.wrap('-h, --help')}        Show this help message');
+    logger.info('');
+
+    logger.info('${yellow.wrap('EXAMPLES:')}');
+    logger.info('  ${cyan.wrap('splendid_cli format .')}');
+    logger.info('    Format everything in current directory (comments and code)');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli format lib/services/api_service.dart --line-length 80')}');
+    logger.info('    Format specific file with 80-character comment line limit');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli format lib/ --dry-run --verbose')}');
+    logger.info('    Preview all formatting changes with detailed output');
+    logger.info('');
+
+    logger.info('${yellow.wrap('FORMATTING STEPS:')}');
+    logger.info('  ${cyan.wrap('Step 1:')} Format Dartdoc comments (/// and /** */)');
+    logger.info('          Wraps documentation comments to specified line length');
+    logger.info('          Preserves code blocks, lists, and special formatting');
+    logger.info('');
+    logger.info('  ${cyan.wrap('Step 2:')} Format regular comments (//)');
+    logger.info('          Wraps implementation comments to specified line length');
+    logger.info('          Maintains code structure and indentation');
+    logger.info('');
+    logger.info('  ${cyan.wrap('Step 3:')} Format Dart code');
+    logger.info('          Applies standard Dart formatting via dart format');
+    logger.info('          Ensures consistent code style and spacing');
+    logger.info('');
+
+    logger.info('${yellow.wrap('WHAT GETS FORMATTED:')}');
+    logger.info('  • All Dartdoc comments (/// and /** */)');
+    logger.info('  • All regular comments (//)');
+    logger.info('  • All Dart code (spacing, indentation, line breaks)');
+    logger.info('  • Preserves code blocks and special formatting in comments');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ERROR HANDLING:')}');
+    logger.info('  The command continues processing even if individual steps fail,');
+    logger.info('  ensuring maximum formatting coverage. Detailed error messages');
+    logger.info('  are provided for any failures encountered.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('NEXT STEPS:')}');
+    logger.info('  After formatting:');
+    logger.info('  1. Review changes in your version control system');
+    logger.info('  2. Run tests to ensure no functionality was affected');
+    logger.info('  3. Commit the formatting changes');
+    logger.info('');
+
+    logger.info('${yellow.wrap('RELATED COMMANDS:')}');
+    logger.info('  ${cyan.wrap('format-dartdoc')}    Format only Dartdoc comments');
+    logger.info('  ${cyan.wrap('format-comments')}   Format only regular comments');
     logger.info('');
   }
 

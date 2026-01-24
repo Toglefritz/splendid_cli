@@ -30,6 +30,7 @@ import 'package:yaml/yaml.dart';
 import 'src/commands/cache_command.dart';
 import 'src/commands/create_command.dart';
 import 'src/commands/deep_clean_command.dart';
+import 'src/commands/format_all_command.dart';
 import 'src/commands/format_command.dart';
 import 'src/commands/format_comments_command.dart';
 import 'src/commands/gui_command.dart';
@@ -72,6 +73,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
     addCommand(CacheCommand());
     addCommand(CreateCommand());
     addCommand(DeepCleanCommand());
+    addCommand(FormatAllCommand());
     addCommand(FormatCommand());
     addCommand(FormatCommentsCommand());
     addCommand(GuiCommand());

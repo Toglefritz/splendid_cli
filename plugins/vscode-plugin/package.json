@@ -60,6 +60,10 @@
           "command": "splendid-cli.formatDartdoc120",
           "when": "resourceExtname == .dart",
           "group": "splendid-cli@3"
+        },
+        {
+          "command": "splendid-cli.createScreen",
+          "group": "splendid-cli@4"
         }
       ],
       "editor/context": [

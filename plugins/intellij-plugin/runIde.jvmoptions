@@ -1,0 +1,6 @@
+# Disable JFR to avoid compatibility issues with Android Studio 2025.2+
+-XX:+UnlockDiagnosticVMOptions
+-XX:+IgnoreUnrecognizedVMOptions
+-XX:-FlightRecorder
+-Djdk.attach.allowAttachSelf=true
+-Didea.jfr.enabled=false

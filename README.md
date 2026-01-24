@@ -314,6 +314,18 @@ splendid_cli gui
 
 The GUI provides the same functionality with a user-friendly interface, file browsers, and real-time feedback.
 
+## IDE Integration
+
+Splendid CLI can be integrated directly into your IDE for seamless access to its features:
+
+### IntelliJ IDEA / Android Studio Plugin
+
+[View Plugin Documentation →](plugins/intellij-plugin/README.md)
+
+### VS Code Extension
+
+[View Plugins Overview →](plugins/README.md)
+
 ## Why Splendid CLI?
 
 **Consistency**: Enforces MVC architecture and coding standards across your entire project
@@ -323,6 +335,8 @@ The GUI provides the same functionality with a user-friendly interface, file bro
 **Best Practices**: Built-in support for strong typing, localization, and proper file organization
 
 **Flexibility**: Works via command line or GUI, online or offline with cached bricks
+
+**IDE Integration**: Available as plugins for popular IDEs with context menu actions
 
 **Comprehensive**: Not just scaffolding—includes testing tools, project management, and workflow automation
 

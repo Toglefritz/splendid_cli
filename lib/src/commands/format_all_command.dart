@@ -38,14 +38,17 @@ import '../services/dartdoc_formatter_service.dart';
 /// # Format all aspects of files in current directory
 /// splendid_cli format .
 ///
-/// # Format a specific file with custom line length
+/// # Format a specific file with custom line length (positional argument)
+/// splendid_cli format lib/services/api_service.dart 100
+///
+/// # Format with custom line length using flag
 /// splendid_cli format lib/services/api_service.dart --line-length 100
 ///
 /// # Preview all changes without modifying files
 /// splendid_cli format lib/ --dry-run
 ///
 /// # Format with verbose output for detailed progress
-/// splendid_cli format . --line-length 120 --verbose
+/// splendid_cli format . 120 --verbose
 /// ```
 ///
 /// Exit Codes:
@@ -103,7 +106,7 @@ class FormatAllCommand extends Command<int> {
 
   /// Usage pattern displayed in help text and error messages.
   @override
-  String get invocation => 'splendid_cli format <target> [arguments]';
+  String get invocation => 'splendid_cli format <target> [line-length] [arguments]';
 
   /// Executes the comprehensive formatting command with parsed command-line
   /// arguments.
@@ -141,10 +144,11 @@ class FormatAllCommand extends Command<int> {
         ..err('Target path is required.')
         ..info('')
         ..info('Usage: $invocation')
+        ..info('       splendid_cli format <target> <line-length>')
         ..info('')
         ..info('Examples:')
         ..info('  splendid_cli format .')
-        ..info('  splendid_cli format lib/services/api_service.dart')
+        ..info('  splendid_cli format lib/services/api_service.dart 80')
         ..info('  splendid_cli format . --line-length 100 --dry-run')
         ..info('')
         ..info(usage);
@@ -160,12 +164,18 @@ class FormatAllCommand extends Command<int> {
     /// Maximum line length for comment wrapping.
     ///
     /// Parsed from the --line-length argument with validation to ensure it
-    /// falls within reasonable bounds for code readability.
+    /// falls within reasonable bounds for code readability. Also supports
+    /// passing line length as a second positional argument for convenience.
     final int lineLength;
     try {
-      lineLength = int.parse(argResults!['line-length'] as String);
+      // Check if line length was provided as a second positional argument
+      if (argResults!.rest.length > 1) {
+        lineLength = int.parse(argResults!.rest[1]);
+      } else {
+        lineLength = int.parse(argResults!['line-length'] as String);
+      }
     } catch (e) {
-      logger.err('Invalid line length: ${argResults!['line-length']}. Must be a number.');
+      logger.err('Invalid line length. Must be a number.');
       return 64;
     }
 

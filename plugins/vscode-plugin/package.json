@@ -1,0 +1,137 @@
+{
+  "name": "splendid-cli-tools",
+  "displayName": "Splendid CLI Tools",
+  "description": "VS Code extension that integrates Splendid CLI utilities for enhanced Flutter development workflows",
+  "version": "0.1.0",
+  "publisher": "splendid-cli",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "flutter",
+    "dart",
+    "cli",
+    "scaffolding",
+    "mvc"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "splendid-cli.sortL10n",
+        "title": "Sort Localizable Strings",
+        "category": "Splendid CLI"
+      },
+      {
+        "command": "splendid-cli.formatDartdoc80",
+        "title": "Format Dartdoc Comments (80 chars)",
+        "category": "Splendid CLI"
+      },
+      {
+        "command": "splendid-cli.formatDartdoc120",
+        "title": "Format Dartdoc Comments (120 chars)",
+        "category": "Splendid CLI"
+      },
+      {
+        "command": "splendid-cli.createScreen",
+        "title": "Create New Screen",
+        "category": "Splendid CLI"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "splendid-cli.sortL10n",
+          "when": "resourceExtname == .arb",
+          "group": "splendid-cli@1"
+        },
+        {
+          "command": "splendid-cli.formatDartdoc80",
+          "when": "resourceExtname == .dart",
+          "group": "splendid-cli@2"
+        },
+        {
+          "command": "splendid-cli.formatDartdoc120",
+          "when": "resourceExtname == .dart",
+          "group": "splendid-cli@3"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "splendid-cli.sortL10n",
+          "when": "resourceExtname == .arb",
+          "group": "splendid-cli@1"
+        },
+        {
+          "command": "splendid-cli.formatDartdoc80",
+          "when": "resourceExtname == .dart",
+          "group": "splendid-cli@2"
+        },
+        {
+          "command": "splendid-cli.formatDartdoc120",
+          "when": "resourceExtname == .dart",
+          "group": "splendid-cli@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "splendid-cli.sortL10n",
+          "when": "resourceExtname == .arb"
+        },
+        {
+          "command": "splendid-cli.formatDartdoc80",
+          "when": "resourceExtname == .dart"
+        },
+        {
+          "command": "splendid-cli.formatDartdoc120",
+          "when": "resourceExtname == .dart"
+        },
+        {
+          "command": "splendid-cli.createScreen"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Splendid CLI Tools",
+      "properties": {
+        "splendidCli.executablePath": {
+          "type": "string",
+          "default": "splendid_cli",
+          "description": "Path to the Splendid CLI executable. Leave as 'splendid_cli' to use the version in PATH."
+        },
+        "splendidCli.showNotifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show notifications when commands complete successfully."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.x",
+    "@typescript-eslint/parser": "^6.x",
+    "eslint": "^8.x",
+    "typescript": "^5.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Toglefritz/splendid_cli.git"
+  },
+  "license": "MIT"
+}

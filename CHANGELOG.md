@@ -1,3 +1,16 @@
+## 8.0.0
+
+### Enhanced Formatting and IDE Integration
+
+- **Comment Formatting**: New `format-comments` command reformats regular Dart comments (single-line // and multi-line /* */) to specified line length
+- **Full File Formatting**: New `format-all` command performs comprehensive formatting including Dartdoc comments, regular comments, and dart format
+- **Unified Formatting Workflow**: Single command to apply all formatting standards across Dart files and directories
+- **IntelliJ Plugin**: Android Studio and IntelliJ IDEA plugin providing IDE integration for all CLI commands
+- **VS Code Extension**: Visual Studio Code extension with command palette integration and context menu actions
+- **IDE Command Access**: Execute CLI commands directly from your IDE without switching to terminal
+- **Developer Productivity**: Streamlined formatting and scaffolding workflows through familiar IDE interfaces
+- **Cross-IDE Support**: Consistent CLI functionality across multiple development environments
+
 ## 7.0.0
 
 ### Localization File Sorting

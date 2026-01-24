@@ -19,6 +19,7 @@
     <strong>Features:</strong>
     <ul>
       <li>Sort localizable strings in .arb files alphabetically</li>
+      <li>Format Dartdoc comments to 80 or 120 character line lengths</li>
       <li>More features coming soon...</li>
     </ul>
     <br>
@@ -53,13 +54,47 @@
 
     <!-- Actions -->
     <actions>
+        <!-- Splendid CLI Tools submenu in Tools menu -->
+        <group id="SplendidCli.ToolsMenu"
+               text="Splendid CLI"
+               description="Splendid CLI development tools"
+               popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </group>
+
         <!-- Sort L10n action for .arb files -->
         <action id="SplendidCli.SortL10n"
                 class="com.splendidcli.intellij.actions.SortL10nAction"
                 text="Sort Localizable Strings"
                 description="Sort ARB file entries alphabetically using Splendid CLI">
-            <!-- Add to Tools menu -->
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <!-- Add to Splendid CLI submenu in Tools menu -->
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="first"/>
+            <!-- Add to editor popup menu (right-click in editor) -->
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <!-- Add to project view popup menu (right-click on file in tree) -->
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+
+        <!-- Format Dartdoc to 80 characters action for .dart files -->
+        <action id="SplendidCli.FormatDartdoc80"
+                class="com.splendidcli.intellij.actions.FormatDartdoc80Action"
+                text="Format Dartdoc Comments (80 chars)"
+                description="Format Dartdoc comments to 80 character line length using Splendid CLI">
+            <!-- Add to Splendid CLI submenu in Tools menu -->
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.SortL10n"/>
+            <!-- Add to editor popup menu (right-click in editor) -->
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <!-- Add to project view popup menu (right-click on file in tree) -->
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+
+        <!-- Format Dartdoc to 120 characters action for .dart files -->
+        <action id="SplendidCli.FormatDartdoc120"
+                class="com.splendidcli.intellij.actions.FormatDartdoc120Action"
+                text="Format Dartdoc Comments (120 chars)"
+                description="Format Dartdoc comments to 120 character line length using Splendid CLI">
+            <!-- Add to Splendid CLI submenu in Tools menu -->
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.FormatDartdoc80"/>
             <!-- Add to editor popup menu (right-click in editor) -->
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <!-- Add to project view popup menu (right-click on file in tree) -->

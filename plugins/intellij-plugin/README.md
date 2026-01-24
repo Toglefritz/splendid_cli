@@ -45,12 +45,34 @@ After installation, configure the plugin:
 
 ## Usage
 
+All Splendid CLI commands are available in two locations:
+- **Tools Menu**: Tools → Splendid CLI (grouped submenu)
+- **Context Menus**: Right-click on files in the editor or project view
+
 ### Sorting ARB Files
 
 1. Right-click any `.arb` file in the project view or editor
 2. Select "Sort Localizable Strings"
 3. The file will be sorted alphabetically with progress indication
 4. File automatically refreshes to show changes
+
+### Formatting Dartdoc Comments
+
+Format Dartdoc comments in Dart files to a specific line length:
+
+**80 Character Line Length:**
+1. Right-click any `.dart` file in the project view or editor
+2. Select "Format Dartdoc Comments (80 chars)"
+3. All Dartdoc comments will be reformatted to 80 character lines
+4. File automatically refreshes to show changes
+
+**120 Character Line Length:**
+1. Right-click any `.dart` file in the project view or editor
+2. Select "Format Dartdoc Comments (120 chars)"
+3. All Dartdoc comments will be reformatted to 120 character lines
+4. File automatically refreshes to show changes
+
+**Note**: The formatting preserves code blocks, lists, and special markdown formatting within comments.
 
 ## Development
 
@@ -86,7 +108,9 @@ gradle wrapper          # First time only
 src/main/
 ├── kotlin/com/splendidcli/intellij/
 │   ├── actions/           # IDE actions (menu items, context actions)
-│   │   └── SortL10nAction.kt
+│   │   ├── SortL10nAction.kt
+│   │   ├── FormatDartdoc80Action.kt
+│   │   └── FormatDartdoc120Action.kt
 │   ├── services/          # Project-level services
 │   │   └── CliExecutorService.kt
 │   └── settings/          # Plugin configuration

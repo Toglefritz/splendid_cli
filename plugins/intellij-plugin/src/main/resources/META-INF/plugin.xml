@@ -20,6 +20,7 @@
     <ul>
       <li>Sort localizable strings in .arb files alphabetically</li>
       <li>Format Dartdoc comments to 80 or 120 character line lengths</li>
+      <li>Fully format Dart files (comments and code)</li>
       <li>More features coming soon...</li>
     </ul>
     <br>
@@ -101,13 +102,65 @@
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
 
+        <!-- Format regular comments to 80 characters action for .dart files -->
+        <action id="SplendidCli.FormatComments80"
+                class="com.splendidcli.intellij.actions.FormatComments80Action"
+                text="Format Regular Comments (80 chars)"
+                description="Format regular // comments to 80 character line length using Splendid CLI">
+            <!-- Add to Splendid CLI submenu in Tools menu -->
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.FormatDartdoc120"/>
+            <!-- Add to editor popup menu (right-click in editor) -->
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <!-- Add to project view popup menu (right-click on file in tree) -->
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+
+        <!-- Format regular comments to 120 characters action for .dart files -->
+        <action id="SplendidCli.FormatComments120"
+                class="com.splendidcli.intellij.actions.FormatComments120Action"
+                text="Format Regular Comments (120 chars)"
+                description="Format regular // comments to 120 character line length using Splendid CLI">
+            <!-- Add to Splendid CLI submenu in Tools menu -->
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.FormatComments80"/>
+            <!-- Add to editor popup menu (right-click in editor) -->
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <!-- Add to project view popup menu (right-click on file in tree) -->
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+
+        <!-- Format Dart file action (comprehensive formatting) -->
+        <action id="SplendidCli.FormatDartFile80"
+                class="com.splendidcli.intellij.actions.FormatDartFile80Action"
+                text="Format Dart File (80 chars)"
+                description="Fully format Dart file including Dartdoc comments, regular comments, and code to 80 character line length using Splendid CLI">
+            <!-- Add to Splendid CLI submenu in Tools menu -->
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.FormatComments120"/>
+            <!-- Add to editor popup menu (right-click in editor) -->
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <!-- Add to project view popup menu (right-click on file in tree) -->
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+
+        <!-- Format Dart file action (comprehensive formatting) -->
+        <action id="SplendidCli.FormatDartFile120"
+                class="com.splendidcli.intellij.actions.FormatDartFile120Action"
+                text="Format Dart File (120 chars)"
+                description="Fully format Dart file including Dartdoc comments, regular comments, and code to 120 character line length using Splendid CLI">
+            <!-- Add to Splendid CLI submenu in Tools menu -->
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.FormatDartFile80"/>
+            <!-- Add to editor popup menu (right-click in editor) -->
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <!-- Add to project view popup menu (right-click on file in tree) -->
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+
         <!-- Create Flutter screen action for directories -->
         <action id="SplendidCli.CreateScreen"
                 class="com.splendidcli.intellij.actions.CreateScreenAction"
                 text="New Flutter Screen..."
                 description="Create a new Flutter screen with MVC architecture using Splendid CLI">
             <!-- Add to Splendid CLI submenu in Tools menu -->
-            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.FormatDartdoc120"/>
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.FormatDartFile120"/>
         </action>
     </actions>
 </idea-plugin>

@@ -279,6 +279,7 @@ class FormatAllCommand extends Command<int> {
       try {
         final List<String> dartFormatArgs = [
           'format',
+          '--line-length=$lineLength',
           if (!dryRun) '--output=write' else '--output=none',
           targetPath,
         ];

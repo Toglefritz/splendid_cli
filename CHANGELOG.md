@@ -1,3 +1,9 @@
+## 9.0.1
+
+### Bug Fixes
+
+- **Format Command Line Length**: Fixed `format` command to correctly pass `--line-length` parameter to `dart format`, ensuring Dart code formatting respects the specified line length instead of defaulting to 80 characters
+
 ## 9.0.0
 
 ### Expanded IDE Formatting Commands

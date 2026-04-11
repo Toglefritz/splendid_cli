@@ -63,7 +63,7 @@ class HomeView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: Insets.small),
                     child: Switch(
                       value: state.isLampOn,
-                      onChanged: state.toggleLamp,
+                      onChanged: (bool value) => state.toggleLamp(value: value),
                       activeThumbColor: Colors.amber,
                     ),
                   ),

@@ -18,7 +18,7 @@ class HomeController extends State<HomeRoute> {
   ///
   /// This method demonstrates how user interactions are handled in the
   /// controller layer, with setState() triggering view updates.
-  void toggleLamp(bool value) {
+  void toggleLamp({required bool value}) {
     setState(() {
       _isLampOn = value;
     });

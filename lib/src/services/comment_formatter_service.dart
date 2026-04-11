@@ -358,6 +358,7 @@ class CommentFormatterService {
   /// * Headers (# ## ###)
   /// * Code examples with indentation
   /// * Special documentation tags
+  /// * Linter ignore directives (ignore: and ignore_for_file:)
   bool _isSpecialFormattingLine(String line) {
     final String trimmed = line.trim();
 
@@ -377,6 +378,12 @@ class CommentFormatterService {
         trimmed.startsWith('Parameters:') ||
         trimmed.startsWith('Returns:') ||
         trimmed.startsWith('Throws:')) {
+      return true;
+    }
+
+    // Linter ignore directives must stay on their own line to function
+    // correctly. Wrapping them onto other lines breaks the ignore syntax.
+    if (trimmed.startsWith('ignore:') || trimmed.startsWith('ignore_for_file:')) {
       return true;
     }
 

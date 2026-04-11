@@ -1,3 +1,11 @@
+## 9.1.0
+
+### Linter Ignore Directive Preservation
+
+- **Ignore Directive Protection**: Comment formatting commands now preserve `ignore:` and `ignore_for_file:` directives on their own lines, preventing line wrapping from breaking linter suppression syntax
+- **Dartdoc and Regular Comments**: Fix applied to both Dartdoc (///) and regular (//) comment formatting services for consistent behavior
+- **Safe Reformatting**: Ignore directives are treated as special formatting lines that are never merged into surrounding paragraph text during wrapping
+
 ## 9.0.1
 
 ### Bug Fixes

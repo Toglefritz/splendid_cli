@@ -10,7 +10,7 @@ Splendid CLI is a comprehensive command-line toolkit for Flutter developers that
 - **Project Scaffolding**: Create Flutter projects with MVC architecture, strong typing, and localization setup
 - **Code Generation**: Generate screens, widgets, and test templates following best practices
 - **Code Formatting**: Format Dartdoc comments, regular comments, and Dart code to consistent line lengths
-- **Localization Tools**: Sort and organize ARB localization files alphabetically
+- **Localization Tools**: Sort and organize ARB localization files and Dart enum values alphabetically
 - **GUI Dashboard**: Visual interface for project management and code generation
 - **Brick Management**: Efficient caching system for Mason bricks with offline support
 - **Test Automation**: Intelligent test template generation for widgets and classes
@@ -307,6 +307,37 @@ splendid_cli sort-l10n lib/l10n/app_en.arb
 splendid_cli sort-l10n lib/l10n --dry-run --verbose
 ```
 
+#### Sort Enum Values
+
+```bash
+splendid_cli sort-enum lib/models/status.dart
+```
+
+Sorts Dart enum values alphabetically by name within a source file. Handles both simple enums (plain value lists) and enhanced enums with fields, constructors, and methods.
+
+**Features:**
+- Alphabetical sorting of enum values by name
+- Preserves documentation comments on individual values
+- Handles enhanced enums with constructor arguments and members
+- Processes all enum declarations in a file independently
+- Already-sorted enums are left unchanged
+
+**Options:**
+- `--dry-run`: Preview changes without modifying the file
+- `--verbose` (`-v`): Show detailed progress
+
+**Examples:**
+```bash
+# Sort all enums in a file
+splendid_cli sort-enum lib/models/status.dart
+
+# Preview which enums would be reordered
+splendid_cli sort-enum lib/models/priority.dart --dry-run
+
+# Sort with verbose output using the alias
+splendid_cli enum-sort lib/models/color.dart --verbose
+```
+
 ### 7. Project Maintenance
 
 #### Deep Clean
@@ -434,6 +465,12 @@ Bricks are cached in `~/.splendid_cli/bricks/` for fast offline access.
 |---------|-------------|---------|
 | `sort-l10n <target>` | Sort ARB localization files alphabetically | `sort-arb`, `l10n-sort` |
 
+### Code Organization Commands
+
+| Command | Description | Aliases |
+|---------|-------------|---------|
+| `sort-enum <dart_file>` | Sort Dart enum values alphabetically by name | `enum-sort` |
+
 ### Utility Commands
 
 | Command | Description | Aliases |
@@ -495,7 +532,12 @@ Most commands support these common options:
    splendid_cli sort-l10n lib/l10n
    ```
 
-7. **Deep clean when needed:**
+7. **Sort enum values alphabetically:**
+   ```bash
+   splendid_cli sort-enum lib/models/status.dart
+   ```
+
+8. **Deep clean when needed:**
    ```bash
    splendid_cli deep_clean
    ```

@@ -4,7 +4,7 @@ import 'home_view.dart';
 
 /// Controller for the home screen that manages state and business logic.
 ///
-/// Extends State<HomeRoute> to provide state management capabilities and serves
+/// Extends `State<HomeRoute>` to provide state management capabilities and serves
 /// as the bridge between the route and view components. All user interactions
 /// and state changes are handled here.
 class HomeController extends State<HomeRoute> {

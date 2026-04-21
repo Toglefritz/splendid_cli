@@ -99,6 +99,12 @@ class CustomHelp {
         example: 'splendid_cli sort-l10n lib/l10n',
       ),
       const CommandInfo(
+        name: 'sort-enum',
+        aliases: ['enum-sort'],
+        description: 'Sort Dart enum values alphabetically by name',
+        example: 'splendid_cli sort-enum lib/models/status.dart',
+      ),
+      const CommandInfo(
         name: 'cache',
         description: 'Manage the local brick cache (list, info, clear)',
         example: 'splendid_cli cache list',
@@ -205,6 +211,9 @@ class CustomHelp {
       case 'sort-arb':
       case 'l10n-sort':
         _showSortL10nCommandHelp(logger);
+      case 'sort-enum':
+      case 'enum-sort':
+        _showSortEnumCommandHelp(logger);
       case 'gui':
       case 'dashboard':
         _showGuiCommandHelp(logger);
@@ -845,6 +854,79 @@ class CustomHelp {
     logger.info('  1. Review changes in your version control system');
     logger.info('  2. Run ${cyan.wrap('flutter gen-l10n')} to regenerate localization classes');
     logger.info('  3. Test your app to ensure all strings display correctly');
+    logger.info('');
+  }
+
+  /// Shows detailed help for the sort-enum command.
+  static void _showSortEnumCommandHelp(Logger logger) {
+    logger.info('${yellow.wrap('USAGE:')}');
+    logger.info('  splendid_cli sort-enum <dart_file> [options]');
+    logger.info('  splendid_cli enum-sort <dart_file> [options]');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DESCRIPTION:')}');
+    logger.info('  Sorts Dart enum values alphabetically by name within a source file.');
+    logger.info('  Handles both simple enums (plain value lists) and enhanced enums');
+    logger.info('  with fields, constructors, and methods. Documentation comments on');
+    logger.info('  individual values travel with their values during sorting.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARGUMENTS:')}');
+    logger.info('  ${green.wrap('dart_file')}        Path to a .dart file containing enum declarations');
+    logger.info('                   Must be a valid .dart file that exists');
+    logger.info('');
+
+    logger.info('${yellow.wrap('OPTIONS:')}');
+    logger.info('  ${green.wrap('--dry-run')}         Preview changes without modifying the file');
+    logger.info('  ${green.wrap('-v, --verbose')}     Show detailed progress and diagnostic information');
+    logger.info('  ${green.wrap('-h, --help')}        Show this help message');
+    logger.info('');
+
+    logger.info('${yellow.wrap('EXAMPLES:')}');
+    logger.info('  ${cyan.wrap('splendid_cli sort-enum lib/models/status.dart')}');
+    logger.info('    Sort all enums in the file alphabetically');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli sort-enum lib/models/status.dart --dry-run')}');
+    logger.info('    Preview which enums would be reordered');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli enum-sort lib/models/priority.dart --verbose')}');
+    logger.info('    Sort enums with detailed output using the alias');
+    logger.info('');
+
+    logger.info('${yellow.wrap('SORTING BEHAVIOR:')}');
+    logger.info('  • Only enum value declarations are reordered');
+    logger.info('  • Fields, constructors, and methods after the semicolon are untouched');
+    logger.info('  • Documentation comments (///) stay attached to their values');
+    logger.info('  • Constructor arguments are preserved exactly as written');
+    logger.info('  • Already-sorted enums are left unchanged');
+    logger.info('  • All enum declarations in the file are processed independently');
+    logger.info('');
+
+    logger.info('${yellow.wrap('SUPPORTED ENUM STYLES:')}');
+    logger.info('');
+    logger.info('  ${darkGray.wrap('Simple enum:')}');
+    logger.info('  ${darkGray.wrap('enum Color {')}');
+    logger.info('    ${darkGray.wrap('red,')}');
+    logger.info('    ${darkGray.wrap('green,')}');
+    logger.info('    ${darkGray.wrap('blue,')}');
+    logger.info('  ${darkGray.wrap('}')}');
+    logger.info('');
+    logger.info('  ${darkGray.wrap('Enhanced enum with constructor arguments:')}');
+    logger.info('  ${darkGray.wrap('enum Priority {')}');
+    logger.info('    ${darkGray.wrap('high(value: 3),')}');
+    logger.info('    ${darkGray.wrap('low(value: 1),')}');
+    logger.info('    ${darkGray.wrap('medium(value: 2);')}');
+    logger.info('');
+    logger.info('    ${darkGray.wrap('final int value;')}');
+    logger.info('    ${darkGray.wrap('const Priority({required this.value});')}');
+    logger.info('  ${darkGray.wrap('}')}');
+    logger.info('');
+
+    logger.info('${yellow.wrap('NEXT STEPS:')}');
+    logger.info('  After sorting:');
+    logger.info('  1. Review changes in your version control system');
+    logger.info('  2. Run ${cyan.wrap('dart analyze')} to verify no issues were introduced');
+    logger.info('  3. Run your tests to ensure correctness');
     logger.info('');
   }
 

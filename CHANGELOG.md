@@ -1,3 +1,19 @@
+## 10.0.0
+
+### Enum Value Sorting
+
+- **Alphabetical Organization**: New `sort-enum` command sorts Dart enum values alphabetically by name for improved readability and consistency
+- **Simple Enum Support**: Handles plain enums with comma-separated value lists
+- **Enhanced Enum Support**: Handles complex enums with constructor arguments, fields, methods, and static members
+- **Documentation Preservation**: Documentation comments (///) on individual values travel with their values during sorting
+- **Member Section Protection**: Fields, constructors, and methods after the semicolon are left untouched
+- **Multi-Enum Processing**: Finds and sorts all enum declarations within a single file independently
+- **Dry Run Mode**: Preview changes without modifying files using `--dry-run` flag for safe validation
+- **Command Alias**: Short `enum-sort` alias for faster command execution
+- **Modular Architecture**: Service layer follows one-class-per-file standard with `part`/`part of` directives for private classes
+- **Custom Help Integration**: Detailed help documentation accessible via `splendid_cli help sort-enum`
+- **Comprehensive Test Coverage**: Full test suite covering simple enums, enhanced enums, documentation comments, multiple enums, error handling, and CLI integration
+
 ## 9.1.0
 
 ### Linter Ignore Directive Preservation

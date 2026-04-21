@@ -37,6 +37,7 @@ import 'src/commands/format_dartdoc_command.dart';
 import 'src/commands/gui_command.dart';
 import 'src/commands/screen_command.dart';
 import 'src/commands/setup_command.dart';
+import 'src/commands/sort_enum_command.dart';
 import 'src/commands/sort_l10n_command.dart';
 import 'src/commands/test_command.dart';
 import 'src/utils/custom_help.dart';
@@ -47,6 +48,7 @@ export 'src/mcp/mcp_tool_registry.dart';
 // Export services for external use
 export 'src/services/comment_formatter_service.dart';
 export 'src/services/dartdoc_formatter_service.dart';
+export 'src/services/enum_sorter_service.dart';
 export 'src/services/l10n_sorter_service.dart';
 export 'src/services/project_service.dart';
 export 'src/services/screen_service.dart';
@@ -79,6 +81,7 @@ class SplendidCommandRunner extends CommandRunner<int> {
     addCommand(GuiCommand());
     addCommand(ScreenCommand());
     addCommand(SetupCommand());
+    addCommand(SortEnumCommand());
     addCommand(SortL10nCommand());
     addCommand(TestCommand());
   }

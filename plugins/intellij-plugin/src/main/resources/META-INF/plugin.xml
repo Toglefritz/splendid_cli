@@ -19,6 +19,7 @@
     <strong>Features:</strong>
     <ul>
       <li>Sort localizable strings in .arb files alphabetically</li>
+      <li>Sort enum values alphabetically in .dart files</li>
       <li>Format Dartdoc comments to 80 or 120 character line lengths</li>
       <li>Fully format Dart files (comments and code)</li>
       <li>More features coming soon...</li>
@@ -76,13 +77,26 @@
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
 
+        <!-- Sort Enum Values action for .dart files -->
+        <action id="SplendidCli.SortEnum"
+                class="com.splendidcli.intellij.actions.SortEnumAction"
+                text="Sort Enum Values"
+                description="Sort enum values alphabetically in Dart files using Splendid CLI">
+            <!-- Add to Splendid CLI submenu in Tools menu -->
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.SortL10n"/>
+            <!-- Add to editor popup menu (right-click in editor) -->
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <!-- Add to project view popup menu (right-click on file in tree) -->
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+
         <!-- Format Dartdoc to 80 characters action for .dart files -->
         <action id="SplendidCli.FormatDartdoc80"
                 class="com.splendidcli.intellij.actions.FormatDartdoc80Action"
                 text="Format Dartdoc Comments (80 chars)"
                 description="Format Dartdoc comments to 80 character line length using Splendid CLI">
             <!-- Add to Splendid CLI submenu in Tools menu -->
-            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.SortL10n"/>
+            <add-to-group group-id="SplendidCli.ToolsMenu" anchor="after" relative-to-action="SplendidCli.SortEnum"/>
             <!-- Add to editor popup menu (right-click in editor) -->
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <!-- Add to project view popup menu (right-click on file in tree) -->

@@ -1,3 +1,31 @@
+## 10.1.0
+
+### Unused Class Detection
+
+- **Dead Code Discovery**: New `unused-classes` command scans a directory for public class declarations not referenced in any other file
+- **Recursive Scanning**: Analyzes all `.dart` files recursively within the target directory
+- **Comment-Aware Parsing**: Strips comments before extracting class declarations to avoid false positives from doc comments
+- **Whole-Word Matching**: Uses word-boundary regex matching to prevent substring collisions with unrelated identifiers
+- **Class Modifier Support**: Detects all class variants including `abstract`, `sealed`, `final`, `base`, and `mixin` classes
+- **Private Class Filtering**: Automatically skips `_`-prefixed private classes since they are inherently file-scoped
+- **Exclusion Patterns**: Repeatable `--exclude` flag for skipping generated or vendored files
+- **Grouped Output**: Results sorted and grouped by file path for easy navigation
+- **Command Alias**: Short `dead-classes` alias for faster command execution
+- **Custom Help Integration**: Detailed help documentation accessible via `splendid_cli help unused-classes`
+
+### Unused Localization Detection
+
+- **Translation Cleanup**: New `unused-l10n` command identifies ARB localization keys not referenced in Dart source files
+- **Automatic ARB Discovery**: Reads `l10n.yaml` for `arb-dir` and `template-arb-file` fields, falls back to common defaults
+- **Explicit Path Override**: `--arb` and `--source` options for manual ARB file and source directory specification
+- **Generated File Exclusion**: Automatically skips `app_localizations*.dart` and `.g.dart` files from the scan
+- **Metadata Display**: Shows `@key` description metadata alongside unused keys for informed decision-making
+- **Whole-Word Matching**: Detects key references regardless of access pattern (direct, aliased, or chained)
+- **Exclusion Patterns**: Repeatable `--exclude` flag for skipping additional generated files
+- **Statistics Summary**: Reports total keys, keys in use, unused keys, and files scanned
+- **Command Aliases**: Short `dead-l10n` and `unused-arb` aliases for flexible invocation
+- **Custom Help Integration**: Detailed help documentation accessible via `splendid_cli help unused-l10n`
+
 ## 10.0.0
 
 ### Enum Value Sorting

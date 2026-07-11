@@ -5,9 +5,9 @@
 /// screen following MVC architecture patterns.
 library;
 
-import 'l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
+import 'l10n/app_localizations.dart';
 import 'screens/home/home_route.dart';
 
 part 'theme/app_theme.dart';
@@ -31,7 +31,7 @@ class {{name.pascalCase()}} extends StatelessWidget {
   ///
   /// Returns a [MaterialApp] configured with:
   /// * App title derived from the project name
-  /// * Light and dark themes from [AppTheme]
+  /// * Light and dark themes from [_AppTheme]
   /// * Home route pointing to the main screen
   /// * Debug banner disabled for cleaner presentation
   /// * Localization support for multiple languages

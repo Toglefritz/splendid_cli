@@ -105,6 +105,18 @@ class CustomHelp {
         example: 'splendid_cli sort-enum lib/models/status.dart',
       ),
       const CommandInfo(
+        name: 'unused-classes',
+        aliases: ['dead-classes'],
+        description: 'Identify class declarations not referenced elsewhere in the project',
+        example: 'splendid_cli unused-classes lib/',
+      ),
+      const CommandInfo(
+        name: 'unused-l10n',
+        aliases: ['dead-l10n', 'unused-arb'],
+        description: 'Identify unused localization strings defined in ARB files',
+        example: 'splendid_cli unused-l10n .',
+      ),
+      const CommandInfo(
         name: 'cache',
         description: 'Manage the local brick cache (list, info, clear)',
         example: 'splendid_cli cache list',
@@ -214,6 +226,13 @@ class CustomHelp {
       case 'sort-enum':
       case 'enum-sort':
         _showSortEnumCommandHelp(logger);
+      case 'unused-classes':
+      case 'dead-classes':
+        _showUnusedClassesCommandHelp(logger);
+      case 'unused-l10n':
+      case 'dead-l10n':
+      case 'unused-arb':
+        _showUnusedL10nCommandHelp(logger);
       case 'gui':
       case 'dashboard':
         _showGuiCommandHelp(logger);
@@ -927,6 +946,134 @@ class CustomHelp {
     logger.info('  1. Review changes in your version control system');
     logger.info('  2. Run ${cyan.wrap('dart analyze')} to verify no issues were introduced');
     logger.info('  3. Run your tests to ensure correctness');
+    logger.info('');
+  }
+
+  /// Shows detailed help for the unused-classes command.
+  static void _showUnusedClassesCommandHelp(Logger logger) {
+    logger.info('${yellow.wrap('USAGE:')}');
+    logger.info('  splendid_cli unused-classes <directory> [options]');
+    logger.info('  splendid_cli dead-classes <directory> [options]');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DESCRIPTION:')}');
+    logger.info('  Scans a directory of Dart source files, identifies all public class');
+    logger.info('  declarations, and reports classes that are not referenced in any other');
+    logger.info('  file. Useful for finding abandoned or dead code from past development');
+    logger.info('  that can be safely removed to reduce maintenance burden.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARGUMENTS:')}');
+    logger.info('  ${green.wrap('directory')}        Path to the directory to scan (typically lib/)');
+    logger.info('                   Scans recursively through all subdirectories');
+    logger.info('');
+
+    logger.info('${yellow.wrap('OPTIONS:')}');
+    logger.info('  ${green.wrap('-e, --exclude')}     File path patterns to exclude (repeatable)');
+    logger.info('  ${green.wrap('-v, --verbose')}     Show detailed progress and diagnostic information');
+    logger.info('  ${green.wrap('-h, --help')}        Show this help message');
+    logger.info('');
+
+    logger.info('${yellow.wrap('EXAMPLES:')}');
+    logger.info('  ${cyan.wrap('splendid_cli unused-classes lib/')}');
+    logger.info('    Scan the lib/ directory for unused classes');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli unused-classes lib/ --exclude=.g.dart --exclude=.freezed.dart')}');
+    logger.info('    Exclude generated files from the scan');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli dead-classes lib/ --verbose')}');
+    logger.info('    Scan with detailed output using the alias');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DETECTION BEHAVIOR:')}');
+    logger.info('  • Only public classes are analyzed (private _-prefixed classes are skipped)');
+    logger.info('  • A class is "unused" if its name does not appear in any other file');
+    logger.info('  • Whole-word matching prevents false positives from substrings');
+    logger.info('  • Comments are stripped before extracting class declarations');
+    logger.info('  • Supports all class modifiers (abstract, sealed, final, base, mixin)');
+    logger.info('');
+
+    logger.info('${yellow.wrap('KNOWN LIMITATIONS:')}');
+    logger.info('  • Entry-point classes used from bin/ appear unused if only lib/ is scanned');
+    logger.info('  • Classes consumed by external packages will appear unused locally');
+    logger.info('  • Classes referenced only via reflection or code generation may be reported');
+    logger.info('  • Results are grouped by file path and sorted alphabetically');
+    logger.info('');
+
+    logger.info('${yellow.wrap('NEXT STEPS:')}');
+    logger.info('  After reviewing results:');
+    logger.info('  1. Manually verify each reported class before removing');
+    logger.info('  2. Check if classes are part of the package\'s public API');
+    logger.info('  3. Remove confirmed dead code and run tests');
+    logger.info('');
+  }
+
+  /// Shows detailed help for the unused-l10n command.
+  static void _showUnusedL10nCommandHelp(Logger logger) {
+    logger.info('${yellow.wrap('USAGE:')}');
+    logger.info('  splendid_cli unused-l10n <project_root> [options]');
+    logger.info('  splendid_cli dead-l10n <project_root> [options]');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DESCRIPTION:')}');
+    logger.info('  Parses an ARB (Application Resource Bundle) file to extract all');
+    logger.info('  localization keys, then scans Dart source files to identify keys');
+    logger.info('  that are not referenced anywhere in the codebase. Helps reduce');
+    logger.info('  translation maintenance burden by finding abandoned strings.');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARGUMENTS:')}');
+    logger.info('  ${green.wrap('project_root')}     Path to the Flutter project root directory');
+    logger.info('                   Must contain l10n.yaml or lib/l10n/app_en.arb');
+    logger.info('');
+
+    logger.info('${yellow.wrap('OPTIONS:')}');
+    logger.info('  ${green.wrap('--arb')}             Explicit path to the primary ARB file');
+    logger.info('                     Auto-detected from l10n.yaml if not specified');
+    logger.info('  ${green.wrap('--source')}          Path to the source directory to scan');
+    logger.info('                     Default: lib/ relative to project root');
+    logger.info('  ${green.wrap('-e, --exclude')}     File path patterns to exclude (repeatable)');
+    logger.info('  ${green.wrap('-v, --verbose')}     Show detailed progress and diagnostic information');
+    logger.info('  ${green.wrap('-h, --help')}        Show this help message');
+    logger.info('');
+
+    logger.info('${yellow.wrap('EXAMPLES:')}');
+    logger.info('  ${cyan.wrap('splendid_cli unused-l10n .')}');
+    logger.info('    Auto-detect ARB file and scan lib/ for unused keys');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli unused-l10n . --arb=lib/l10n/app_en.arb --source=lib/')}');
+    logger.info('    Specify explicit ARB and source paths');
+    logger.info('');
+    logger.info('  ${cyan.wrap('splendid_cli unused-l10n . --exclude=.freezed.dart --exclude=.g.dart')}');
+    logger.info('    Exclude generated files from the source scan');
+    logger.info('');
+
+    logger.info('${yellow.wrap('ARB FILE DISCOVERY:')}');
+    logger.info('  The command discovers the ARB file in this order:');
+    logger.info('  1. Explicit --arb argument (highest priority)');
+    logger.info('  2. Reads l10n.yaml for arb-dir and template-arb-file fields');
+    logger.info('  3. Falls back to lib/l10n/app_en.arb (common default)');
+    logger.info('');
+
+    logger.info('${yellow.wrap('DETECTION BEHAVIOR:')}');
+    logger.info('  • All JSON keys not prefixed with @ are treated as l10n keys');
+    logger.info('  • Generated localization files (app_localizations*.dart) are excluded');
+    logger.info('  • Generated code files (.g.dart) are excluded automatically');
+    logger.info('  • Whole-word matching prevents false positives');
+    logger.info('  • Descriptions from @key metadata are shown when available');
+    logger.info('');
+
+    logger.info('${yellow.wrap('KNOWN LIMITATIONS:')}');
+    logger.info('  • Keys accessed dynamically (via maps or interpolation) may be reported');
+    logger.info('  • Keys used only in test files appear unused if only lib/ is scanned');
+    logger.info('  • Keys reserved for platform-specific builds may appear unused');
+    logger.info('');
+
+    logger.info('${yellow.wrap('NEXT STEPS:')}');
+    logger.info('  After reviewing results:');
+    logger.info('  1. Remove confirmed unused keys from all ARB files');
+    logger.info('  2. Run ${cyan.wrap('flutter gen-l10n')} to regenerate localization classes');
+    logger.info('  3. Run your tests to verify no strings were incorrectly removed');
     logger.info('');
   }
 

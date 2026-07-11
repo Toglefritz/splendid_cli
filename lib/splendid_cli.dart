@@ -40,6 +40,8 @@ import 'src/commands/setup_command.dart';
 import 'src/commands/sort_enum_command.dart';
 import 'src/commands/sort_l10n_command.dart';
 import 'src/commands/test_command.dart';
+import 'src/commands/unused_classes_command.dart';
+import 'src/commands/unused_l10n_command.dart';
 import 'src/utils/custom_help.dart';
 
 // Export MCP server components
@@ -53,6 +55,8 @@ export 'src/services/l10n_sorter_service.dart';
 export 'src/services/project_service.dart';
 export 'src/services/screen_service.dart';
 export 'src/services/test_service.dart';
+export 'src/services/unused_classes_service.dart';
+export 'src/services/unused_l10n_service.dart';
 
 /// Top-level command runner for the Splendid CLI.
 ///
@@ -84,6 +88,8 @@ class SplendidCommandRunner extends CommandRunner<int> {
     addCommand(SortEnumCommand());
     addCommand(SortL10nCommand());
     addCommand(TestCommand());
+    addCommand(UnusedClassesCommand());
+    addCommand(UnusedL10nCommand());
   }
 
   /// Override to provide custom help output.

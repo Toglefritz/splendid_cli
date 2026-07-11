@@ -3,6 +3,13 @@ include: package:very_good_analysis/analysis_options.yaml
 analyzer:
   exclude:
     - bricks/**
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 
 linter:
   rules:
@@ -15,6 +22,7 @@ linter:
     prefer_int_literals: false
     avoid_catches_without_on_clauses: false
     avoid_print: false
+    avoid_types_on_closure_parameters: false
 
 formatter:
   page_width: 120

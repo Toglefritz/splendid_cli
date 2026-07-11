@@ -432,7 +432,7 @@ class TestCommand extends Command<int> {
       /// files.
       final Brick brick = Brick.path(brickPath);
 
-      return MasonGenerator.fromBrick(brick);
+      return await MasonGenerator.fromBrick(brick);
     } catch (error) {
       logger.err('Failed to load test brick: $error');
       rethrow;

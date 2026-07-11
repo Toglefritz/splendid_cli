@@ -37,7 +37,7 @@ void main() {
     test('should pass line-length parameter to dart format', () async {
       // Create a test file with a long line (100 characters)
       // This line exceeds 80 chars but fits in 120 chars
-      final String testContent = '''
+      const String testContent = '''
 void main() {
   final String veryLongVariableName = 'This is a very long string that exceeds eighty characters';
 }
@@ -80,7 +80,7 @@ void main() {
     /// dart format will wrap it appropriately.
     test('should wrap lines that exceed specified line-length', () async {
       // Create a test file with a very long line (150+ characters)
-      final String testContent = '''
+      const String testContent = '''
 void main() {
   final String extremelyLongVariableName = 'This is an extremely long string that definitely exceeds one hundred and twenty characters and should be wrapped';
 }
@@ -123,7 +123,7 @@ void main() {
     /// This test ensures that the flag-based syntax (--line-length=120)
     /// works in addition to the positional argument syntax.
     test('should accept line-length as a flag', () async {
-      final String testContent = '''
+      const String testContent = '''
 void main() {
   final String veryLongVariableName = 'This is a very long string that exceeds eighty characters';
 }
@@ -165,7 +165,7 @@ void main() {
     /// This test ensures that even in dry-run mode, the line-length
     /// parameter is correctly passed to dart format for analysis.
     test('should pass line-length in dry-run mode', () async {
-      final String testContent = '''
+      const String testContent = '''
 void main() {
   final String veryLongVariableName = 'This is a very long string that exceeds eighty characters';
 }

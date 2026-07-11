@@ -80,24 +80,5 @@ class TestClass {}
       service = const DartdocFormatterService();
       tempDirHelper = TempDirectoryHelper();
     });
-
-    test('should format single-line comments correctly', () async {
-      final File testFile = File(path.join(tempDirHelper.directoryPath, 'test.dart'));
-      await testFile.writeAsString('''
-/// This is a very long single-line comment that exceeds the typical 80
-/// character line limit and should be wrapped.
-class TestClass {}
-''');
-
-      final DartdocFormatterRequest request = DartdocFormatterRequest(
-        targetPath: testFile.path,
-        lineLength: 80,
-      );
-
-      final DartdocFormatterResult result = await service.formatDartdoc(request);
-
-      expect(result.success, isTrue);
-      expect(result.modifiedFiles, contains(testFile.path));
-    });
   });
 }

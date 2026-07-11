@@ -116,8 +116,7 @@ class TestClass {}
     test('should format regular comments correctly', () async {
       final File testFile = File(path.join(tempDirHelper.directoryPath, 'test.dart'));
       await testFile.writeAsString('''
-// This is a very long regular comment that exceeds the typical 80 character
-// line limit and should be wrapped.
+// This is a very long regular comment that definitely exceeds the typical eighty character line limit and should be wrapped by the formatter.
 class TestClass {}
 ''');
 
@@ -208,8 +207,7 @@ class TestClass {}
     test('should handle dry-run mode', () async {
       final File testFile = File(path.join(tempDirHelper.directoryPath, 'test.dart'));
       const String originalContent = '''
-// This is a very long regular comment that exceeds the typical 80 character
-// line limit and should be wrapped.
+// This is a very long regular comment that definitely exceeds the typical eighty character line limit and should be wrapped by the formatter.
 class TestClass {}
 ''';
       await testFile.writeAsString(originalContent);

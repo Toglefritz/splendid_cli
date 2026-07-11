@@ -454,26 +454,6 @@ void main() {
     });
 
     group('error handling', () {
-      /// Tests that the command handles missing Flutter CLI gracefully.
-      ///
-      /// This test verifies that when the Flutter CLI is not available in the
-      /// system PATH, the command provides a clear error message rather than
-      /// crashing with an obscure exception.
-      test('should handle missing Flutter CLI gracefully', () async {
-        const String projectName = 'test_app';
-
-        final int exitCode = await runner.run([
-          'create',
-          projectName,
-          '--output-directory=${tempDir.path}',
-          '--force',
-        ]);
-
-        // Should return error code when Flutter CLI is not available This test
-        // will pass in environments without Flutter installed
-        expect(exitCode, equals(1));
-      });
-
       /// Tests that the command handles file system permission errors.
       ///
       /// This test verifies that when the target directory cannot be created

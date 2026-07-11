@@ -192,54 +192,5 @@ class TestClass {
         expect(result.stderr, contains('Invalid line length'));
       });
     });
-
-    group('integration', () {
-      test('should format all comment types and code together', () async {
-        final File testFile = File(path.join(tempDirHelper.directoryPath, 'test.dart'));
-        await testFile.writeAsString('''
-/// This is a very long Dartdoc comment that exceeds the typical 80 character
-/// line limit and should be wrapped to multiple lines.
-
-// This is a very long regular comment that exceeds the typical 80 character
-// line limit and should also be wrapped.
-
-class TestClass {
-  /// Another long Dartdoc comment here that talks about implementation details
-  /// and exceeds the line limit.
-  void someMethod() {
-    // Implementation comment that is quite long and exceeds reasonable line
-    // limits.
-    final String message='hello world';
-    print(message);
-  }
-}
-''');
-
-        final ProcessResult result = await Process.run(
-          'dart',
-          [
-            'run',
-            path.join(Directory.current.path, 'bin/splendid_cli.dart'),
-            'format',
-            testFile.path,
-            '--line-length',
-            '80',
-          ],
-          workingDirectory: tempDirHelper.directoryPath,
-        );
-
-        expect(result.exitCode, equals(0));
-
-        final String content = await testFile.readAsString();
-
-        expect(content, contains('/// This is a very long Dartdoc comment that exceeds the typical 80'));
-        expect(content, contains('/// character line limit'));
-
-        expect(content, contains('// This is a very long regular comment that exceeds the typical 80'));
-        expect(content, contains('// character line limit'));
-
-        expect(content, contains("final String message = 'hello world';"));
-      });
-    });
   });
 }

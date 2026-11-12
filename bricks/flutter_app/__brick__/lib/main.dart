@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'app.dart';
 
 /// Application entry point that initializes and runs the Flutter app.
@@ -8,8 +8,6 @@ import 'app.dart';
 /// handled by the {{name.pascalCase()}} widget in app.dart.
 void main() {
   runApp(
-    const {
-      {name.pascalCase()},
-    }(),
+    const {{name.pascalCase()}}(),
   );
 }

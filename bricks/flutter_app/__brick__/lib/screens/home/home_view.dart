@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../theme/insets.dart';
@@ -63,7 +63,7 @@ class HomeView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: Insets.small),
                     child: Switch(
                       value: state.isLampOn,
-                      onChanged: (bool value) => state.toggleLamp(value: value),
+                      onChanged: (value) => state.toggleLamp(value: value),
                       activeThumbColor: Colors.amber,
                     ),
                   ),

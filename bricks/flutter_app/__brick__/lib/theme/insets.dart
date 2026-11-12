@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Provides [EdgeInsets] values to be used for [Padding] and other, similar
 /// widgets.
